@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         :root {
@@ -23,78 +24,66 @@
             padding-top: 90px;
         }
 
-        /* --- NAVBAR --- */
         .navbar {
             background: var(--glass-bg) !important;
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0,0,0,0.08);
+            padding: 15px 0;
         }
 
-        /* --- HERO SECTION --- */
+        .menu-icon {
+            width: 35px; height: 35px;
+            background: #f0f7ff;
+            color: #0097e6;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; margin-right: 12px;
+        }
+
+        .dropdown-item { padding: 12px 20px; transition: 0.3s; }
+        .dropdown-item:hover { background: #f8f9fa; transform: translateX(5px); }
+
+        .btn-login {
+            background: var(--primary-gradient);
+            color: white !important;
+            border-radius: 50px;
+            padding: 8px 25px !important;
+            border: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-login:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,82,212,0.3);
+        }
+
         .hero-activities {
             background: var(--primary-gradient);
-            color: white;
-            padding: 60px 0;
-            border-radius: 0 0 50px 50px;
-            margin-bottom: 40px;
-        }
-
-        /* --- TIMELINE DESIGN --- */
-        .timeline-container {
-            position: relative;
-            padding: 20px 0;
+            color: white; padding: 60px 0;
+            border-radius: 0 0 50px 50px; margin-bottom: 40px;
         }
 
         .timeline-item {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
+            background: white; border-radius: 20px;
+            padding: 25px; margin-bottom: 30px;
             border-left: 8px solid #0097e6;
             transition: 0.3s;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            position: relative;
-        }
-
-        .timeline-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
 
         .date-badge {
-            background: #e1f5fe;
-            color: #0097e6;
-            padding: 8px 15px;
-            border-radius: 10px;
-            font-weight: 800;
-            display: inline-block;
-            margin-bottom: 15px;
+            background: #e1f5fe; color: #0097e6;
+            padding: 8px 15px; border-radius: 10px;
+            font-weight: 800; display: inline-block; margin-bottom: 15px;
         }
 
-        .category-pill {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 50px;
-            background: #eee;
-            margin-left: 10px;
+        .activity-gallery {
+            display: flex; gap: 10px; overflow-x: auto; padding: 10px 0;
         }
 
-        .status-upcoming { background: #d4edda; color: #155724; }
-        .status-urgent { background: #f8d7da; color: #721c24; }
-
-        .btn-back {
-            color: white;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            margin-bottom: 20px;
+        .activity-gallery img {
+            width: 120px; height: 80px; object-fit: cover; border-radius: 8px;
         }
-
-        .btn-back:hover { color: var(--accent-color); }
     </style>
 </head>
 <body>
@@ -104,167 +93,177 @@
             <a class="navbar-brand" href="index.html">
                 <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="60" alt="GAD Atacames">
             </a>
-            <div class="ms-auto">
-                <a href="index.html" class="btn btn-outline-primary rounded-pill px-4 fw-bold">Volver al Inicio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Participación
+                        </a>
+                        <ul class="dropdown-menu animate__animated animate__fadeIn">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="Asamblea-cantonal.html">
+                                    <div class="menu-icon"><i class="fa-solid fa-people-group"></i></div>
+                                    <div><span class="d-block fw-bold">Asamblea Cantonal</span><small class="text-muted">Espacio máximo de concertación.</small></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="Consejos barriales.html">
+                                    <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
+                                    <div><span class="d-block fw-bold">Consejos Barriales</span><small class="text-muted">Gestión en zonas urbanas.</small></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="Silla-vacia.html">
+                                    <div class="menu-icon"><i class="fa-solid fa-chair"></i></div>
+                                    <div><span class="d-block fw-bold">Silla vacía</span><small class="text-muted">Derecho constitucional.</small></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="Consejos rurales.html">
+                                    <div class="menu-icon"><i class="fa-solid fa-people-roof"></i></div>
+                                    <div><span class="d-block fw-bold">Consejos Rurales</span><small class="text-muted">Líderes de recintos.</small></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html#nosotros">Nosotros</a></li>
+                    <li class="nav-item">
+                        <button onclick="validarAcceso()" class="nav-link btn-login ms-lg-3">Admin</button>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <header class="hero-activities text-center">
         <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb justify-content-center">
-                    <li class="breadcrumb-item"><a href="index.html" class="text-white-50">Inicio</a></li>
-                    <li class="breadcrumb-item active text-white" aria-current="page">Actividades</li>
-                </ol>
-            </nav>
-            <h1 class="display-5 fw-800">Agenda Territorial De La Asamblea De Participación Ciudadana De Atacames</h1>
-            <p class="lead opacity-75">Sigue de cerca las acciones y eventos de participación ciudadana.</p>
+            <h1 class="display-5 fw-800">Agenda Territorial</h1>
+            <p class="lead opacity-75">Actividades de la Asamblea Ciudadana de Atacames</p>
         </div>
     </header>
 
     <main class="container">
         <div class="row mb-5 justify-content-center">
             <div class="col-md-8 text-center">
-                <div class="btn-group shadow-sm rounded-pill bg-white p-2" role="group">
+                <div class="btn-group shadow-sm rounded-pill bg-white p-2">
                     <button type="button" class="btn btn-primary rounded-pill px-4" onclick="filtrar('todos')">Todas</button>
                     <button type="button" class="btn btn-light rounded-pill px-4" onclick="filtrar('sesion')">Sesiones</button>
-                    <button type="button" class="button btn btn-light rounded-pill px-4" onclick="filtrar('territorio')">Territorio</button>
+                    <button type="button" class="btn btn-light rounded-pill px-4" onclick="filtrar('territorio')">Territorio</button>
                     <button type="button" class="btn btn-light rounded-pill px-4" onclick="filtrar('social')">Social</button>
                 </div>
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-lg-9 timeline-container" id="listaEventos">
-                
-                <div class="timeline-item animate__animated animate__fadeInUp event-card" data-cat="sesion">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="date-badge">
-                            <i class="fa-regular fa-calendar-check me-2"></i> 15 de Febrero, 2026
-                        </div>
-                        <span class="category-pill status-upcoming">Próximo</span>
-                    </div>
-                    <h3 class="fw-bold mt-2">Sesiones ordinarias de directorio</h3>
-                    <p class="text-muted">Discusión del presupuesto participativo anual y priorización de obras para las parroquias rurales.</p>
-                    <hr>
-                    <div class="d-flex align-items-center text-muted small">
-                        <span class="me-4"><i class="fa-solid fa-clock me-1"></i> 10:00 AM</span>
-                        <span><i class="fa-solid fa-location-dot me-1"></i> Salón Auditorio GAD Atacames</span>
-                    </div>
-                </div>
-
-                <div class="timeline-item animate__animated animate__fadeInUp event-card" data-cat="territorio" style="border-left-color: #2ecc71;">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="date-badge" style="background: #e8f5e9; color: #2ecc71;">
-                            <i class="fa-regular fa-calendar-check me-2"></i> 22 de Febrero, 2026
-                        </div>
-                        <span class="category-pill">Recorrido</span>
-                    </div>
-                    <h3 class="fw-bold mt-2">Visitas a territorio en el cantón</h3>
-                    <p class="text-muted">Inspección de avances en el sistema de alcantarillado con los presidentes de los Consejos Barriales.</p>
-                    <hr>
-                    <div class="d-flex align-items-center text-muted small">
-                        <span class="me-4"><i class="fa-solid fa-clock me-1"></i> 08:30 AM</span>
-                        <span><i class="fa-solid fa-location-dot me-1"></i> Cancha Central de Tonsupa</span>
-                    </div>
-                </div>
-
-                <div class="timeline-item animate__animated animate__fadeInUp event-card" data-cat="social" style="border-left-color: #f1c40f;">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="date-badge" style="background: #fff9c4; color: #827717;">
-                            <i class="fa-regular fa-calendar-check me-2"></i> 05 de Marzo, 2026
-                        </div>
-                        <span class="category-pill status-urgent">Importante</span>
-                    </div>
-                    <h3 class="fw-bold mt-2">Talleres de Capacitación a la ciudadanía sobre los mecanismos de participacion ciudadana</h3>
-                    <p class="text-muted">Formación ciudadana sobre los mecanismos legales para el uso de la Silla Vacía en sesiones de concejo.</p>
-                    <hr>
-                    <div class="d-flex align-items-center text-muted small">
-                        <span class="me-4"><i class="fa-solid fa-clock me-1"></i> 15:00 PM</span>
-                        <span><i class="fa-solid fa-location-dot me-1"></i> Casa de la Cultura - Atacames</span>
-                    </div>
-                </div>
-
-                 <div class="timeline-item animate__animated animate__fadeInUp event-card" data-cat="social" style="border-left-color: #f1c40f;">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="date-badge" style="background: #fff9c4; color: #827717;">
-                            <i class="fa-regular fa-calendar-check me-2"></i> 05 de Marzo, 2026
-                        </div>
-                        <span class="category-pill status-urgent">Importante</span>
-                    </div>
-                    <h3 class="fw-bold mt-2">Participacion en mesas de trabajo para la elaboracion del presupuesto participativo anual del GADMA.</h3>
-                    <p class="text-muted">Formación ciudadana sobre los mecanismos legales para el uso de la Silla Vacía en sesiones de concejo.</p>
-                    <hr>
-                    <div class="d-flex align-items-center text-muted small">
-                        <span class="me-4"><i class="fa-solid fa-clock me-1"></i> 15:00 PM</span>
-                        <span><i class="fa-solid fa-location-dot me-1"></i> Casa de la Cultura - Atacames</span>
-                    </div>
-                </div>
-
-                 <div class="timeline-item animate__animated animate__fadeInUp event-card" data-cat="social" style="border-left-color: #f1c40f;">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="date-badge" style="background: #fff9c4; color: #827717;">
-                            <i class="fa-regular fa-calendar-check me-2"></i> 05 de Marzo, 2026
-                        </div>
-                        <span class="category-pill status-urgent">Importante</span>
-                    </div>
-                    <h3 class="fw-bold mt-2">Participacion en reuniones para la realizacion y aprobacion del informe tecnico de rendicion de cuentas anual de las autoridades locales.</h3>
-                    <p class="text-muted">Formación ciudadana sobre los mecanismos legales para el uso de la Silla Vacía en sesiones de concejo.</p>
-                    <hr>
-                    <div class="d-flex align-items-center text-muted small">
-                        <span class="me-4"><i class="fa-solid fa-clock me-1"></i> 15:00 PM</span>
-                        <span><i class="fa-solid fa-location-dot me-1"></i> Casa de la Cultura - Atacames</span>
-                    </div>
-                </div>
-                 <div class="timeline-item animate__animated animate__fadeInUp event-card" data-cat="social" style="border-left-color: #f1c40f;">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="date-badge" style="background: #fff9c4; color: #827717;">
-                            <i class="fa-regular fa-calendar-check me-2"></i> 05 de Marzo, 2026
-                        </div>
-                        <span class="category-pill status-urgent">Importante</span>
-                    </div>
-                    <h3 class="fw-bold mt-2">Reuniones de capacitación para la creacion de veedurías ciudadanas.</h3>
-                    <p class="text-muted">Formación ciudadana sobre los mecanismos legales para el uso de la Silla Vacía en sesiones de concejo.</p>
-                    <hr>
-                    <div class="d-flex align-items-center text-muted small">
-                        <span class="me-4"><i class="fa-solid fa-clock me-1"></i> 15:00 PM</span>
-                        <span><i class="fa-solid fa-location-dot me-1"></i> Casa de la Cultura - Atacames</span>
-                    </div>
-                </div>
-
-
-
-
-            </div>
+            <div class="col-lg-9" id="listaEventos"></div>
         </div>
     </main>
 
     <footer class="bg-dark text-white py-5 mt-5">
-        <div class="container text-center">
-            <p class="mb-0 small opacity-50">© 2026 GAD Municipal de Atacames - Dirección de Participación Ciudadana</p>
+        <div class="container text-center text-white-50">
+            <p>© 2026 GAD Municipal de Atacames</p>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        function filtrar(categoria) {
-            const eventos = document.querySelectorAll('.event-card');
-            eventos.forEach(ev => {
-                if (categoria === 'todos' || ev.getAttribute('data-cat') === categoria) {
-                    ev.style.display = 'block';
-                    ev.classList.add('animate__fadeIn');
-                } else {
-                    ev.style.display = 'none';
-                }
+        // LÓGICA DE VALIDACIÓN INTIMIDANTE
+        async function validarAcceso() {
+            const { value: password } = await Swal.fire({
+                title: 'SISTEMA RESTRINGIDO',
+                html: '<div class="text-danger fw-bold"><i class="fa-solid fa-triangle-exclamation"></i> ADVERTENCIA CRÍTICA <i class="fa-solid fa-triangle-exclamation"></i></div><p class="small">Está intentando acceder al núcleo del sistema. Todo ingreso no autorizado es una violación de los protocolos del GAD. Ingrese clave de nivel 4:</p>',
+                input: 'password',
+                inputPlaceholder: 'CÓDIGO DE ACCESO',
+                showCancelButton: true,
+                confirmButtonText: 'VERIFICAR IDENTIDAD',
+                cancelButtonText: 'ABORTAR',
+                confirmButtonColor: '#d33',
+                background: '#1a1a1a',
+                color: '#ffffff',
+                backdrop: `rgba(123,0,0,0.8)`
             });
 
-            // Actualizar estilo de botones
-            const botones = document.querySelectorAll('.btn-group .btn');
-            botones.forEach(btn => {
-                btn.classList.replace('btn-primary', 'btn-light');
-            });
-            event.target.classList.replace('btn-light', 'btn-primary');
+            if (password === 'Admin2024') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'IDENTIDAD CONFIRMADA',
+                    text: 'Accediendo al panel de control...',
+                    timer: 1500,
+                    showConfirmButton: false,
+                    background: '#1a1a1a',
+                    color: '#fff'
+                }).then(() => {
+                    window.location.href = "Actividades-admin.html";
+                });
+            } else if (password) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ACCESO DENEGADO',
+                    text: 'Se ha registrado un intento de intrusión desde su IP. Abandone esta sección inmediatamente.',
+                    confirmButtonColor: '#d33',
+                    background: '#000',
+                    color: '#ff0000'
+                });
+            }
         }
+
+        // LÓGICA DE CARGA DE DATOS (API)
+        const API_URL = "https://backend-asamblea-atacames.onrender.com/api/actividades";
+        let todasLasActividades = [];
+
+        async function obtenerActividades() {
+            try {
+                const response = await fetch(API_URL);
+                todasLasActividades = await response.json();
+                todasLasActividades.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                renderizarActividades(todasLasActividades);
+            } catch (error) {
+                document.getElementById('listaEventos').innerHTML = `<p class="text-center text-danger">Error al cargar datos.</p>`;
+            }
+        }
+
+        function renderizarActividades(datos) {
+            const contenedor = document.getElementById('listaEventos');
+            contenedor.innerHTML = datos.map(act => {
+                const colores = {
+                    sesion: { border: '#0097e6', bg: '#e1f5fe', text: '#0097e6' },
+                    territorio: { border: '#2ecc71', bg: '#e8f5e9', text: '#2ecc71' },
+                    social: { border: '#f1c40f', bg: '#fff9c4', text: '#827717' }
+                };
+                const estilo = colores[act.categoria] || colores.sesion;
+                const fotosHtml = act.imagenes && act.imagenes.length > 0 
+                    ? `<div class="activity-gallery">${act.imagenes.map(img => `<img src="${img}">`).join('')}</div>`
+                    : '';
+
+                return `
+                    <div class="timeline-item animate__animated animate__fadeInUp" style="border-left-color: ${estilo.border}">
+                        <div class="date-badge" style="background: ${estilo.bg}; color: ${estilo.text}">
+                            ${new Date(act.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </div>
+                        <h3 class="fw-bold">${act.titulo}</h3>
+                        <p class="text-muted">${act.descripcion}</p>
+                        ${fotosHtml}
+                        <hr>
+                        <small class="text-muted"><i class="fa-solid fa-location-dot"></i> ${act.lugar} | <i class="fa-solid fa-clock"></i> ${act.hora || 'S/H'}</small>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filtrar(categoria) {
+            const botones = document.querySelectorAll('.btn-group .btn');
+            botones.forEach(btn => btn.classList.replace('btn-primary', 'btn-light'));
+            event.target.classList.replace('btn-light', 'btn-primary');
+            const filtradas = categoria === 'todos' ? todasLasActividades : todasLasActividades.filter(a => a.categoria === categoria);
+            renderizarActividades(filtradas);
+        }
+
+        obtenerActividades();
     </script>
 </body>
 </html>
