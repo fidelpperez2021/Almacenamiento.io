@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
 
-// Este esquema define la estructura de los documentos en tu nueva colección
 const ActividadSchema = new mongoose.Schema({
     titulo: { type: String, required: true },
     descripcion: { type: String },
-    categoria: { type: String, enum: ['sesion', 'territorio', 'social'] },
+    categoria: { 
+        type: String, 
+        enum: ['sesion', 'territorio', 'social'],
+        default: 'social'
+    },
     fecha: { type: Date, required: true },
+    hora: { type: String }, // Campo añadido para evitar errores
     lugar: { type: String },
-    imagenes: [{ type: String }], // Array para las URLs de las 20 fotos
+    imagenes: [{ type: String }], 
     fechaRegistro: { type: Date, default: Date.now }
 });
 
-// El primer argumento 'Actividad' es el nombre que MongoDB usará para crear la colección
 module.exports = mongoose.model('Actividad', ActividadSchema);

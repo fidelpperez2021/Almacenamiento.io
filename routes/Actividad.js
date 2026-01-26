@@ -1,53 +1,52 @@
 const express = require('express');
 const router = express.Router();
-const Actividad = require('../models/Actividad'); // Tu modelo Mongoose
+const Actividad = require('../models/Actividad');
 
-/**
- * @route   POST /api/actividades
- * @desc    Registrar una nueva actividad usando URLs de imágenes
- */
+// POST: Guardar actividad
 router.post('/', async (req, res) => {
     try {
-        const { titulo, descripcion, categoria, fecha, lugar, imagenes } = req.body;
+        console.log("Datos recibidos en el server:", req.body);
+        
+        const { titulo, descripcion, categoria, fecha, hora, lugar, imagenes } = req.body;
 
-        // Validamos que 'imagenes' sea un array (incluso si viene vacío o con una sola URL)
-        const listaUrls = Array.isArray(imagenes) ? imagenes : [imagenes];
+        // Asegurar que imagenes sea un array
+        const listaUrls = Array.isArray(imagenes) ? imagenes : (imagenes ? [imagenes] : []);
 
         const nuevaActividad = new Actividad({
             titulo,
             descripcion,
             categoria,
             fecha,
+            hora,
             lugar,
-            imagenes: listaUrls // Se guarda el array de strings directamente
+            imagenes: listaUrls
         });
 
-        // Al guardar, Mongoose crea la colección 'actividads' en Atlas automáticamente
         await nuevaActividad.save();
-        
-        res.status(201).json({ 
-            mensaje: "Actividad creada exitosamente", 
-            data: nuevaActividad 
-        });
+        res.status(201).json({ mensaje: "Actividad guardada con éxito", data: nuevaActividad });
     } catch (error) {
-        console.error("Error en el servidor:", error);
-        res.status(500).json({ 
-            error: "Error al registrar la actividad",
-            detalle: error.message 
-        });
+        console.error("Error al guardar:", error);
+        res.status(500).json({ error: "Error interno", detalle: error.message });
     }
 });
 
-/**
- * @route   GET /api/actividades
- * @desc    Obtener todas las actividades para el Frontend
- */
+// GET: Listar actividades
 router.get('/', async (req, res) => {
     try {
         const actividades = await Actividad.find().sort({ fecha: -1 });
         res.json(actividades);
     } catch (error) {
-        res.status(500).json({ error: "Error al obtener actividades" });
+        res.status(500).json({ error: "Error al obtener datos" });
+    }
+});
+
+// DELETE: Eliminar actividad
+router.delete('/:id', async (req, res) => {
+    try {
+        await Actividad.findByIdAndDelete(req.params.id);
+        res.json({ mensaje: "Eliminado correctamente" });
+    } catch (error) {
+        res.status(500).json({ error: "No se pudo eliminar" });
     }
 });
 
