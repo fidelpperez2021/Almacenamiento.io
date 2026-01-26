@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Noticias - GAD Atacames</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #0097e6;
+            --success: #44bd32;
+            --danger: #e84118;
+            --dark: #2f3640;
+            --bg: #f5f6fa;
+        }
+
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); padding: 40px 20px; }
+        .container { max-width: 1000px; margin: auto; }
+        
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: span 2; }
+        
+        input, select, textarea {
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-top: 5px; box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 12px 25px; border: none; border-radius: 8px; color: white;
+            font-weight: 600; cursor: pointer; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        
+        .btn-save { background: var(--success); width: 100%; margin-top: 20px; justify-content: center; }
+        .btn-delete { background: var(--danger); padding: 8px 12px; }
+        .btn-edit { background: var(--primary); padding: 8px 12px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: var(--dark); color: white; }
+
+        .img-preview { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+        .badge { padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2><i class="fa-solid fa-newspaper"></i> Redactar Noticia</h2>
+        <form id="noticiaForm">
+            <input type="hidden" id="noticiaId">
+            <div class="form-grid">
+                <div class="full-width">
+                    <label>Título de la Noticia</label>
+                    <input type="text" id="titulo" placeholder="Ej: Nueva obra de alcantarillado" required>
+                </div>
+                <div>
+                    <label>Categoría</label>
+                    <select id="categoria">
+                        <option value="General">General</option>
+                        <option value="Obras Públicas">Obras Públicas</option>
+                        <option value="Social">Social</option>
+                    </select>
+                </div>
+                <div>
+                    <label>URL Imagen Principal</label>
+                    <input type="url" id="imagen" placeholder="https://..." required>
+                </div>
+                <div class="full-width">
+                    <label>Resumen Corto</label>
+                    <textarea id="resumen" rows="2" placeholder="Breve introducción para la tarjeta..."></textarea>
+                </div>
+                <div class="full-width">
+                    <label>Contenido Completo</label>
+                    <textarea id="contenido" rows="6" placeholder="Desarrollo de la noticia..."></textarea>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-save" id="btnSubmit">
+                <i class="fa-solid fa-paper-plane"></i> Publicar Noticia
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Noticias en el Sistema</h3>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaNoticias"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    const API_URL = "https://backend-asamblea-atacames.onrender.com/api/noticias";
+
+    // CARGAR NOTICIAS
+    async function cargarNoticias() {
+        try {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            const tabla = document.getElementById('tablaNoticias');
+            
+            tabla.innerHTML = data.map(n => `
+                <tr>
+                    <td><img src="${n.imagen}" class="img-preview"></td>
+                    <td><strong>${n.titulo}</strong></td>
+                    <td><span class="badge" style="background:#eee">${n.categoria}</span></td>
+                    <td>
+                        <button onclick="prepararEdicion('${n._id}')" class="btn btn-edit">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button onclick="eliminarNoticia('${n._id}')" class="btn btn-delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        } catch (e) { console.error("Error:", e); }
+    }
+
+    // GUARDAR O ACTUALIZAR
+    document.getElementById('noticiaForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const id = document.getElementById('noticiaId').value;
+        const datos = {
+            titulo: document.getElementById('titulo').value,
+            categoria: document.getElementById('categoria').value,
+            imagen: document.getElementById('imagen').value,
+            resumen: document.getElementById('resumen').value,
+            contenido: document.getElementById('contenido').value,
+            fecha: new Date().toISOString()
+        };
+
+        const metodo = id ? 'PUT' : 'POST';
+        const url = id ? `${API_URL}/${id}` : API_URL;
+
+        try {
+            const res = await fetch(url, {
+                method: metodo,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+            
+            if(res.ok) {
+                Swal.fire('Éxito', 'Noticia guardada correctamente', 'success');
+                resetearFormulario();
+                cargarNoticias();
+            }
+        } catch (err) {
+            Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
+        }
+    });
+
+    // EDITAR (CARGAR DATOS AL FORM)
+    async function prepararEdicion(id) {
+        try {
+            const res = await fetch(API_URL);
+            const noticias = await res.json();
+            const n = noticias.find(item => item._id === id);
+
+            document.getElementById('noticiaId').value = n._id;
+            document.getElementById('titulo').value = n.titulo;
+            document.getElementById('categoria').value = n.categoria;
+            document.getElementById('imagen').value = n.imagen;
+            document.getElementById('resumen').value = n.resumen;
+            document.getElementById('contenido').value = n.contenido;
+
+            document.getElementById('btnSubmit').innerHTML = `<i class="fa-solid fa-rotate"></i> Actualizar Noticia`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (e) { console.error(e); }
+    }
+
+    // ELIMINAR
+    async function eliminarNoticia(id) {
+        const result = await Swal.fire({
+            title: '¿Eliminar noticia?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e84118',
+            confirmButtonText: 'Sí, borrar'
+        });
+
+        if (result.isConfirmed) {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            cargarNoticias();
+            Swal.fire('Borrado', 'La noticia ha sido eliminada', 'success');
+        }
+    }
+
+    function resetearFormulario() {
+        document.getElementById('noticiaForm').reset();
+        document.getElementById('noticiaId').value = '';
+        document.getElementById('btnSubmit').innerHTML = `<i class="fa-solid fa-paper-plane"></i> Publicar Noticia`;
+    }
+
+    cargarNoticias();
+</script>
+</body>
+</html>

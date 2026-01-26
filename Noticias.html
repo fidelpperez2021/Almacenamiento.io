@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de información | GAD Atacames</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0097e6 0%, #0052d4 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            background: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding-top: 90px;
+        }
+
+        .navbar {
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .btn-login {
+            background: var(--primary-gradient);
+            color: white !important;
+            border-radius: 50px;
+            padding: 8px 25px !important;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .hero-news {
+            background: var(--primary-gradient);
+            color: white; padding: 60px 0;
+            border-radius: 0 0 50px 50px; margin-bottom: 40px;
+        }
+
+        /* Estilo de Tarjetas de Noticias */
+        .news-card {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .news-img-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .news-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 151, 230, 0.9);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .news-body { padding: 25px; }
+        
+        .news-date {
+            color: #0097e6;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .news-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .news-excerpt {
+            color: #64748b;
+            font-size: 0.95rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .btn-read-more {
+            color: #0052d4;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="60" alt="GAD Atacames">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="Actividades.html">Actividades</a></li>
+                    <li class="nav-item"><button onclick="validarAcceso()" class="btn-login ms-lg-3">Admin</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-news text-center">
+        <div class="container">
+            <h1 class="display-5 fw-800">Centro de información para la ciudadanía</h1>
+            <p class="lead opacity-75">Noticias e información oficial del GAD Municipal de Atacames</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-10 text-center">
+                <div class="btn-group shadow-sm rounded-pill bg-white p-2 flex-wrap">
+                    <button class="btn btn-primary rounded-pill px-4" onclick="filtrar('todos')">Todo</button>
+                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('Obras Públicas')">Obras</button>
+                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('Social')">Social</button>
+                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('General')">General</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4" id="contenedorNoticias">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2">Cargando noticias...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container text-center text-white-50">
+            <p>© 2026 GAD Municipal de Atacames | Comunicación Institucional</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const API_URL = "https://backend-asamblea-atacames.onrender.com/api/noticias";
+        let todasLasNoticias = [];
+
+        async function obtenerNoticias() {
+            try {
+                const response = await fetch(API_URL);
+                todasLasNoticias = await response.json();
+                todasLasNoticias.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                renderizarNoticias(todasLasNoticias);
+            } catch (error) {
+                document.getElementById('contenedorNoticias').innerHTML = `<p class="text-center text-danger">Error al conectar con la sala de prensa.</p>`;
+            }
+        }
+
+        function renderizarNoticias(datos) {
+            const contenedor = document.getElementById('contenedorNoticias');
+            if(datos.length === 0) {
+                contenedor.innerHTML = '<p class="text-center">No hay noticias en esta categoría.</p>';
+                return;
+            }
+
+            contenedor.innerHTML = datos.map(n => `
+                <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                    <div class="news-card">
+                        <div class="news-img-wrapper">
+                            <span class="category-badge">${n.categoria}</span>
+                            <img src="${n.imagen}" alt="${n.titulo}">
+                        </div>
+                        <div class="news-body">
+                            <span class="news-date">${new Date(n.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                            <h3 class="news-title">${n.titulo}</h3>
+                            <p class="news-excerpt">${n.resumen}</p>
+                            <a href="#" class="btn-read-more" onclick="verDetalle('${n._id}')">
+                                Leer noticia completa <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filtrar(cat) {
+            // Estética de botones
+            const botones = document.querySelectorAll('.btn-group .btn');
+            botones.forEach(btn => btn.classList.replace('btn-primary', 'btn-light'));
+            event.target.classList.replace('btn-light', 'btn-primary');
+
+            const filtradas = cat === 'todos' ? todasLasNoticias : todasLasNoticias.filter(n => n.categoria === cat);
+            renderizarNoticias(filtradas);
+        }
+
+        async function verDetalle(id) {
+            const n = todasLasNoticias.find(item => item._id === id);
+            Swal.fire({
+                title: n.titulo,
+                html: `
+                    <img src="${n.imagen}" class="img-fluid rounded mb-3" style="max-height: 300px; width: 100%; object-fit: cover;">
+                    <div class="text-start" style="font-size: 0.95rem; line-height: 1.6;">
+                        <p class="text-muted small">Publicado: ${new Date(n.fecha).toLocaleDateString()}</p>
+                        <hr>
+                        <div class="news-content">${n.contenido.replace(/\n/g, '<br>')}</div>
+                    </div>
+                `,
+                width: '800px',
+                confirmButtonText: 'Cerrar',
+                confirmButtonColor: '#0097e6'
+            });
+        }
+
+        // Lógica Admin (Igual a la tuya)
+        async function validarAcceso() {
+            const { value: password } = await Swal.fire({
+                title: 'ACCESO ADMIN',
+                input: 'password',
+                inputPlaceholder: 'Clave de nivel 4',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                background: '#1a1a1a',
+                color: '#fff'
+            });
+
+            if (password === 'Admin2024') {
+                window.location.href = "Noticias-admin.html";
+            }
+        }
+
+        obtenerNoticias();
+    </script>
+</body>
+</html>
