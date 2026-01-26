@@ -13,8 +13,11 @@ app.get("/", (req, res) => {
   res.send("✅ API Backend Asamblea Atacames funcionando");
 });
 
-// Rutas del CRUD
+// --- REGISTRO DE RUTAS ---
 app.use("/api/asambleistas", require("./routes/asambleistas"));
+
+// AGREGA ESTA LÍNEA PARA ACTIVAR LAS ACTIVIDADES
+app.use("/api/actividades", require("./routes/actividades")); 
 
 mongoose
   .connect(process.env.MONGO_URI)
