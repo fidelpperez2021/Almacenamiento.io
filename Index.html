@@ -31,22 +31,21 @@
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 15px 0; /* Padding inicial más amplio */
+            padding: 15px 0;
         }
 
-        /* Clase que se activa con JS al hacer scroll */
         .navbar-scrolled {
             padding: 5px 0;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
         .logo img {
-            max-height: 110px; /* Tamaño grande inicial */
+            max-height: 110px;
             transition: all 0.4s ease;
         }
 
         .navbar-scrolled .logo img {
-            max-height: 60px; /* Se encoge al bajar */
+            max-height: 60px;
         }
 
         .nav-link {
@@ -61,7 +60,7 @@
             color: var(--primary-color) !important;
         }
 
-        /* --- ESTILOS DEL MENÚ DESPLEGABLE (DROPDOWN) --- */
+        /* --- DROPDOWN --- */
         .dropdown-menu {
             border: none;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -69,7 +68,6 @@
             padding: 15px;
             min-width: 300px;
             margin-top: 15px !important;
-            /* Animación de entrada */
             display: block;
             opacity: 0;
             visibility: hidden;
@@ -109,11 +107,6 @@
             flex-shrink: 0;
         }
 
-        .dropdown-item:hover .menu-icon {
-            background: var(--primary-color);
-            color: white;
-        }
-
         .btn-login {
             background-color: var(--primary-color);
             color: white !important;
@@ -123,30 +116,34 @@
             transition: 0.3s;
         }
 
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 151, 230, 0.4);
-        }
-
-        /* --- HERO --- */
+        /* --- HERO (AJUSTADO PARA NO TAPAR LETRAS) --- */
         .hero {
-            height: 70vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
-                        url('https://2.bp.blogspot.com/-i5FVR0q8vY4/WlDTSqNT8-I/AAAAAAAAtT8/D-8mFljctZQBh0qI-nPuk81P_8oG7_ptQCLcBGAs/s1600/IMG_20171226_160617-02-01.jpeg');
+            height: 85vh; /* Un poco más alto para dar aire a la imagen */
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), 
+                        url('https://fidelpperez2021.github.io/Almacenamiento.io/image_3cc45e.png');
             background-size: cover;
             background-position: center;
             display: flex;
-            align-items: center;
+            align-items: flex-end; /* ALINEA EL TEXTO ABAJO */
             justify-content: center;
             text-align: center;
-            margin-top: 130px; /* Ajustado para el logo inicial grande */
+            margin-top: 0; 
+            padding-bottom: 80px; /* ESPACIO DESDE EL BORDE INFERIOR */
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 800;
             color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            /* SOMBRA MÁS FUERTE PARA RESALTAR SOBRE LA ARENA */
+            text-shadow: 3px 3px 15px rgba(0,0,0,0.9), 0px 0px 10px rgba(0,0,0,0.5);
+            max-width: 900px;
+            line-height: 1.2;
+        }
+
+        .hero .lead {
+            font-weight: 500;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
         }
 
         /* --- SECCIONES --- */
@@ -185,7 +182,7 @@
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 15px;
-            border-left: 5px solid var(--accent);
+            border-left: 5px solid var(--white);
             transition: 0.3s;
         }
 
@@ -199,7 +196,6 @@
             background: var(--dark-color);
             color: white;
             padding: 60px 0 20px;
-            margin-top: 50px;
         }
 
         .socials a {
@@ -211,16 +207,9 @@
 
         .socials a:hover { color: var(--primary-color); }
 
-        /* Animación para el menú móvil */
         @media (max-width: 991px) {
-            .navbar-collapse {
-                background: white;
-                padding: 20px;
-                border-radius: 15px;
-                margin-top: 10px;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-            .hero { margin-top: 100px; }
+            .hero h1 { font-size: 2rem; }
+            .hero { height: 70vh; padding-bottom: 40px; }
         }
     </style>
 </head>
@@ -263,38 +252,20 @@
                             </li>
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" href="Silla-vacia.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
+                                    <div class="menu-icon"><i class="fa-solid fa-chair"></i></div>
                                     <div>
                                         <span class="d-block fw-bold">Silla vacía</span>
-                                        <small class="text-muted">Tu derecho constitucional a participar con voz y voto en las decisiones del Concejo Municipal de Atacames.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Consejos rurales.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-people-roof"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Consejos Rurales</span>
-                                        <small class="text-muted">Líderes de recintos y sectores.</small>
+                                        <small class="text-muted">Voz y voto en el Concejo.</small>
                                     </div>
                                 </a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Actividades.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-calendar-days"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Actividades</span>
-                                        <small class="text-muted">Cronograma de eventos.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
                                 <a class="dropdown-item d-flex align-items-center" href="Noticias.html">
                                     <div class="menu-icon"><i class="fa-solid fa-newspaper"></i></div>
                                     <div>
                                         <span class="d-block fw-bold">Noticias</span>
-                                        <small class="text-muted">Difusión de información.</small>
+                                        <small class="text-muted">Actualidad del cantón.</small>
                                     </div>
                                 </a>
                             </li>
@@ -310,7 +281,7 @@
 
     <header class="hero">
         <div class="container">
-            <h1 class="animate__animated animate__fadeInDown">ASAMBLEA CANTONAL DE PARTICIPACIÓN CIUDADANA DE ATACAMES</h1>
+            <h1 class="animate__animated animate__fadeInUp">ASAMBLEA CANTONAL DE PARTICIPACIÓN CIUDADANA DE ATACAMES</h1>
             <p class="lead text-white">Juntos trabajamos por el desarrollo de Atacames.</p>
         </div>
     </header>
@@ -322,14 +293,14 @@
                     <div class="card-identity text-center shadow-sm">
                         <i class="fa-solid fa-bullseye"></i>
                         <h3>Misión</h3>
-                        <p>Promover y garantizar el ejercicio de los derechos de participación ciudadana de los habitantes del cantón Atacames, a través de la gestión de la articulación de las demandas sociales de los habitantes del cantón con los representantes de los Gobiernos parroquiales, cantonales y demas identidades públicas.</p>
+                        <p>Promover y garantizar el ejercicio de los derechos de participación ciudadana de los habitantes del cantón Atacames, a través de la gestión de la articulación de las demandas sociales.</p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card-identity text-center shadow-sm">
                         <i class="fa-solid fa-eye"></i>
                         <h3>Visión</h3>
-                        <p>Ser el referente provincial y nacional de participación ciudadana a través de la articulación de las demandas sociales con la gestión pública, consolidando una sociedad atacameña activa, organizada y corresponsable en la toma de decisiones para el desarrollo de su cantón.</p>
+                        <p>Ser el referente provincial y nacional de participación ciudadana, consolidando una sociedad atacameña activa, organizada y corresponsable.</p>
                     </div>
                 </div>
             </div>
@@ -345,33 +316,20 @@
                         <p class="fs-5">Fortalecer el sistema de participación ciudadana mediante la activación de mecanismos que permitan a la ciudadanía incidir activamente en las políticas públicas locales.</p>
                     </div>
                     <div class="col-lg-7">
-    <h3 class="h4 mb-4 fw-bold text-white">Objetivos Específicos</h3>
-    
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>1.</strong> Fomentar la Formación de líderes sociales y comunitarios a través de capacitaciones en liderazgo moral y desarrollo comunitario y participación ciudadana.</span>
-    </div>
-
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>2.</strong> Vigilar la Gestión administrativa pública local a través de la implementación procesos de veeduría ciudadana para asegurar la transparencia en la administración pública.</span>
-    </div>
-
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>3.</strong> Priorizar el Gasto del presupuesto público local a través de la participación de los líderes barriales, rurales y de la asamblea de participación ciudadana en las mesas de trabajo y reuniones de planificación y elaboración del presupuesto participativo anual de GAD Cantonal.</span>
-    </div>
-
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>4.</strong> Participar activamente en las reuniones de preparación y ejecución de la rendición de cuenta anual de las autoridades parroquiales, cantonales y demas entidades públicas del cantón.</span>
-    </div>
-
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>5.</strong> Coordinar con los líderes barriales y rurales las gestiones necesarias para la atención de las autoridades a sus necesidades comunitarias y organizaciones sociales.</span>
-    </div>
-</div>
+                        <h3 class="h4 mb-4 fw-bold text-white">Ejes de Acción</h3>
+                        <div class="obj-item d-flex align-items-start text-white">
+                            <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+                            <span>Fomentar la formación de líderes sociales y comunitarios.</span>
+                        </div>
+                        <div class="obj-item d-flex align-items-start text-white">
+                            <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+                            <span>Vigilar la gestión administrativa pública local (Veedurías).</span>
+                        </div>
+                        <div class="obj-item d-flex align-items-start text-white">
+                            <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+                            <span>Participar en la elaboración del presupuesto participativo anual.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -387,7 +345,7 @@
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#"><i class="fa-brands fa-twitter"></i></a>
             </div>
-            <p class="opacity-50 small">&copy; <span id="year"></span> GAD Municipal de Atacames. Todos los derechos reservados.</p>
+            <p class="opacity-50 small">© <span id="year"></span> GAD Municipal de Atacames. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -395,7 +353,6 @@
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // LÓGICA DE SCROLL PARA NAVBAR
         const navbar = document.getElementById('mainNavbar');
         window.onscroll = () => {
             if (window.scrollY > 50) {
@@ -404,14 +361,6 @@
                 navbar.classList.remove('navbar-scrolled');
             }
         };
-
-        // Cerrar menú al hacer clic en un enlace (móvil)
-        const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
-        const menuToggle = document.getElementById('navbarNav');
-        const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle:false});
-        navLinks.forEach((l) => {
-            l.addEventListener('click', () => { if(window.innerWidth < 992) { bsCollapse.hide(); } });
-        });
     </script>
 </body>
 </html>
