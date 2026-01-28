@@ -171,47 +171,21 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="Index.html">
-                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="65" alt="GAD Atacames">
+                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="60" alt="GAD Atacames">
             </a>
-            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                            Participación
-                        </a>
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">Participación</a>
                         <ul class="dropdown-menu animate__animated animate__fadeIn">
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Asamblea-cantonal.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-people-group"></i></div>
-                                    <div><span class="d-block fw-bold">Asamblea Cantonal</span><small class="text-muted">Espacio máximo de concertación.</small></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Consejos barriales.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
-                                    <div><span class="d-block fw-bold">Consejos Barriales</span><small class="text-muted">Gestión en zonas urbanas.</small></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Silla-vacia.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-chair"></i></div>
-                                    <div><span class="d-block fw-bold">Silla vacía</span><small class="text-muted">Derecho constitucional.</small></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Consejos rurales.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-people-roof"></i></div>
-                                    <div><span class="d-block fw-bold">Consejos Rurales</span><small class="text-muted">Líderes de recintos.</small></div>
-                                </a>
-                            </li>
+                            <li><a class="dropdown-item fw-bold" href="#">Asamblea Cantonal</a></li>
+                            <li><a class="dropdown-item fw-bold" href="#">Consejos Barriales</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link fw-bold" href="#nosotros">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="#">Nosotros</a></li>
                     <li class="nav-item">
                         <button class="nav-link btn-login ms-lg-3" data-bs-toggle="modal" data-bs-target="#adminModal">Admin</button>
                     </li>
@@ -220,66 +194,68 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="adminModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-lock me-2"></i> Acceso Restringido</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <p class="text-muted">Por favor, ingrese la clave de administrador para continuar.</p>
-                    <div class="mb-3">
-                        <input type="password" id="adminKey" class="form-control form-control-lg" placeholder="Contraseña">
-                    </div>
-                    <div id="loginError" class="text-danger small mb-3 d-none">Clave incorrecta. Intente de nuevo.</div>
-                    <button type="button" class="btn btn-primary w-100 rounded-pill py-2 fw-bold" onclick="verificarClave()">Acceder al Panel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <header class="hero-section text-center">
         <div class="container">
-            <h1 class="display-4 fw-800">Asamblea de Participación Ciudadana</h1>
-            <p class="lead">Conoce a tus representantes del periodo 2024 - 2027</p>
+            <h1 class="display-4 fw-bold">Asamblea de Participación Ciudadana</h1>
+            <p class="lead opacity-75">Conoce a tus representantes del periodo 2024 - 2027</p>
         </div>
     </header>
 
     <main class="container mb-5">
         <div class="row justify-content-center mb-5">
             <div class="col-md-6">
-                <input type="text" id="searchInput" class="form-control form-control-lg rounded-pill shadow-sm border-0 px-4" placeholder="Buscar por nombre, sector o cargo..." onkeyup="filtrarAsambleistas()">
+                <div class="input-group shadow-sm rounded-pill overflow-hidden">
+                    <span class="input-group-text border-0 bg-white ps-4"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                    <input type="text" id="searchInput" class="form-control border-0 py-3" placeholder="Buscar por nombre, sector o cargo..." onkeyup="filtrarAsambleistas()">
+                </div>
             </div>
         </div>
+
         <div class="row g-4" id="contenedorAsambleistas">
             </div>
     </main>
 
+    <div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header border-0 bg-light">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 pt-0 text-center" id="detalleCuerpo">
+                    </div>
+                <div class="modal-footer border-0 justify-content-center pb-4">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar Perfil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="adminModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-lock me-2"></i> Acceso Admin</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="password" id="adminKey" class="form-control form-control-lg mb-3" placeholder="Contraseña">
+                    <div id="loginError" class="text-danger small mb-3 d-none">Clave incorrecta.</div>
+                    <button class="btn btn-primary w-100 py-2 fw-bold" onclick="verificarClave()">Ingresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // CONFIGURACIÓN DE ACCESO
-        function verificarClave() {
-            const claveIngresada = document.getElementById('adminKey').value;
-            const CLAVE_CORRECTA = "Admin2024"; // <--- CAMBIA TU CLAVE AQUÍ
-            const errorMsg = document.getElementById('loginError');
-
-            if (claveIngresada === CLAVE_CORRECTA) {
-                window.location.href = "Asambleistas-admin.html";
-            } else {
-                errorMsg.classList.remove('d-none');
-                document.getElementById('adminKey').value = "";
-            }
-        }
-
-        // LÓGICA DE CARGA DE DATOS
         const API_URL = "https://backend-asamblea-atacames.onrender.com/api/asambleistas";
         let listaOriginal = [];
 
         const mapaOrden = {
             "presidenta": 1, "presidente": 1, "vicepresidenta": 2, "vicepresidente": 2,
             "secretaria": 3, "secretario": 3, "tesorera": 4, "tesorero": 4,
-            "primer vocal": 5, "segundo vocal": 6, "tercer vocal": 7, "cuarto vocal": 8, "quinto vocal": 9
+            "primer vocal": 5, "segundo vocal": 6, "tercer vocal": 7
         };
 
         async function cargarDatos() {
@@ -292,36 +268,85 @@
                     return ordenA - ordenB;
                 });
                 renderizarCards(listaOriginal);
-            } catch (error) { console.error("Error:", error); }
+            } catch (error) {
+                console.error("Error cargando datos:", error);
+            }
         }
 
         function renderizarCards(asambleistas) {
             const contenedor = document.getElementById("contenedorAsambleistas");
             contenedor.innerHTML = asambleistas.map(a => `
                 <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp">
-                    <div class="member-card shadow-sm">
+                    <div class="member-card shadow-sm" onclick='mostrarDetalle(${JSON.stringify(a)})'>
                         <div class="avatar-container">
-                            ${a.fotoUrl ? `<img src="${a.fotoUrl}" class="member-img">` : `<div class="no-img-icon"><i class="fa-solid fa-user"></i></div>`}
+                            ${a.fotoUrl ? `<img src="${a.fotoUrl}" class="member-img shadow-sm">` : `<div class="no-img-icon"><i class="fa-solid fa-user"></i></div>`}
                         </div>
                         <span class="status-pill text-uppercase">Vigente</span>
-                        <h4 class="fw-800 mt-2 mb-1">${a.nombre}</h4>
+                        <h4 class="fw-bold mt-2 mb-1">${a.nombre}</h4>
                         <p class="text-primary fw-600 mb-3">${a.cargo || 'Asambleísta'}</p>
                         <div class="pt-3 border-top d-flex justify-content-between text-muted small">
                             <span><i class="fa-solid fa-location-dot me-1"></i> ${a.sector}</span>
-                            <span class="fw-bold">ID: ${a._id.slice(-4).toUpperCase()}</span>
+                            <span class="fw-bold text-primary">Ver más <i class="fa-solid fa-chevron-right ms-1"></i></span>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
+        function mostrarDetalle(asambleista) {
+            const cuerpo = document.getElementById("detalleCuerpo");
+            cuerpo.innerHTML = `
+                <div class="text-center">
+                    ${asambleista.fotoUrl ? 
+                        `<img src="${asambleista.fotoUrl}" class="modal-profile-img">` : 
+                        `<div class="no-img-icon mx-auto modal-profile-img"><i class="fa-solid fa-user"></i></div>`
+                    }
+                    <h3 class="fw-bold mt-3 mb-1">${asambleista.nombre}</h3>
+                    <span class="badge bg-primary-subtle text-primary rounded-pill mb-4 px-3">${asambleista.cargo || 'Miembro'}</span>
+                </div>
+                
+                <div class="text-start">
+                    <div class="info-row">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <div>
+                            <small class="text-muted d-block">Sector / Jurisdicción</small>
+                            <span class="fw-bold">${asambleista.sector}</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <i class="fa-solid fa-id-card"></i>
+                        <div>
+                            <small class="text-muted d-block">Código de Registro</small>
+                            <span class="fw-bold text-uppercase">${asambleista._id.slice(-8)}</span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <i class="fa-solid fa-calendar"></i>
+                        <div>
+                            <small class="text-muted d-block">Periodo de Gestión</small>
+                            <span class="fw-bold">2024 - 2027</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('detalleModal'));
+            modal.show();
+        }
+
         function filtrarAsambleistas() {
-            const query = document.getElementById("searchInput").value.toLowerCase();
+            const q = document.getElementById("searchInput").value.toLowerCase();
             renderizarCards(listaOriginal.filter(a => 
-                a.nombre.toLowerCase().includes(query) || 
-                a.sector.toLowerCase().includes(query) ||
-                (a.cargo && a.cargo.toLowerCase().includes(query))
+                a.nombre.toLowerCase().includes(q) || 
+                a.sector.toLowerCase().includes(q) || 
+                (a.cargo && a.cargo.toLowerCase().includes(q))
             ));
+        }
+
+        function verificarClave() {
+            const pass = document.getElementById('adminKey').value;
+            if (pass === "Admin2024") window.location.href = "Asambleistas-admin.html";
+            else document.getElementById('loginError').classList.remove('d-none');
         }
 
         cargarDatos();
