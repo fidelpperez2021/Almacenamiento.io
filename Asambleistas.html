@@ -14,6 +14,7 @@
         :root {
             --primary-gradient: linear-gradient(135deg, #0097e6 0%, #0052d4 100%);
             --glass-bg: rgba(255, 255, 255, 0.95);
+            --accent-color: #0097e6;
         }
 
         body {
@@ -24,7 +25,7 @@
             padding-top: 90px;
         }
 
-        /* --- NAVBAR Y DROPDOWN --- */
+        /* --- NAVBAR --- */
         .navbar {
             background: var(--glass-bg) !important;
             backdrop-filter: blur(10px);
@@ -44,20 +45,6 @@
             padding: 12px;
             border-radius: 10px;
             transition: 0.3s;
-            white-space: normal;
-        }
-
-        .dropdown-item:hover {
-            background-color: #f8f9fa;
-            transform: translateX(5px);
-        }
-
-        .menu-icon {
-            width: 40px; height: 40px;
-            background: #e1f5fe; color: #0097e6;
-            border-radius: 10px; display: flex;
-            align-items: center; justify-content: center;
-            margin-right: 15px; font-size: 1.2rem;
         }
 
         .btn-login {
@@ -69,7 +56,7 @@
             border: none;
         }
 
-        /* --- CARDS Y HERO --- */
+        /* --- HERO --- */
         .hero-section {
             padding: 80px 0 60px;
             background: var(--primary-gradient);
@@ -78,40 +65,105 @@
             margin-bottom: 50px;
         }
 
-        .avatar-container {
-            width: 150px; height: 150px;
-            margin: 0 auto 20px;
+        /* --- CARDS ASAMBLEISTAS --- */
+        .member-card {
+            background: white;
+            border: none;
+            border-radius: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            padding: 30px;
+            height: 100%;
+            cursor: pointer;
             position: relative;
+            overflow: hidden;
+        }
+
+        .member-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .avatar-container {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
         }
 
         .member-img {
-            width: 100%; height: 100%;
-            object-fit: cover; border-radius: 50%;
-            border: 6px solid white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #f0f2f5;
+            transition: 0.3s;
+        }
+
+        .member-card:hover .member-img {
+            border-color: var(--accent-color);
         }
 
         .no-img-icon {
-            width: 100%; height: 100%;
-            border-radius: 50%; background: #f8f9fa;
-            display: flex; align-items: center; justify-content: center;
-            color: #dee2e6; font-size: 4rem;
-            border: 6px solid white;
-        }
-
-        .member-card {
-            background: white; border: none;
-            border-radius: 30px; transition: 0.4s;
-            text-align: center; padding: 30px;
+            width: 100%;
             height: 100%;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dee2e6;
+            font-size: 3.5rem;
+            border: 5px solid #eee;
         }
 
-        .member-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .status-pill { font-size: 0.7rem; font-weight: 800; color: #2ecc71; letter-spacing: 1px; }
+        .status-pill {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #2ecc71;
+            letter-spacing: 1px;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
 
-        /* Estilo para el Modal de Acceso */
-        .modal-content { border-radius: 20px; border: none; overflow: hidden; }
-        .modal-header { background: var(--primary-gradient); color: white; border: none; }
+        /* --- MODAL DE DETALLES --- */
+        .modal-content {
+            border-radius: 25px;
+            border: none;
+        }
+
+        .modal-profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            margin-top: -60px;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .info-row {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-row i {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--accent-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
     </style>
 </head>
 <body>
