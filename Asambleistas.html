@@ -13,8 +13,10 @@
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #0097e6 0%, #0052d4 100%);
-            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.98);
             --accent-color: #0097e6;
+            --dark-color: #2f3640;
+            --dropdown-hover: #f1f9ff;
         }
 
         body {
@@ -22,15 +24,38 @@
             background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
             background-size: 30px 30px;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            padding-top: 90px;
+            padding-top: 130px; /* Espacio para el logo grande */
+            transition: padding 0.4s;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR DINÁMICA (Logo Grande a Pequeño) --- */
         .navbar {
             background: var(--glass-bg) !important;
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0,0,0,0.08);
-            padding: 12px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 15px 0;
+        }
+
+        .navbar-scrolled {
+            padding: 5px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand img {
+            max-height: 110px; /* Tamaño grande inicial igual al Index */
+            transition: all 0.4s ease;
+        }
+
+        .navbar-scrolled .navbar-brand img {
+            max-height: 60px; /* Tamaño reducido al hacer scroll */
+        }
+
+        /* --- MENÚ Y DROPDOWN ESTILO MEJORADO --- */
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 600;
+            margin: 0 10px;
         }
 
         .dropdown-menu {
@@ -38,13 +63,40 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             border-radius: 15px;
             padding: 15px;
-            min-width: 320px;
+            min-width: 280px;
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
         .dropdown-item {
-            padding: 12px;
+            padding: 10px 15px;
             border-radius: 10px;
+            display: flex;
+            align-items: center;
             transition: 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--dropdown-hover);
+            transform: translateX(8px);
+        }
+
+        .menu-icon {
+            width: 35px; height: 35px;
+            background: rgba(0, 151, 230, 0.1);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 12px;
+            color: var(--accent-color);
         }
 
         .btn-login {
@@ -54,7 +106,10 @@
             padding: 8px 25px !important;
             font-weight: 600;
             border: none;
+            transition: 0.3s;
         }
+
+        .btn-login:hover { transform: scale(1.05); opacity: 0.9; }
 
         /* --- HERO --- */
         .hero-section {
@@ -91,8 +146,7 @@
         }
 
         .member-img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
             border-radius: 50%;
             border: 5px solid #f0f2f5;
@@ -101,19 +155,6 @@
 
         .member-card:hover .member-img {
             border-color: var(--accent-color);
-        }
-
-        .no-img-icon {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #dee2e6;
-            font-size: 3.5rem;
-            border: 5px solid #eee;
         }
 
         .status-pill {
@@ -126,15 +167,9 @@
             border-radius: 20px;
         }
 
-        /* --- MODAL DE DETALLES --- */
-        .modal-content {
-            border-radius: 25px;
-            border: none;
-        }
-
+        /* --- MODAL DETALLES --- */
         .modal-profile-img {
-            width: 120px;
-            height: 120px;
+            width: 120px; height: 120px;
             object-fit: cover;
             border-radius: 50%;
             border: 4px solid var(--accent-color);
@@ -153,42 +188,46 @@
         }
 
         .info-row i {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             background: white;
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             margin-right: 15px;
             color: var(--accent-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
         <div class="container">
             <a class="navbar-brand" href="Index.html">
-                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="60" alt="GAD Atacames">
+                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" alt="GAD Atacames">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="Index.html">Inicio</a></li>
+                    
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">Participación</a>
-                        <ul class="dropdown-menu animate__animated animate__fadeIn">
-                            <li><a class="dropdown-item fw-bold" href="Index.html">Inicio</a></li>
-                            <li><a class="dropdown-item fw-bold" href="Consejos barriales.html">Consejos Barriales</a></li>
-                            <li><a class="dropdown-item fw-bold" href="Consejos rurales.html">Consejos Rurales</a></li>
+                        <a class="nav-link dropdown-toggle" href="#" role="button">Participación</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="Asamblea-cantonal.html">
+                                <div class="menu-icon"><i class="fa-solid fa-users"></i></div>
+                                <div><span class="d-block fw-bold">Asamblea Cantonal</span></div>
+                            </a></li>
+                            <li><a class="dropdown-item" href="Consejos barriales.html">
+                                <div class="menu-icon"><i class="fa-solid fa-house-chimney"></i></div>
+                                <div><span class="d-block fw-bold">Consejos Barriales</span></div>
+                            </a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link fw-bold" href="#">Nosotros</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="Noticias.html">Noticias</a></li>
                     <li class="nav-item">
-                        <button class="nav-link btn-login ms-lg-3" data-bs-toggle="modal" data-bs-target="#adminModal">Admin</button>
+                        <button class="btn-login ms-lg-3" data-bs-toggle="modal" data-bs-target="#adminModal">Admin</button>
                     </li>
                 </ul>
             </div>
@@ -197,7 +236,7 @@
 
     <header class="hero-section text-center">
         <div class="container">
-            <h1 class="display-4 fw-bold">Asamblea de Participación Ciudadana</h1>
+            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">Asamblea de Participación Ciudadana</h1>
             <p class="lead opacity-75">Conoce a tus representantes del periodo 2024 - 2027</p>
         </div>
     </header>
@@ -213,17 +252,19 @@
         </div>
 
         <div class="row g-4" id="contenedorAsambleistas">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary"></div>
             </div>
+        </div>
     </main>
 
     <div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow-lg">
                 <div class="modal-header border-0 bg-light">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4 pt-0 text-center" id="detalleCuerpo">
-                    </div>
+                <div class="modal-body p-4 pt-0 text-center" id="detalleCuerpo"></div>
                 <div class="modal-footer border-0 justify-content-center pb-4">
                     <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar Perfil</button>
                 </div>
@@ -253,10 +294,19 @@
         const API_URL = "https://backend-asamblea-atacames.onrender.com/api/asambleistas";
         let listaOriginal = [];
 
+        // EFECTO SCROLL NAVBAR
+        const navbar = document.getElementById('mainNavbar');
+        window.onscroll = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        };
+
         const mapaOrden = {
             "presidenta": 1, "presidente": 1, "vicepresidenta": 2, "vicepresidente": 2,
-            "secretaria": 3, "secretario": 3, "tesorera": 4, "tesorero": 4,
-            "primer vocal": 5, "segundo vocal": 6, "tercer vocal": 7
+            "secretaria": 3, "secretario": 3, "tesorera": 4, "tesorero": 4
         };
 
         async function cargarDatos() {
@@ -270,7 +320,7 @@
                 });
                 renderizarCards(listaOriginal);
             } catch (error) {
-                console.error("Error cargando datos:", error);
+                document.getElementById("contenedorAsambleistas").innerHTML = "<p class='text-center'>Error al cargar datos.</p>";
             }
         }
 
@@ -278,61 +328,36 @@
             const contenedor = document.getElementById("contenedorAsambleistas");
             contenedor.innerHTML = asambleistas.map(a => `
                 <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp">
-                    <div class="member-card shadow-sm" onclick='mostrarDetalle(${JSON.stringify(a)})'>
+                    <div class="member-card shadow-sm" onclick='abrirDetalle(${JSON.stringify(a).replace(/'/g, "&apos;")})'>
                         <div class="avatar-container">
-                            ${a.fotoUrl ? `<img src="${a.fotoUrl}" class="member-img shadow-sm">` : `<div class="no-img-icon"><i class="fa-solid fa-user"></i></div>`}
+                            ${a.fotoUrl ? `<img src="${a.fotoUrl}" class="member-img shadow-sm">` : `<div class="no-img-icon" style="height:100%; border-radius:50%; background:#eee; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;"><i class="fa-solid fa-user"></i></div>`}
                         </div>
                         <span class="status-pill text-uppercase">Vigente</span>
                         <h4 class="fw-bold mt-2 mb-1">${a.nombre}</h4>
                         <p class="text-primary fw-600 mb-3">${a.cargo || 'Asambleísta'}</p>
                         <div class="pt-3 border-top d-flex justify-content-between text-muted small">
                             <span><i class="fa-solid fa-location-dot me-1"></i> ${a.sector}</span>
-                            <span class="fw-bold text-primary">Ver más <i class="fa-solid fa-chevron-right ms-1"></i></span>
+                            <span class="fw-bold text-primary">Ver perfil <i class="fa-solid fa-chevron-right ms-1"></i></span>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function mostrarDetalle(asambleista) {
+        function abrirDetalle(a) {
             const cuerpo = document.getElementById("detalleCuerpo");
             cuerpo.innerHTML = `
                 <div class="text-center">
-                    ${asambleista.fotoUrl ? 
-                        `<img src="${asambleista.fotoUrl}" class="modal-profile-img">` : 
-                        `<div class="no-img-icon mx-auto modal-profile-img"><i class="fa-solid fa-user"></i></div>`
-                    }
-                    <h3 class="fw-bold mt-3 mb-1">${asambleista.nombre}</h3>
-                    <span class="badge bg-primary-subtle text-primary rounded-pill mb-4 px-3">${asambleista.cargo || 'Miembro'}</span>
+                    ${a.fotoUrl ? `<img src="${a.fotoUrl}" class="modal-profile-img">` : `<div class="modal-profile-img mx-auto d-flex align-items-center justify-content-center" style="background:#eee; font-size:3rem; color:#ccc;"><i class="fa-solid fa-user"></i></div>`}
+                    <h3 class="fw-bold mt-3 mb-1">${a.nombre}</h3>
+                    <span class="badge bg-primary-subtle text-primary rounded-pill mb-4 px-3">${a.cargo || 'Miembro'}</span>
                 </div>
-                
                 <div class="text-start">
-                    <div class="info-row">
-                        <i class="fa-solid fa-map-pin"></i>
-                        <div>
-                            <small class="text-muted d-block">Sector / Jurisdicción</small>
-                            <span class="fw-bold">${asambleista.sector}</span>
-                        </div>
-                    </div>
-                    <div class="info-row">
-                        <i class="fa-solid fa-id-card"></i>
-                        <div>
-                            <small class="text-muted d-block">Código de Registro</small>
-                            <span class="fw-bold text-uppercase">${asambleista._id.slice(-8)}</span>
-                        </div>
-                    </div>
-                    <div class="info-row">
-                        <i class="fa-solid fa-calendar"></i>
-                        <div>
-                            <small class="text-muted d-block">Periodo de Gestión</small>
-                            <span class="fw-bold">2024 - 2027</span>
-                        </div>
-                    </div>
+                    <div class="info-row"><i class="fa-solid fa-map-pin"></i><div><small class="text-muted d-block">Jurisdicción</small><span class="fw-bold">${a.sector}</span></div></div>
+                    <div class="info-row"><i class="fa-solid fa-calendar"></i><div><small class="text-muted d-block">Periodo</small><span class="fw-bold">2024 - 2027</span></div></div>
                 </div>
             `;
-            
-            const modal = new bootstrap.Modal(document.getElementById('detalleModal'));
-            modal.show();
+            new bootstrap.Modal(document.getElementById('detalleModal')).show();
         }
 
         function filtrarAsambleistas() {
