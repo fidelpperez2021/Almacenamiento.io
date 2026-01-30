@@ -11,6 +11,7 @@
             --primary: #0097e6;
             --success: #44bd32;
             --danger: #e84118;
+            --warning: #fbc531;
             --dark: #2f3640;
             --bg: #f5f6fa;
         }
@@ -24,10 +25,9 @@
         .full-width { grid-column: span 2; }
         
         input, select, textarea {
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-top: 5px;
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-top: 5px; box-sizing: border-box;
         }
 
-        /* Estilos para los campos de URL dinámicos */
         .url-input-group {
             display: flex;
             gap: 10px;
@@ -42,7 +42,10 @@
         
         .btn-add-url { background: var(--dark); font-size: 0.8rem; margin-top: 10px; }
         .btn-save { background: var(--success); width: 100%; margin-top: 20px; justify-content: center; }
+        .btn-update { background: var(--warning); color: #2f3640; width: 100%; margin-top: 20px; justify-content: center; }
         .btn-delete { background: var(--danger); padding: 8px 12px; }
+        .btn-edit { background: var(--primary); padding: 8px 12px; margin-right: 5px; }
+        .btn-cancel { background: #95a5a6; width: 100%; margin-top: 10px; justify-content: center; }
 
         table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
         th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
@@ -58,8 +61,10 @@
 
 <div class="container">
     <div class="card">
-        <h2><i class="fa-solid fa-calendar-plus"></i> Gestionar Nueva Actividad</h2>
+        <h2 id="form-title"><i class="fa-solid fa-calendar-plus"></i> Gestionar Nueva Actividad</h2>
         <form id="actividadForm">
+            <input type="hidden" id="actividadId">
+
             <div class="form-grid">
                 <div class="full-width">
                     <label>Título de la Actividad</label>
@@ -103,8 +108,11 @@
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-save">
-                <i class="fa-solid fa-floppy-disk"></i> Guardar Actividad en el Cronograma
+            <button type="submit" id="btn-submit" class="btn btn-save">
+                <i class="fa-solid fa-floppy-disk"></i> <span id="btn-text">Guardar Actividad</span>
+            </button>
+            <button type="button" id="btn-cancel" class="btn btn-cancel" style="display: none;" onclick="cancelarEdicion()">
+                Cancelar Edición
             </button>
         </form>
     </div>
@@ -122,8 +130,7 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="tablaActividades">
-                    </tbody>
+                <tbody id="tablaActividades"></tbody>
             </table>
         </div>
     </div>
@@ -131,9 +138,9 @@
 
 <script>
     const API_URL = "https://backend-asamblea-atacames.onrender.com/api/actividades";
+    let listaActividadesCache = []; // Para buscar datos al editar sin llamar a la API
 
-    // AGREGAR CAMPOS DE URL DINÁMICAMENTE
-    function agregarCampoUrl() {
+    function agregarCampoUrl(valor = "") {
         const container = document.getElementById('urlContainer');
         const inputs = container.getElementsByClassName('foto-url-input');
         
@@ -141,69 +148,32 @@
             const div = document.createElement('div');
             div.className = 'url-input-group';
             div.innerHTML = `
-                <input type="url" class="foto-url-input" placeholder="https://imagen-ejemplo.com/foto${inputs.length + 1}.jpg">
+                <input type="url" class="foto-url-input" value="${valor}" placeholder="https://imagen-ejemplo.com/foto${inputs.length + 1}.jpg">
                 <button type="button" onclick="this.parentElement.remove()" style="background:none; border:none; color:red; cursor:pointer">
                     <i class="fa-solid fa-circle-xmark"></i>
                 </button>
             `;
             container.appendChild(div);
-        } else {
-            alert("Has alcanzado el límite de 20 imágenes.");
         }
     }
-
-    // CREAR ACTIVIDAD (POST)
-    document.getElementById('actividadForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Recolectar URLs de los inputs
-        const inputsUrl = document.querySelectorAll('.foto-url-input');
-        const listaUrls = Array.from(inputsUrl)
-                               .map(input => input.value.trim())
-                               .filter(val => val !== "");
-
-        const datos = {
-            titulo: document.getElementById('titulo').value,
-            categoria: document.getElementById('categoria').value,
-            fecha: document.getElementById('fecha').value,
-            hora: document.getElementById('hora').value,
-            lugar: document.getElementById('lugar').value,
-            descripcion: document.getElementById('descripcion').value,
-            imagenes: listaUrls // Array de strings
-        };
-
-        try {
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(datos)
-            });
-            
-            if(res.ok) {
-                alert("✅ Actividad guardada con éxito");
-                location.reload();
-            } else {
-                alert("❌ Error al guardar la actividad");
-            }
-        } catch (err) {
-            alert("❌ No se pudo conectar con el servidor");
-        }
-    });
 
     // CARGAR TABLA (GET)
     async function cargarActividades() {
         try {
             const res = await fetch(API_URL);
-            const data = await res.json();
+            listaActividadesCache = await res.json();
             const tabla = document.getElementById('tablaActividades');
             
-            tabla.innerHTML = data.map(act => `
+            tabla.innerHTML = listaActividadesCache.map(act => `
                 <tr>
                     <td>${new Date(act.fecha).toLocaleDateString()}</td>
                     <td><strong>${act.titulo}</strong></td>
                     <td><span class="badge badge-${act.categoria}">${act.categoria}</span></td>
                     <td><i class="fa-solid fa-images"></i> ${act.imagenes ? act.imagenes.length : 0}</td>
                     <td>
+                        <button onclick="prepararEdicion('${act._id}')" class="btn btn-edit">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
                         <button onclick="eliminarActividad('${act._id}')" class="btn btn-delete">
                             <i class="fa-solid fa-trash"></i>
                         </button>
@@ -215,25 +185,103 @@
         }
     }
 
-    // ELIMINAR ACTIVIDAD (DELETE)
-    async function eliminarActividad(id) {
-        if (!confirm("¿Estás seguro de que deseas eliminar esta actividad?")) return;
+    // PREPARAR FORMULARIO PARA EDITAR
+    function prepararEdicion(id) {
+        const act = listaActividadesCache.find(a => a._id === id);
+        if(!act) return;
+
+        // Llenar campos simples
+        document.getElementById('actividadId').value = act._id;
+        document.getElementById('titulo').value = act.titulo;
+        document.getElementById('categoria').value = act.categoria;
+        document.getElementById('fecha').value = act.fecha.split('T')[0]; // Formato YYYY-MM-DD
+        document.getElementById('hora').value = act.hora || "";
+        document.getElementById('lugar').value = act.lugar || "";
+        document.getElementById('descripcion').value = act.descripcion || "";
+
+        // Llenar URLs
+        const container = document.getElementById('urlContainer');
+        container.innerHTML = ""; // Limpiar
+        if (act.imagenes && act.imagenes.length > 0) {
+            act.imagenes.forEach(url => agregarCampoUrl(url));
+        } else {
+            agregarCampoUrl();
+        }
+
+        // Cambiar interfaz
+        document.getElementById('form-title').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editando Actividad';
+        document.getElementById('btn-text').innerText = "Actualizar Cambios";
+        document.getElementById('btn-submit').className = "btn btn-update";
+        document.getElementById('btn-cancel').style.display = "inline-flex";
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelarEdicion() {
+        document.getElementById('actividadForm').reset();
+        document.getElementById('actividadId').value = "";
+        document.getElementById('urlContainer').innerHTML = '<div class="url-input-group"><input type="url" class="foto-url-input" placeholder="https://..."></div>';
+        
+        document.getElementById('form-title').innerHTML = '<i class="fa-solid fa-calendar-plus"></i> Gestionar Nueva Actividad';
+        document.getElementById('btn-text').innerText = "Guardar Actividad";
+        document.getElementById('btn-submit').className = "btn btn-save";
+        document.getElementById('btn-cancel').style.display = "none";
+    }
+
+    // GUARDAR O ACTUALIZAR
+    document.getElementById('actividadForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('actividadId').value;
+        
+        const inputsUrl = document.querySelectorAll('.foto-url-input');
+        const listaUrls = Array.from(inputsUrl).map(input => input.value.trim()).filter(val => val !== "");
+
+        const datos = {
+            titulo: document.getElementById('titulo').value,
+            categoria: document.getElementById('categoria').value,
+            fecha: document.getElementById('fecha').value,
+            hora: document.getElementById('hora').value,
+            lugar: document.getElementById('lugar').value,
+            descripcion: document.getElementById('descripcion').value,
+            imagenes: listaUrls
+        };
+
+        const metodo = id ? 'PUT' : 'POST';
+        const url = id ? `${API_URL}/${id}` : API_URL;
 
         try {
-            const res = await fetch(`${API_URL}/${id}`, {
-                method: 'DELETE'
+            const res = await fetch(url, {
+                method: metodo,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
             });
+            
+            if(res.ok) {
+                alert(id ? "✅ Actividad actualizada" : "✅ Actividad guardada");
+                cancelarEdicion();
+                cargarActividades();
+            } else {
+                alert("❌ Error al procesar la solicitud");
+            }
+        } catch (err) {
+            alert("❌ Error de conexión");
+        }
+    });
 
+    // ELIMINAR
+    async function eliminarActividad(id) {
+        if (!confirm("¿Eliminar actividad definitivamente?")) return;
+        try {
+            const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
             if (res.ok) {
-                alert("🗑️ Actividad eliminada correctamente");
+                alert("🗑️ Eliminada");
                 cargarActividades();
             }
         } catch (error) {
-            alert("Error al intentar eliminar el registro");
+            alert("Error al eliminar");
         }
     }
 
-    // Inicializar tabla al cargar
     cargarActividades();
 </script>
 
