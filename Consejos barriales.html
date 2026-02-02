@@ -1,280 +1,450 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consejos Barriales - Atacames</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consejos Barriales - Atacames (Consulta)</title>
 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <style>
-        :root {
-            --primary-color: #0097e6;
-            --secondary-color: #44bd32;
-            --dark-color: #2f3640;
-            --light-bg: #f8f9fc;
-            --white: #ffffff;
-            --accent: #e1b12c;
-            --primary-gradient: linear-gradient(135deg, #0097e6 0%, #0052d4 100%);
-        }
+  <style>
+    :root{
+      --primary:#0097e6;
+      --primary2:#0052d4;
+      --dark:#2f3640;
+      --bg:#f8f9fc;
+      --grad:linear-gradient(135deg,#0097e6 0%,#0052d4 100%);
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-bg);
-            color: #333;
-            padding-top: 80px;
-        }
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      color:#333;
+      padding-top:80px;
+    }
 
-        /* --- NAVBAR Y DROPDOWN --- */
-        .navbar { 
-            background: rgba(255, 255, 255, 0.98); 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08); 
-            padding: 10px 0; 
-        }
+    .navbar{
+      background:rgba(255,255,255,.98);
+      box-shadow:0 2px 15px rgba(0,0,0,.08);
+      padding:10px 0;
+      backdrop-filter: blur(8px);
+    }
 
-        .dropdown-menu {
-            border: none;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            border-radius: 15px;
-            padding: 15px;
-            min-width: 320px;
-        }
+    .page-header{
+      background:
+        linear-gradient(135deg, rgba(0,151,230,.92), rgba(47,54,64,.95)),
+        url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1350&q=80');
+      background-size:cover;
+      padding:120px 0 80px;
+      color:#fff;
+      text-align:center;
+      clip-path:ellipse(150% 100% at 50% 0%);
+    }
 
-        .dropdown-item {
-            padding: 12px;
-            border-radius: 10px;
-            transition: 0.3s;
-            white-space: normal;
-        }
+    .main-card{
+      background:#fff;
+      border-radius:20px;
+      box-shadow:0 15px 35px rgba(0,0,0,.05);
+      margin-top:-60px;
+      padding:24px;
+      margin-bottom:40px;
+    }
 
-        .dropdown-item:hover {
-            background-color: #f8f9fa;
-            transform: translateX(5px);
-        }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:50px;
+      border:1px solid rgba(0,0,0,.08);
+      background:#fff;
+    }
 
-        .menu-icon {
-            width: 40px;
-            height: 40px;
-            background: #e1f5fe;
-            color: #0097e6;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
+    .badge-status{
+      padding:6px 12px;
+      border-radius:50px;
+      font-weight:700;
+      font-size:.75rem;
+      letter-spacing:.2px;
+      display:inline-block;
+    }
+    .st-ACTIVO{ background:#dff9fb; color:#0984e3; }
+    .st-INACTIVO{ background:#ffeaea; color:#d63031; }
+    .st-EN_PROCESO{ background:#fff7df; color:#b8860b; }
 
-        .btn-login {
-            background: var(--primary-gradient);
-            color: white !important;
-            border-radius: 50px;
-            padding: 8px 25px !important;
-            font-weight: 600;
-        }
+    .table thead th{
+      font-weight:700;
+      font-size:.9rem;
+    }
 
-        /* --- HEADER --- */
-        .page-header {
-            background: linear-gradient(135deg, rgba(0, 151, 230, 0.9), rgba(47, 54, 64, 0.95)), 
-                        url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            padding: 120px 0 80px;
-            color: white;
-            text-align: center;
-            clip-path: ellipse(150% 100% at 50% 0%);
-        }
+    .empty-state{
+      text-align:center;
+      padding:40px 10px;
+      color:#777;
+    }
 
-        /* --- CONTENEDORES --- */
-        .main-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            margin-top: -60px;
-            padding: 30px;
-            margin-bottom: 40px;
-        }
+    .skeleton{
+      background:linear-gradient(90deg,#f0f0f0 25%,#e6e6e6 37%,#f0f0f0 63%);
+      background-size:400% 100%;
+      animation:shine 1.2s ease-in-out infinite;
+      border-radius:10px;
+      height:14px;
+    }
+    @keyframes shine{
+      0%{ background-position:100% 0 }
+      100%{ background-position:0 0 }
+    }
 
-        .custom-table tbody tr:hover { transform: scale(1.005); background: #fdfdfd; transition: 0.2s; }
-        .badge-status { padding: 6px 12px; border-radius: 50px; font-weight: 600; font-size: 0.75rem; }
-        .bg-active { background: #dff9fb; color: #0984e3; }
-
-        .neighborhood-gallery-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            height: 100%;
-        }
-        .img-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 2px; height: 200px; background: #eee;
-        }
-        .img-grid img { width: 100%; height: 100%; object-fit: cover; }
-        .img-grid .main-img { grid-row: span 2; }
-
-        footer { background: var(--dark-color); color: white; padding: 40px 0; margin-top: 50px; }
-    </style>
+    footer{
+      background:var(--dark);
+      color:#fff;
+      padding:40px 0;
+      margin-top:50px;
+    }
+  </style>
 </head>
+
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand logo" href="Index.html">
-                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" alt="Logo" height="60">
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+<img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="120" alt="Logo" />
+      </a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Participación
-                        </a>
-                        <ul class="dropdown-menu animate__animated animate__fadeIn">
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Asamblea-cantonal.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-people-group"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Asamblea Cantonal</span>
-                                        <small class="text-muted">Espacio máximo de concertación.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Consejos barriales.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Consejos Barriales</span>
-                                        <small class="text-muted">Gestión en zonas urbanas.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Silla-vacia.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-chair"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Silla vacía</span>
-                                        <small class="text-muted">Tu derecho constitucional a participar.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Consejos rurales.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-people-roof"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Consejos Rurales</span>
-                                        <small class="text-muted">Líderes de recintos y sectores.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Actividades.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-calendar-days"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Actividades</span>
-                                        <small class="text-muted">Cronograma de eventos.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Noticias.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-newspaper"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Noticias</span>
-                                        <small class="text-muted">Difusión de información.</small>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link fw-bold" href="#nosotros">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link btn-login ms-lg-3" href="#">Admin</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <header class="page-header">
-        <div class="container animate__animated animate__fadeIn">
-            <h1 class="fw-bold display-4">Consejos Barriales</h1>
-            <p class="lead">Transparencia y participación en cada rincón de Atacames.</p>
-        </div>
-    </header>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Inicio</a></li>
+          <li class="nav-item"><span class="nav-link fw-bold text-primary"><i class="fa-solid fa-eye me-2"></i>Consulta Pública</span></li>
+          <li class="nav-item">
+  <a class="nav-link fw-bold text-danger" href="Consejos%20barriales%20Admin.html">
+    <i class="fa-solid fa-shield-halved me-2"></i>Modo Administrador
+  </a>
+</li>
 
-    <main class="container">
-        <div class="main-card animate__animated animate__fadeInUp">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="fw-bold m-0"><i class="fa-solid fa-list-check me-2 text-primary"></i>Registros Actuales</h4>
-                <button class="btn btn-success rounded-pill px-4 fw-bold shadow-sm">
-                    <i class="fa-solid fa-plus me-2"></i>Nueva Directiva
-                </button>
-            </div>
-            
-            <div class="table-responsive">
-                <table class="table custom-table align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Barrio / Sector</th>
-                            <th>Ubicación</th>
-                            <th>Presidente</th>
-                            <th>Vigencia</th>
-                            <th>Estado</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="fw-bold">Nueva Granada</div><small class="text-muted">Sector Central</small></td>
-                            <td>Atacames</td>
-                            <td>Juan Pérez Ortiz</td>
-                            <td>2024 - 2026</td>
-                            <td><span class="badge-status bg-active">Vigente</span></td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary border-0"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn btn-sm btn-outline-danger border-0"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="container animate__animated animate__fadeIn">
+      <h1 class="fw-bold display-4">Consejos Barriales</h1>
+      <p class="lead m-0">Consulta pública (solo visualización)</p>
+      <div class="mt-3">
+        <span class="chip">
+          <i class="fa-solid fa-database text-primary"></i>
+          <span class="small">API: <span class="fw-bold" id="apiStatus">Conectando...</span></span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="main-card animate__animated animate__fadeInUp">
+
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3">
+        <div>
+          <h4 class="fw-bold m-0">
+            <i class="fa-solid fa-city me-2 text-primary"></i>Directorio Barrial
+          </h4>
+          <small class="text-muted">Busca consejos barriales por código, barrio o directiva.</small>
         </div>
 
-        <section class="mb-5">
-            <h3 class="fw-bold border-start border-primary border-4 ps-3 mb-4">Galería de Actividades</h3>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="neighborhood-gallery-card">
-                        <div class="img-grid">
-                            <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=400&q=80" class="main-img" alt="Actividad">
-                            <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&w=200&q=80" alt="Reunión">
-                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=200&q=80" alt="Minga">
-                        </div>
-                        <div class="p-3">
-                            <h5 class="fw-bold mb-1">Nueva Granada</h5>
-                            <p class="small text-muted mb-2"><i class="fa-solid fa-calendar-day me-1"></i>Minga de Limpieza</p>
-                            <button class="btn btn-sm btn-primary w-100 rounded-pill">Ver Álbum</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="text-center">
-        <div class="container">
-            <p class="m-0">&copy; 2026 Asamblea Cantonal de Atacames. Gobierno Autónomo Descentralizado.</p>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-primary rounded-pill px-4 fw-bold" onclick="obtenerConsejos(true)">
+            <i class="fa-solid fa-rotate me-2"></i>Actualizar
+          </button>
         </div>
-    </footer>
+      </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- FILTROS -->
+      <div class="row g-2 align-items-end mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Buscar</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input id="q" type="text" class="form-control" placeholder="Código, nombre, barrio o presidente..." />
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Parroquia</label>
+          <select id="fParroquia" class="form-select">
+            <option value="">Todas</option>
+            <option value="Atacames">Atacames</option>
+            <option value="Súa">Súa</option>
+            <option value="Tonsupa">Tonsupa</option>
+            <option value="Tonchigüe">Tonchigüe</option>
+            <option value="La Unión">La Unión</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Estado</label>
+          <select id="fEstado" class="form-select">
+            <option value="">Todos</option>
+            <option value="ACTIVO">ACTIVO</option>
+            <option value="EN_PROCESO">EN_PROCESO</option>
+            <option value="INACTIVO">INACTIVO</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABLA -->
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Código</th>
+              <th>Consejo</th>
+              <th>Presidente</th>
+              <th>Contacto</th>
+              <th>Estado</th>
+              <th class="text-center">Detalle</th>
+            </tr>
+          </thead>
+          <tbody id="listaConsejos"></tbody>
+        </table>
+      </div>
+
+      <div id="emptyState" class="empty-state d-none">
+        <i class="fa-regular fa-folder-open fa-2x mb-2"></i>
+        <div class="fw-bold">No hay registros para mostrar</div>
+        <small>Prueba con otros filtros.</small>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL DETALLE -->
+  <div class="modal fade" id="modalDetalle" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content rounded-4 shadow border-0">
+        <div class="modal-header bg-dark text-white p-4">
+          <h5 class="modal-title fw-bold">
+            <i class="fa-solid fa-circle-info me-2"></i>Detalle del Consejo
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4" id="detalleBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center">
+    <div class="container">
+      <p class="m-0">&copy; 2026 Asamblea Cantonal de Atacames.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const API_URL = "https://backend-asamblea-atacames.onrender.com/api/consejos-barriales";
+
+    let cacheConsejos = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      wireFilters();
+      obtenerConsejos();
+    });
+
+    function wireFilters() {
+      document.getElementById("q").addEventListener("input", debounce(aplicarFiltros, 250));
+      document.getElementById("fParroquia").addEventListener("change", aplicarFiltros);
+      document.getElementById("fEstado").addEventListener("change", aplicarFiltros);
+    }
+
+    async function pingApi() {
+      try {
+        const r = await fetch(API_URL, { method: "GET" });
+        document.getElementById("apiStatus").textContent = r.ok ? "Online" : "Error";
+      } catch {
+        document.getElementById("apiStatus").textContent = "Offline";
+      }
+    }
+
+    async function obtenerConsejos(showToast = false) {
+      await pingApi();
+      renderLoading();
+
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error("No se pudo obtener datos");
+        const datos = await res.json();
+        cacheConsejos = Array.isArray(datos) ? datos : (datos.data || []);
+        aplicarFiltros();
+
+        if (showToast) Swal.fire({ icon: "success", title: "Actualizado", timer: 900, showConfirmButton: false });
+      } catch (err) {
+        console.error(err);
+        renderEmpty(true);
+        Swal.fire("Error", "No se pudo cargar el directorio.", "error");
+      }
+    }
+
+    function aplicarFiltros() {
+      const q = (document.getElementById("q").value || "").toLowerCase().trim();
+      const parroquia = document.getElementById("fParroquia").value;
+      const estado = document.getElementById("fEstado").value;
+
+      let list = [...cacheConsejos];
+
+      if (parroquia) list = list.filter(x => (x.parroquia || "") === parroquia);
+      if (estado) list = list.filter(x => (x.estado || "") === estado);
+
+      if (q) {
+        list = list.filter(x => {
+          const pres = x?.directiva?.presidente?.nombres || "";
+          return (
+            (x.codigo || "").toLowerCase().includes(q) ||
+            (x.nombre || "").toLowerCase().includes(q) ||
+            (x.barrioSector || "").toLowerCase().includes(q) ||
+            pres.toLowerCase().includes(q)
+          );
+        });
+      }
+
+      renderTable(list);
+    }
+
+    function badgeEstado(estado) {
+      const st = estado || "ACTIVO";
+      return `<span class="badge-status st-${st}">${st}</span>`;
+    }
+
+    function renderLoading() {
+      const tbody = document.getElementById("listaConsejos");
+      document.getElementById("emptyState").classList.add("d-none");
+      tbody.innerHTML = `
+        <tr><td colspan="6">
+          <div class="p-3">
+            <div class="skeleton mb-2" style="width:45%"></div>
+            <div class="skeleton mb-2" style="width:70%"></div>
+            <div class="skeleton" style="width:55%"></div>
+          </div>
+        </td></tr>
+      `;
+    }
+
+    function renderEmpty(show = false) {
+      document.getElementById("listaConsejos").innerHTML = "";
+      document.getElementById("emptyState").classList.toggle("d-none", !show);
+    }
+
+    function renderTable(list) {
+      const tbody = document.getElementById("listaConsejos");
+      tbody.innerHTML = "";
+
+      if (!list.length) {
+        renderEmpty(true);
+        return;
+      }
+      renderEmpty(false);
+
+      list.forEach(c => {
+        const pres = c?.directiva?.presidente?.nombres || "No asignado";
+        const tel = c?.directiva?.presidente?.telefono || "-";
+
+        tbody.innerHTML += `
+          <tr>
+            <td><span class="badge bg-light text-dark border">${escapeHtml(c.codigo || "-")}</span></td>
+            <td>
+              <div class="fw-bold">${escapeHtml(c.nombre || "-")}</div>
+              <small class="text-muted">${escapeHtml(c.barrioSector || "-")}</small>
+            </td>
+            <td>${escapeHtml(pres)}</td>
+            <td><i class="fa-solid fa-phone me-1 text-success"></i>${escapeHtml(tel)}</td>
+            <td>${badgeEstado(c.estado)}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-dark border-0" onclick="verDetalle('${c._id}')" title="Ver detalle">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    async function verDetalle(id) {
+      const c = cacheConsejos.find(x => x._id === id);
+      if (!c) return;
+
+      const pres = c?.directiva?.presidente || {};
+      const coords = c?.ubicacion?.coordinates || [];
+
+      const inicio = c?.periodo?.inicio ? new Date(c.periodo.inicio).toLocaleDateString() : "-";
+      const fin = c?.periodo?.fin ? new Date(c.periodo.fin).toLocaleDateString() : "-";
+
+      const gm = coords.length
+        ? `https://www.google.com/maps?q=${coords[1]},${coords[0]}`
+        : null;
+
+      document.getElementById("detalleBody").innerHTML = `
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="fw-bold text-primary">Información</div>
+            <div><span class="text-muted">Código:</span> <span class="fw-bold">${escapeHtml(c.codigo || "-")}</span></div>
+            <div><span class="text-muted">Nombre:</span> ${escapeHtml(c.nombre || "-")}</div>
+            <div><span class="text-muted">Parroquia:</span> ${escapeHtml(c.parroquia || "-")}</div>
+            <div><span class="text-muted">Barrio/Sector:</span> ${escapeHtml(c.barrioSector || "-")}</div>
+            <div><span class="text-muted">Dirección:</span> ${escapeHtml(c.direccionReferencia || "-")}</div>
+            <div class="mt-2">${badgeEstado(c.estado)}</div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="fw-bold text-primary">Directiva</div>
+            <div><span class="text-muted">Presidente:</span> ${escapeHtml(pres.nombres || "-")}</div>
+            <div><span class="text-muted">Teléfono:</span> ${escapeHtml(pres.telefono || "-")}</div>
+            <div><span class="text-muted">Email:</span> ${escapeHtml(pres.email || "-")}</div>
+          </div>
+
+          <div class="col-12">
+            <hr>
+            <div class="fw-bold text-primary">Ubicación</div>
+            <div><span class="text-muted">Coordenadas:</span> ${coords.length ? `${coords[0]}, ${coords[1]}` : "-"}</div>
+            ${gm ? `<a class="btn btn-sm btn-outline-primary rounded-pill mt-2" href="${gm}" target="_blank">
+              <i class="fa-solid fa-map-location-dot me-2"></i>Ver en Google Maps
+            </a>` : ""}
+
+            <div class="fw-bold text-primary mt-3">Periodo</div>
+            <div><span class="text-muted">Inicio:</span> ${escapeHtml(inicio)}</div>
+            <div><span class="text-muted">Fin:</span> ${escapeHtml(fin)}</div>
+          </div>
+        </div>
+      `;
+
+      new bootstrap.Modal(document.getElementById("modalDetalle")).show();
+    }
+
+    function debounce(fn, delay) {
+      let t;
+      return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(null, args), delay);
+      };
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+  </script>
+
 </body>
 </html>
