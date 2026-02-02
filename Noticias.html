@@ -23,11 +23,10 @@
         body {
             background: #f1f5f9;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            padding-top: 130px; /* Espacio para el logo grande inicial */
+            padding-top: 130px;
             transition: padding 0.4s;
         }
 
-        /* --- NAVBAR DINÁMICA (Efecto igual al Index) --- */
         .navbar {
             background: var(--glass-bg) !important;
             backdrop-filter: blur(10px);
@@ -42,12 +41,12 @@
         }
 
         .navbar-brand img {
-            max-height: 110px; /* Tamaño grande inicial */
+            max-height: 110px;
             transition: all 0.4s ease;
         }
 
         .navbar-scrolled .navbar-brand img {
-            max-height: 60px; /* Se encoge al bajar */
+            max-height: 60px;
         }
 
         .nav-link {
@@ -57,7 +56,6 @@
             font-size: 0.95rem;
         }
 
-        /* --- DROPDOWN ESTILO INDEX --- */
         .dropdown-menu {
             border: none;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -109,7 +107,6 @@
             transition: 0.3s;
         }
 
-        /* --- DISEÑO DE NOTICIAS --- */
         .hero-news {
             background: var(--primary-gradient);
             color: white; padding: 60px 0;
@@ -145,6 +142,9 @@
     </style>
 </head>
 <body>
+
+    <!-- ✅ Requerido para el SDK de Facebook -->
+    <div id="fb-root"></div>
 
     <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
         <div class="container">
@@ -190,10 +190,10 @@
         <div class="row mb-5 justify-content-center">
             <div class="col-md-10 text-center">
                 <div class="btn-group shadow-sm rounded-pill bg-white p-2">
-                    <button class="btn btn-primary rounded-pill px-4" onclick="filtrar('todos')">Todo</button>
-                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('Obras Públicas')">Obras</button>
-                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('Social')">Social</button>
-                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('General')">General</button>
+                    <button class="btn btn-primary rounded-pill px-4" onclick="filtrar('todos', event)">Todo</button>
+                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('Obras Públicas', event)">Obras</button>
+                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('Social', event)">Social</button>
+                    <button class="btn btn-light rounded-pill px-4" onclick="filtrar('General', event)">General</button>
                 </div>
             </div>
         </div>
@@ -214,6 +214,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- ✅ SDK de Facebook (necesario para algunos embeds) -->
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v19.0">
+    </script>
+
     <script>
         const API_URL = "https://backend-asamblea-atacames.onrender.com/api/noticias";
         let todasLasNoticias = [];
@@ -221,11 +226,8 @@
         // EFECTO SCROLL NAVBAR
         const navbar = document.getElementById('mainNavbar');
         window.onscroll = () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
+            if (window.scrollY > 50) navbar.classList.add('navbar-scrolled');
+            else navbar.classList.remove('navbar-scrolled');
         };
 
         async function obtenerNoticias() {
@@ -234,13 +236,14 @@
                 todasLasNoticias = await response.json();
                 renderizarNoticias(todasLasNoticias);
             } catch (error) {
-                document.getElementById('contenedorNoticias').innerHTML = `<p class="text-center text-danger">Error al conectar con el servidor.</p>`;
+                document.getElementById('contenedorNoticias').innerHTML =
+                    `<p class="text-center text-danger">Error al conectar con el servidor.</p>`;
             }
         }
 
         function renderizarNoticias(datos) {
             const contenedor = document.getElementById('contenedorNoticias');
-            if(datos.length === 0) {
+            if (!datos || datos.length === 0) {
                 contenedor.innerHTML = '<p class="text-center">No hay noticias disponibles.</p>';
                 return;
             }
@@ -249,13 +252,13 @@
                 <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp">
                     <div class="news-card">
                         <div class="news-img-wrapper">
-                            <span class="category-badge">${n.categoria}</span>
+                            <span class="category-badge">${n.categoria || 'General'}</span>
                             <img src="${n.imagen}" onerror="this.src='https://via.placeholder.com/400x250'">
                         </div>
                         <div class="news-body">
                             <span class="news-date">${new Date(n.fecha).toLocaleDateString('es-ES', {day:'numeric', month:'long', year:'numeric'})}</span>
                             <h3 class="news-title">${n.titulo}</h3>
-                            <p class="text-muted small">${n.resumen}</p>
+                            <p class="text-muted small">${n.resumen || ''}</p>
                             <a href="javascript:void(0)" class="btn-read-more" onclick="verDetalle('${n._id}')">
                                 Leer más <i class="fa-solid fa-arrow-right"></i>
                             </a>
@@ -265,30 +268,67 @@
             `).join('');
         }
 
-        function filtrar(cat) {
+        function filtrar(cat, ev) {
             const botones = document.querySelectorAll('.btn-group .btn');
             botones.forEach(btn => btn.classList.replace('btn-primary', 'btn-light'));
-            event.target.classList.replace('btn-light', 'btn-primary');
+            if (ev && ev.target) ev.target.classList.replace('btn-light', 'btn-primary');
 
             const filtradas = cat === 'todos' ? todasLasNoticias : todasLasNoticias.filter(n => n.categoria === cat);
             renderizarNoticias(filtradas);
         }
 
+        // ✅ Convierte una URL de Facebook cualquiera en URL embebible
+        function getFacebookEmbedUrl(fbUrl) {
+            // plugins/video.php acepta "href" con la URL original
+            return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(fbUrl)}&show_text=false&width=760`;
+        }
+
         async function verDetalle(id) {
             const n = todasLasNoticias.find(item => item._id === id);
+            if (!n) return;
+
+            const fechaStr = new Date(n.fecha).toLocaleDateString('es-ES', {day:'numeric', month:'long', year:'numeric'});
+
+            // ✅ Si hay video, lo mostramos primero (embed)
+            const videoHtml = (n.video && n.video.trim() !== "")
+                ? `
+                    <div class="ratio ratio-16x9 mb-3">
+                        <iframe
+                            src="${getFacebookEmbedUrl(n.video)}"
+                            style="border:none;overflow:hidden"
+                            scrolling="no"
+                            frameborder="0"
+                            allowfullscreen="true"
+                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                        </iframe>
+                    </div>
+                  `
+                : `
+                    <img src="${n.imagen}" class="img-fluid rounded mb-3"
+                         style="max-height:300px; width:100%; object-fit:cover;"
+                         onerror="this.src='https://via.placeholder.com/800x300'">
+                  `;
+
             Swal.fire({
                 title: n.titulo,
                 html: `
-                    <img src="${n.imagen}" class="img-fluid rounded mb-3" style="max-height:300px; width:100%; object-fit:cover;">
+                    ${videoHtml}
                     <div class="text-start" style="line-height:1.6;">
-                        <p class="text-muted small">Publicado el ${new Date(n.fecha).toLocaleDateString()}</p>
+                        <p class="text-muted small">Publicado el ${fechaStr}</p>
+                        ${n.video ? `<a href="${n.video}" target="_blank" class="btn btn-sm btn-primary mb-2">
+                            <i class="fa-brands fa-facebook"></i> Ver en Facebook
+                        </a>` : ``}
                         <hr>
-                        <p>${n.contenido.replace(/\n/g, '<br>')}</p>
+                        <p>${(n.contenido || '').replace(/\n/g, '<br>')}</p>
                     </div>
                 `,
-                width: '800px',
+                width: '850px',
                 confirmButtonText: 'Cerrar',
-                confirmButtonColor: '#0097e6'
+                confirmButtonColor: '#0097e6',
+                didOpen: () => {
+                    // Por si el SDK necesita reparsear (no siempre es necesario con iframe)
+                    if (window.FB && FB.XFBML) FB.XFBML.parse();
+                }
             });
         }
 
@@ -312,4 +352,5 @@
     </script>
 </body>
 </html>
+
 
