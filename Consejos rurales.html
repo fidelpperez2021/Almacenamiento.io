@@ -128,6 +128,32 @@
     }
 
     footer { background: var(--dark-color); color: white; padding: 40px 0; margin-top: 50px; }
+
+    /* -------- Modal Admin estilo similar a tu captura -------- */
+    .admin-modal-bg {
+      background: #0b0b0b;
+      color: #fff;
+      border: 1px solid rgba(255, 90, 0, .35);
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+    }
+    .admin-title {
+      letter-spacing: 2px;
+    }
+    .admin-hr {
+      border-color: rgba(255,255,255,.15);
+    }
+    .admin-btn {
+      background: #ff3b30;
+      color: #fff;
+    }
+    .admin-input {
+      background: #151515;
+      border: 1px solid rgba(255,255,255,.15);
+      color: #fff;
+    }
+    .admin-input::placeholder {
+      color: rgba(255,255,255,.35);
+    }
   </style>
 </head>
 
@@ -209,9 +235,9 @@
 
           <li class="nav-item"><a class="nav-link fw-bold" href="#nosotros">Nosotros</a></li>
 
-          <!-- ✅ Enlace a Admin (ajusta el archivo si se llama distinto) -->
+          <!-- ✅ Admin protegido -->
           <li class="nav-item">
-            <a class="nav-link btn-login ms-lg-3" href="https://fidelpperez2021.github.io/Almacenamiento.io/Consejos-rurales-admin.html">
+            <a class="nav-link btn-login ms-lg-3" href="#" id="adminLink">
               <i class="fa-solid fa-shield-halved me-2"></i>Admin
             </a>
           </li>
@@ -239,7 +265,6 @@
           <i class="fa-solid fa-list-check me-2 text-primary"></i>Directorio público
         </h4>
 
-        <!-- ✅ Botón de crear eliminado (solo lectura) -->
         <button class="btn btn-outline-primary rounded-pill px-4 fw-bold" onclick="obtenerConsejos(true)">
           <i class="fa-solid fa-rotate me-2"></i>Actualizar
         </button>
@@ -286,6 +311,47 @@
     </div>
   </div>
 
+  <!-- ✅ MODAL ACCESO ADMIN -->
+  <div class="modal fade" id="modalAdminAccess" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 admin-modal-bg">
+        <div class="modal-body p-4 p-md-5">
+
+          <div class="text-center mb-3">
+            <div style="font-size:52px; color:#ff3b30;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 class="fw-bold mt-2 admin-title">ACCESO RESTRINGIDO</h4>
+            <hr class="admin-hr">
+          </div>
+
+          <p class="text-center mb-4" style="color:rgba(255,255,255,.75)">
+            Usted está ingresando al <b>Modo Administrador</b>.  
+            Ingrese la clave para continuar.
+          </p>
+
+          <div class="mb-3">
+            <label class="form-label" style="color:rgba(255,255,255,.75)">Clave de acceso</label>
+            <input type="password" class="form-control form-control-lg rounded-3 admin-input"
+                   id="adminPass" placeholder="Ingrese la clave (Ej: Admin2024)">
+            <div class="small mt-2 d-none" id="adminError" style="color:#ff3b30;">
+              Clave incorrecta. Intente nuevamente.
+            </div>
+          </div>
+
+          <button class="btn w-100 fw-bold py-3 rounded-3 admin-btn" id="btnAdminEnter">
+            ACEPTAR LA RESPONSABILIDAD Y ENTRAR
+          </button>
+
+          <div class="text-center mt-3 small" style="color:rgba(255,255,255,.45)">
+            LOG_ID: IP_ADMIN_GATEWAY
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="text-center">
     <div class="container">
       <p class="m-0">&copy; 2026 Asamblea Cantonal de Atacames. Gobierno Autónomo Descentralizado.</p>
@@ -325,7 +391,6 @@
         renderTable(cacheConsejos);
 
         if (showToast) {
-          // sin librerías extra; solo feedback simple
           console.log("Actualizado");
         }
       } catch (err) {
@@ -444,6 +509,52 @@
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
     }
+  </script>
+
+  <!-- ✅ SCRIPT PROTECCIÓN ADMIN -->
+  <script>
+    const ADMIN_URL = "https://fidelpperez2021.github.io/Almacenamiento.io/Consejos-rurales-admin.html";
+    const ADMIN_KEY = "Admin2025";
+
+    const adminLink = document.getElementById("adminLink");
+
+    adminLink?.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const pass = document.getElementById("adminPass");
+      const err = document.getElementById("adminError");
+
+      if (pass) pass.value = "";
+      if (err) err.classList.add("d-none");
+
+      const modal = new bootstrap.Modal(document.getElementById("modalAdminAccess"));
+      modal.show();
+
+      setTimeout(() => pass?.focus(), 350);
+    });
+
+    document.getElementById("btnAdminEnter")?.addEventListener("click", () => {
+      const pass = document.getElementById("adminPass");
+      const err = document.getElementById("adminError");
+      const value = (pass?.value || "").trim();
+
+      if (value !== ADMIN_KEY) {
+        err?.classList.remove("d-none");
+        pass?.focus();
+        return;
+      }
+
+      // Guarda acceso en la pestaña actual (opcional)
+      sessionStorage.setItem("admin_access_ok", "1");
+
+      // Entra al admin
+      window.location.href = ADMIN_URL;
+    });
+
+    // Enter para enviar
+    document.getElementById("adminPass")?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") document.getElementById("btnAdminEnter")?.click();
+    });
   </script>
 </body>
 </html>
