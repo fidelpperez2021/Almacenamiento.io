@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veeduría Ciudadana | Observatorio Atacames</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        :root {
+            --brand-primary: #0097e6;
+            --brand-secondary: #2c3e50;
+            --brand-info: #0fbcf9;
+            --surface-card: rgba(255, 255, 255, 0.95);
+            --radius-xl: 24px;
+            --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top right, #f1f5f9, #ffffff);
+            color: #1e293b;
+        }
+
+        /* --- Navbar Glassmorphism --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid var(--brand-primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(0, 151, 230, 0.8)), 
+                        url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 160px 0 100px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+            color: white;
+            text-align: center;
+        }
+
+        /* --- Main Container --- */
+        .dashboard-container {
+            margin-top: -60px;
+            background: var(--surface-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-premium);
+            padding: 40px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        /* --- Project Cards (Veeduría) --- */
+        .veeduria-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .veeduria-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+
+        .github-img-wrapper {
+            position: relative;
+            height: 220px;
+            background: #1e293b;
+            overflow: hidden;
+        }
+
+        .github-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            transition: 0.5s;
+        }
+
+        .veeduria-card:hover .github-img-wrapper img {
+            scale: 1.1;
+            opacity: 1;
+        }
+
+        /* --- API Mock Style --- */
+        .api-status-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--brand-primary);
+            padding: 15px;
+            font-family: 'monospace';
+            font-size: 0.8rem;
+            color: #475569;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .api-keyword { color: #d946ef; font-weight: bold; }
+        .api-value { color: #0ea5e9; }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .badge-active { background: #dcfce7; color: #166534; }
+        .badge-review { background: #fef9c3; color: #854d0e; }
+
+        /* --- Info Widgets --- */
+        .sidebar-widget {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .github-source {
+            font-size: 0.75rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="fa-solid fa-eye fa-2x text-primary me-3"></i>
+                <div class="border-start ps-3">
+                    <span class="d-block h5 mb-0 fw-800 text-dark">VEEDURÍA</span>
+                    <span class="small text-muted fw-bold">CONTROL CIUDADANO</span>
+                </div>
+            </a>
+            <div class="ms-auto">
+                <a href="Index.html" class="btn btn-dark rounded-pill px-4 fw-bold">
+                    <i class="fa-brands fa-github me-2"></i>Inicio
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container animate__animated animate__fadeIn">
+            <span class="badge bg-info text-dark px-3 py-2 rounded-pill mb-3 fw-bold">OBSERVATORIO DE TRANSPARENCIA</span>
+            <h1 class="display-4 fw-800">Vigilancia de Obra Pública</h1>
+            <p class="lead opacity-75">Visualización de datos y evidencia fotográfica en tiempo real desde repositorios oficiales.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="dashboard-container animate__animated animate__fadeInUp">
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-800 m-0 text-secondary">Proyectos Bajo Vigilancia</h3>
+                        <div class="github-source">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="veeduria-card">
+                                <div class="github-img-wrapper">
+                                    <span class="status-badge badge-active">En Ejecución</span>
+                                    <img src="https://raw.githubusercontent.com/fidelpperez2021/Almacenamiento.io/main/obra-malecon.jpg" 
+                                         onerror="this.src='https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-02-01%20at%2010.22.36%20PM%20(3).jpeg'" alt="Obra">
+                                </div>
+                                <div class="p-4 pb-0">
+                                    <h5 class="fw-800 mb-1">Alcantarillado de Tonsupa</h5>
+                                    <p class="small text-muted mb-3">📍VEEDURIA CIUDADANA AL PROYECTO DE REPOTENCIACIÓN DE LAS ESTACIONES DE BOMBEO DEL SISTEMA DE ALCANTARILLADO DEL CANTON ATACAMES.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="veeduria-card">
+                                <div class="github-img-wrapper">
+                                    <span class="status-badge badge-review">Auditoría Final</span>
+                                    <img src="https://raw.githubusercontent.com/fidelpperez2021/Almacenamiento.io/main/obra-vialidad.jpg" 
+                                         onerror="this.src=''" alt="Obra">
+                                </div>
+                                <div class="p-4 pb-0">
+                                    <h5 class="fw-800 mb-1">...</h5>
+                                    <p class="small text-muted mb-3">...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="sidebar-widget shadow-sm">
+                        <h5 class="fw-800 mb-3"><i class="fa-solid fa-circle-info text-primary me-2"></i>¿Cómo funciona?</h5>
+                        <p class="small text-muted">
+                            Este portal consume información directamente desde los reportes de los veedores acreditados.
+                        </p>
+                        <ul class="list-unstyled small fw-bold mt-3">
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Fotos georreferenciadas.</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Verificación de pliegos.</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Control de plazos.</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget bg-dark text-white border-0">
+                        <h6 class="fw-800 text-warning mb-3">SISTEMA DE VEEDURÍA CIUDADANA</h6>
+                        <p class="small opacity-75">Las imágenes son cargadas mediante un token de acceso a GitHub para asegurar que no han sido manipuladas tras su captura.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-5 bg-white border-top">
+        <div class="container text-center">
+            <p class="text-muted small">© 2026 GAD Municipal Atacames | Veeduría Ciudadana.<br>Asamblea de Participación Ciudadana.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
