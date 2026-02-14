@@ -1,485 +1,625 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asamblea Cantonal de Atacames</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asamblea Cantonal de Atacames</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-    --primary-color: #0097e6;
-    --secondary-color: #44bd32;
-    --dark-color: #2f3640;
-    --light-bg: #f5f6fa;
-    --white: #ffffff;
-    --accent: #000000;
-    --dropdown-hover: #f1f9ff;
-}
+  <style>
+    :root {
+      --primary-color: #0097e6;
+      --secondary-color: #44bd32;
+      --dark-color: #2f3640;
+      --light-bg: #f5f6fa;
+      --white: #ffffff;
+      --accent: #000000;
+      --dropdown-hover: #f1f9ff;
+    }
 
-* {
-    box-sizing: border-box;
-}
+    * { box-sizing: border-box; }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--light-bg);
-    color: #333;
-    overflow-x: hidden;
-    margin: 0;
-}
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-bg);
+      color: #333;
+      overflow-x: hidden;
+      margin: 0;
+    }
 
-/* --- NAVBAR --- */
-.navbar {
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    transition: all 0.4s ease;
-    padding: 15px 0;
-}
+    /* --- NAVBAR --- */
+    .navbar {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: all 0.4s ease;
+      padding: 15px 0;
+    }
 
-.navbar-scrolled {
-    padding: 5px 0;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
+    .navbar-scrolled {
+      padding: 5px 0;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
 
-.logo img {
-    max-height: 110px;
-    transition: all 0.4s ease;
-}
+    .logo img {
+      max-height: 110px;
+      transition: all 0.4s ease;
+    }
 
-.navbar-scrolled .logo img {
-    max-height: 60px;
-}
+    .navbar-scrolled .logo img {
+      max-height: 60px;
+    }
 
-.nav-link {
-    color: var(--dark-color) !important;
-    font-weight: 600;
-    margin: 0 10px;
-    font-size: 0.95rem;
-}
+    .nav-link {
+      color: var(--dark-color) !important;
+      font-weight: 600;
+      margin: 0 10px;
+      font-size: 0.95rem;
+    }
 
-.nav-link:hover {
-    color: var(--primary-color) !important;
-}
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
 
-/* --- DROPDOWN --- */
-.dropdown-menu {
-    border: none;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    border-radius: 15px;
-    padding: 15px;
-    min-width: 300px;
-    margin-top: 15px !important;
-    display: block;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-}
+    /* --- DROPDOWN --- */
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border-radius: 15px;
+      padding: 15px;
+      min-width: 300px;
+      margin-top: 15px !important;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
 
-.nav-item.dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
+    .nav-item.dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
 
-.dropdown-item {
-    border-radius: 10px;
-    padding: 12px 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    white-space: normal;
-}
+    .dropdown-item {
+      border-radius: 10px;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      white-space: normal;
+    }
 
-.dropdown-item:hover {
-    background-color: var(--dropdown-hover);
-    transform: translateX(8px);
-}
+    .dropdown-item:hover {
+      background-color: var(--dropdown-hover);
+      transform: translateX(8px);
+    }
 
-.menu-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 151, 230, 0.1);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-}
+    .menu-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 151, 230, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
 
-.dropdown-item:hover .menu-icon {
-    background: var(--primary-color);
-    color: white;
-}
+    .dropdown-item:hover .menu-icon {
+      background: var(--primary-color);
+      color: white;
+    }
 
-/* --- BOTÓN --- */
-.btn-login {
-    background-color: var(--primary-color);
-    color: white !important;
-    border-radius: 50px;
-    padding: 8px 25px !important;
-    box-shadow: 0 4px 10px rgba(0, 151, 230, 0.3);
-    transition: 0.3s;
-}
+    /* --- BOTÓN --- */
+    .btn-login {
+      background-color: var(--primary-color);
+      color: white !important;
+      border-radius: 50px;
+      padding: 8px 25px !important;
+      box-shadow: 0 4px 10px rgba(0, 151, 230, 0.3);
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 151, 230, 0.4);
-}
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 151, 230, 0.4);
+    }
 
-/* --- HERO --- */
-.hero {
-    min-height: 70vh;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
-    url('https://2.bp.blogspot.com/-i5FVR0q8vY4/WlDTSqNT8-I/AAAAAAAAtT8/D-8mFljctZQBh0qI-nPuk81P_8oG7_ptQCLcBGAs/s1600/IMG_20171226_160617-02-01.jpeg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-top: 130px;
-    padding: 20px;
-    padding-bottom: 300px; /* 👈 ESTO SUBE LAS LETRAS */
+    /* Badge contador */
+    #subsCount {
+      background: rgba(255,255,255,0.95) !important;
+      color: var(--dark-color) !important;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.85rem;
+    }
 
-}
+    /* --- HERO --- */
+    .hero {
+      min-height: 70vh;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+      url('https://2.bp.blogspot.com/-i5FVR0q8vY4/WlDTSqNT8-I/AAAAAAAAtT8/D-8mFljctZQBh0qI-nPuk81P_8oG7_ptQCLcBGAs/s1600/IMG_20171226_160617-02-01.jpeg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-top: 130px;
+      padding: 20px;
+      padding-bottom: 300px;
+    }
 
-.hero h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    color: white;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-}
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
 
-/* --- SECCIONES --- */
-.section-padding {
-    padding: 80px 15px;
-}
+    /* --- SECCIONES --- */
+    .section-padding { padding: 80px 15px; }
 
-.card-identity {
-    border: none;
-    border-radius: 20px;
-    padding: 40px;
-    height: 100%;
-    background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: 0.3s;
-}
+    .card-identity {
+      border: none;
+      border-radius: 20px;
+      padding: 40px;
+      height: 100%;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
 
-.card-identity:hover {
-    transform: translateY(-10px);
-}
+    .card-identity:hover { transform: translateY(-10px); }
 
-.card-identity i {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
+    .card-identity i {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
 
-.bg-gradient-custom {
-    background: linear-gradient(135deg, #0097e6 0%, #0056b3 100%);
-    color: white;
-    border-radius: 30px;
-    padding: 50px;
-}
+    .bg-gradient-custom {
+      background: linear-gradient(135deg, #0097e6 0%, #0056b3 100%);
+      color: white;
+      border-radius: 30px;
+      padding: 50px;
+    }
 
-.obj-item {
-    background: rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    border-left: 5px solid var(--accent);
-    transition: 0.3s;
-}
+    .obj-item {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      border-left: 5px solid var(--accent);
+      transition: 0.3s;
+    }
 
-.obj-item:hover {
-    padding-left: 30px;
-}
+    .obj-item:hover { padding-left: 30px; }
 
-/* --- FOOTER --- */
-footer {
-    background: var(--dark-color);
-    color: white;
-    padding: 60px 20px 20px;
-    text-align: center;
-}
+    /* --- FOOTER --- */
+    footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 60px 20px 20px;
+      text-align: center;
+    }
 
-.socials a {
-    color: white;
-    font-size: 1.5rem;
-    margin: 0 10px;
-}
+    .socials a {
+      color: white;
+      font-size: 1.5rem;
+      margin: 0 10px;
+    }
 
-.socials a:hover {
-    color: var(--primary-color);
-}
+    .socials a:hover { color: var(--primary-color); }
 
-/* ========================= */
-/* ===== RESPONSIVE ======= */
-/* ========================= */
-
-/* Tablets */
-@media (max-width: 991px) {
-    .navbar-collapse {
+    /* Responsive */
+    @media (max-width: 991px) {
+      .navbar-collapse {
         background: white;
         padding: 20px;
         border-radius: 15px;
         margin-top: 10px;
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
+      }
 
-    .dropdown-menu {
+      .dropdown-menu {
         position: static;
         opacity: 1;
         visibility: visible;
         transform: none;
         box-shadow: none;
         min-width: 100%;
+      }
+
+      .hero { margin-top: 100px; }
+      .hero h1 { font-size: 2.2rem; }
+      .bg-gradient-custom { padding: 30px; }
     }
 
-    .hero {
-        margin-top: 100px;
+    @media (max-width: 576px) {
+      .logo img { max-height: 70px; }
+      .hero { min-height: 60vh; margin-top: 90px; }
+      .hero h1 { font-size: 1.8rem; }
+      .card-identity { padding: 25px; }
+      .section-padding { padding: 50px 10px; }
+      footer { padding: 40px 15px; }
     }
-
-    .hero h1 {
-        font-size: 2.2rem;
-    }
-
-    .bg-gradient-custom {
-        padding: 30px;
-    }
-}
-
-/* Móviles */
-@media (max-width: 576px) {
-    .logo img {
-        max-height: 70px;
-    }
-
-    .hero {
-        min-height: 60vh;
-        margin-top: 90px;
-    }
-
-    .hero h1 {
-        font-size: 1.8rem;
-    }
-
-    .card-identity {
-        padding: 25px;
-    }
-
-    .section-padding {
-        padding: 50px 10px;
-    }
-
-    footer {
-        padding: 40px 15px;
-    }
-}
-    </style>
+  </style>
 </head>
+
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
-        <div class="container">
-            <a class="navbar-brand logo" href="#">
-                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" alt="Logo">
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+    <div class="container">
+      <a class="navbar-brand logo" href="#">
+        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" alt="Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropParticipacion" role="button">
+              Participación
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="Asamblea-cantonal.html">
+                  <div class="menu-icon"><i class="fa-solid fa-people-group"></i></div>
+                  <div>
+                    <span class="d-block fw-bold">Asamblea Cantonal</span>
+                    <small class="text-muted">Espacio máximo de concertación.</small>
+                  </div>
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="Consejos barriales.html">
+                  <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
+                  <div>
+                    <span class="d-block fw-bold">Consejos Barriales</span>
+                    <small class="text-muted">Gestión en zonas urbanas.</small>
+                  </div>
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="Silla-vacia.html">
+                  <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
+                  <div>
+                    <span class="d-block fw-bold">Silla vacía</span>
+                    <small class="text-muted">Tu derecho constitucional a participar con voz y voto en las decisiones del Concejo Municipal de Atacames.</small>
+                  </div>
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="https://fidelpperez2021.github.io/Almacenamiento.io/Veedur%C3%ADa%20Ciudadana.html">
+                  <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
+                  <div>
+                    <span class="d-block fw-bold">Veeduría Ciudadana</span>
+                    <small class="text-muted">Observacion, control y segumiento ejercido por la ciudadanía.</small>
+                  </div>
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="Consejos rurales.html">
+                  <div class="menu-icon"><i class="fa-solid fa-people-roof"></i></div>
+                  <div>
+                    <span class="d-block fw-bold">Consejos Rurales</span>
+                    <small class="text-muted">Líderes de recintos y sectores.</small>
+                  </div>
+                </a>
+              </li>
+
+              <li><hr class="dropdown-divider"></li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="Actividades.html">
+                  <div class="menu-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                  <div>
+                    <span class="d-block fw-bold">Actividades</span>
+                    <small class="text-muted">Cronograma de eventos.</small>
+                  </div>
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="Noticias.html">
+                  <div class="menu-icon"><i class="fa-solid fa-newspaper"></i></div>
+                  <div>
+                    <span class="d-block fw-bold">Noticias</span>
+                    <small class="text-muted">Difusión de información.</small>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link" href="#identidad">Nosotros</a></li>
+
+          <!-- ✅ Suscribirse con contador -->
+          <li class="nav-item">
+            <a class="nav-link btn-login ms-lg-3" href="#" id="btnSuscribirse">
+              Suscribirse
+              <span id="subsCount">0</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1 class="animate__animated animate__fadeInDown">ASAMBLEA CANTONAL DE PARTICIPACIÓN CIUDADANA DE ATACAMES</h1>
+      <p class="lead text-white">Juntos trabajamos por el desarrollo de Atacames.</p>
+    </div>
+  </header>
+
+  <section id="identidad" class="section-padding">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card-identity text-center shadow-sm">
+            <i class="fa-solid fa-bullseye"></i>
+            <h3>Misión</h3>
+            <p>Promover y garantizar el ejercicio de los derechos de Participación Ciudadana de los habitantes del cantón Atacames, a través de la gestión y la articulación de las demandas sociales de los atacameños con los representantes de los Gobiernos parroquiales, cantonales y demas entidades públicas.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-identity text-center shadow-sm">
+            <i class="fa-solid fa-eye"></i>
+            <h3>Visión</h3>
+            <p>Ser el referente provincial y nacional de Participación Ciudadana a través de la articulación de las demandas sociales de la población con la administración pública, consolidando una sociedad atacameña activa, organizada y corresponsable en la toma de decisiones para el desarrollo de su cantón.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="bg-gradient-custom shadow-lg">
+        <div class="row align-items-center">
+          <div class="col-lg-5 mb-4 mb-lg-0">
+            <h2 class="display-5 fw-bold mb-4">Objetivo General</h2>
+            <p class="fs-5">Fortalecer el sistema de Participación Ciudadana mediante la activación de distintos mecanismos que permitan a la ciudadanía incidir activamente en las políticas públicas locales.</p>
+          </div>
+
+          <div class="col-lg-7">
+            <h3 class="h4 mb-4 fw-bold text-white">Objetivos Específicos</h3>
+
+            <div class="obj-item d-flex align-items-start text-white">
+              <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+              <span><strong>1.</strong> Fomentar la Formación de líderes sociales y comunitarios a través de capacitaciones en liderazgo moral, desarrollo comunitario y participación ciudadana.</span>
+            </div>
+
+            <div class="obj-item d-flex align-items-start text-white">
+              <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+              <span><strong>2.</strong> Vigilar la Gestión de Gobernanza Local a través de la implementación de procesos de veeduría ciudadana para asegurar la transparencia en la administración pública.</span>
+            </div>
+
+            <div class="obj-item d-flex align-items-start text-white">
+              <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+              <span><strong>3.</strong> Priorizar el Gasto del presupuesto público local a través de la participación de los líderes barriales, rurales y de la Asamblea de Participación Ciudadana en las mesas de trabajo y reuniones de planificación y elaboración del presupuesto participativo anual de GAD Cantonal.</span>
+            </div>
+
+            <div class="obj-item d-flex align-items-start text-white">
+              <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+              <span><strong>4.</strong> Participar activamente en las reuniones de preparación y ejecución de la rendición de cuentas anual de las autoridades parroquiales, cantonales y demas entidades públicas del cantón.</span>
+            </div>
+
+            <div class="obj-item d-flex align-items-start text-white">
+              <i class="fa-solid fa-circle-check mt-1 me-3"></i>
+              <span><strong>5.</strong> Coordinar con los líderes barriales y rurales las gestiones necesarias para la atención de las autoridades a sus necesidades comunitarias y organizaciones sociales.</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container text-center">
+      <div class="footer-logo h3 mb-4">
+        <i class="fa-solid fa-landmark"></i> Asamblea Cantonal de Atacames
+      </div>
+      <div class="socials mb-4">
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      </div>
+      <p class="opacity-50 small">&copy; <span id="year"></span> GAD Municipal de Atacames. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ✅ MODAL FORMULARIO SUSCRIPCIÓN -->
+  <div class="modal fade" id="suscripcionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 18px;">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Suscribirse a la página</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-muted mb-3">Ingresa tu nombre y correo para recibir novedades.</p>
+
+          <form id="suscripcionForm" novalidate>
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input class="form-control" type="text" id="subName" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Correo</label>
+              <input class="form-control" type="email" id="subEmail" placeholder="tucorreo@gmail.com" required>
+            </div>
+
+            <div class="alert d-none" id="subAlert" role="alert"></div>
+
+            <button class="btn w-100" id="btnEnviarSus" type="submit"
+              style="background: var(--primary-color); color: white; border-radius: 12px;">
+              <span class="me-2"><i class="fa-solid fa-paper-plane"></i></span> Suscribirme
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropParticipacion" role="button">
-                            Participación
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Asamblea-cantonal.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-people-group"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Asamblea Cantonal</span>
-                                        <small class="text-muted">Espacio máximo de concertación.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Consejos barriales.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Consejos Barriales</span>
-                                        <small class="text-muted">Gestión en zonas urbanas.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Silla-vacia.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Silla vacía</span>
-                                        <small class="text-muted">Tu derecho constitucional a participar con voz y voto en las decisiones del Concejo Municipal de Atacames.</small>
-                                    </div>
-                                </a>
-                            </li>
-                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="https://fidelpperez2021.github.io/Almacenamiento.io/Veedur%C3%ADa%20Ciudadana.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-city"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Veeduría Ciudadana</span>
-                                        <small class="text-muted">Observacion, control y segumiento ejercido por la ciudadanía.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Consejos rurales.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-people-roof"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Consejos Rurales</span>
-                                        <small class="text-muted">Líderes de recintos y sectores.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Actividades.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-calendar-days"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Actividades</span>
-                                        <small class="text-muted">Cronograma de eventos.</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="Noticias.html">
-                                    <div class="menu-icon"><i class="fa-solid fa-newspaper"></i></div>
-                                    <div>
-                                        <span class="d-block fw-bold">Noticias</span>
-                                        <small class="text-muted">Difusión de información.</small>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item"><a class="nav-link" href="#identidad">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link btn-login ms-lg-3" href="#">Suscribirse</a></li>
-                </ul>
-            </div>
+          </form>
         </div>
-    </nav>
-
-    <header class="hero">
-        <div class="container">
-            <h1 class="animate__animated animate__fadeInDown">ASAMBLEA CANTONAL DE PARTICIPACIÓN CIUDADANA DE ATACAMES</h1>
-            <p class="lead text-white">Juntos trabajamos por el desarrollo de Atacames.</p>
-        </div>
-    </header>
-
-    <section id="identidad" class="section-padding">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card-identity text-center shadow-sm">
-                        <i class="fa-solid fa-bullseye"></i>
-                        <h3>Misión</h3>
-                        <p>Promover y garantizar el ejercicio de los derechos de Participación Ciudadana de los habitantes del cantón Atacames, a través de la gestión y la articulación de las demandas sociales de los atacameños con los representantes de los Gobiernos parroquiales, cantonales y demas entidades públicas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card-identity text-center shadow-sm">
-                        <i class="fa-solid fa-eye"></i>
-                        <h3>Visión</h3>
-                        <p>Ser el referente provincial y nacional de Participación Ciudadana a través de la articulación de las demandas sociales de la población con la administración pública, consolidando una sociedad atacameña activa, organizada y corresponsable en la toma de decisiones para el desarrollo de su cantón.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding bg-light">
-        <div class="container">
-            <div class="bg-gradient-custom shadow-lg">
-                <div class="row align-items-center">
-                    <div class="col-lg-5 mb-4 mb-lg-0">
-                        <h2 class="display-5 fw-bold mb-4">Objetivo General</h2>
-                        <p class="fs-5">Fortalecer el sistema de Participación Ciudadana mediante la activación de distintos mecanismos que permitan a la ciudadanía incidir activamente en las políticas públicas locales.</p>
-                    </div>
-                    <div class="col-lg-7">
-    <h3 class="h4 mb-4 fw-bold text-white">Objetivos Específicos</h3>
-    
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>1.</strong> Fomentar la Formación de líderes sociales y comunitarios a través de capacitaciones en liderazgo moral, desarrollo comunitario y participación ciudadana.</span>
+      </div>
     </div>
+  </div>
 
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>2.</strong> Vigilar la Gestión de Gobernanza Local a través de la implementación de procesos de veeduría ciudadana para asegurar la transparencia en la administración pública.</span>
-    </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>3.</strong> Priorizar el Gasto del presupuesto público local a través de la participación de los líderes barriales, rurales y de la Asamblea de Participación Ciudadana en las mesas de trabajo y reuniones de planificación y elaboración del presupuesto participativo anual de GAD Cantonal.</span>
-    </div>
+  <script>
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>4.</strong> Participar activamente en las reuniones de preparación y ejecución de la rendición de cuentas anual de las autoridades parroquiales, cantonales y demas entidades públicas del cantón.</span>
-    </div>
+  // Navbar scroll
+  const navbar = document.getElementById('mainNavbar');
+  window.onscroll = () => {
+    if (window.scrollY > 50) navbar.classList.add('navbar-scrolled');
+    else navbar.classList.remove('navbar-scrolled');
+  };
 
-    <div class="obj-item d-flex align-items-start text-white">
-        <i class="fa-solid fa-circle-check mt-1 me-3"></i>
-        <span><strong>5.</strong> Coordinar con los líderes barriales y rurales las gestiones necesarias para la atención de las autoridades a sus necesidades comunitarias y organizaciones sociales.</span>
-    </div>
-</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  // Cerrar menú móvil
+  const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+  const menuToggle = document.getElementById('navbarNav');
+  const bsCollapse = new bootstrap.Collapse(menuToggle, { toggle: false });
+  navLinks.forEach((l) => {
+    l.addEventListener('click', () => {
+      if (window.innerWidth < 992) bsCollapse.hide();
+    });
+  });
 
-    <footer>
-        <div class="container text-center">
-            <div class="footer-logo h3 mb-4">
-                <i class="fa-solid fa-landmark"></i> Asamblea Cantonal de Atacames
-            </div>
-            <div class="socials mb-4">
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-            </div>
-            <p class="opacity-50 small">&copy; <span id="year"></span> GAD Municipal de Atacames. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+  // =========================
+  // SUSCRIPCIONES (MODAL + API)
+  // =========================
+  const API_BASE = "https://backend-asamblea-atacames.onrender.com";
+  const SUBSCRIBE_URL = `${API_BASE}/api/suscripciones`;
+  const COUNT_URL = `${API_BASE}/api/suscripciones/count`; // si no existe, usamos fallback
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
- document.getElementById('year').textContent = new Date().getFullYear();
-        
-        // LÓGICA DE SCROLL PARA NAVBAR
-        const navbar = document.getElementById('mainNavbar');
-        window.onscroll = () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        };
+  const btnSuscribirse = document.getElementById("btnSuscribirse");
+  const subsCountEl = document.getElementById("subsCount");
 
-        // Cerrar menú al hacer clic en un enlace (móvil)
-        const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
-        const menuToggle = document.getElementById('navbarNav');
-        const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle:false});
-        navLinks.forEach((l) => {
-            l.addEventListener('click', () => { if(window.innerWidth < 992) { bsCollapse.hide(); } });
-        });
-    </script>
+  const susModalEl = document.getElementById("suscripcionModal");
+  const susModal = new bootstrap.Modal(susModalEl);
+
+  const form = document.getElementById("suscripcionForm");
+  const subName = document.getElementById("subName");
+  const subEmail = document.getElementById("subEmail");
+  const subAlert = document.getElementById("subAlert");
+  const btnEnviarSus = document.getElementById("btnEnviarSus");
+
+  function showAlert(type, msg) {
+    subAlert.className = `alert alert-${type}`;
+    subAlert.textContent = msg;
+    subAlert.classList.remove("d-none");
+  }
+  function hideAlert() {
+    subAlert.classList.add("d-none");
+  }
+
+  // Oculta alert al escribir
+  [subName, subEmail].forEach(inp => inp.addEventListener("input", hideAlert));
+
+  async function cargarContador() {
+    // 1) Intentar /count
+    try {
+      const res = await fetch(COUNT_URL);
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.ok) {
+          subsCountEl.textContent = data.total ?? data.count ?? 0;
+          return;
+        }
+      }
+    } catch (e) {}
+
+    // 2) Fallback: listar y contar
+    try {
+      const res2 = await fetch(SUBSCRIBE_URL);
+      const data2 = await res2.json();
+      if (data2?.ok && Array.isArray(data2.data)) {
+        subsCountEl.textContent = data2.data.length;
+      }
+    } catch (e) {
+      // no pasa nada
+    }
+  }
+
+  btnSuscribirse.addEventListener("click", (e) => {
+    e.preventDefault();
+    hideAlert();
+    form.reset();
+    susModal.show();
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideAlert();
+
+    const nombre = subName.value.trim();
+    const correo = subEmail.value.trim().toLowerCase();
+
+    if (!nombre || !correo) {
+      showAlert("warning", "Nombre y correo son obligatorios.");
+      return;
+    }
+
+    btnEnviarSus.disabled = true;
+    btnEnviarSus.innerHTML = "Enviando...";
+
+    try {
+      // ✅ Mandamos ambas versiones de llaves para que no falle:
+      const payload = {
+        nombre, correo,
+        name: nombre, email: correo
+      };
+
+      const res = await fetch(SUBSCRIBE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.ok) {
+        showAlert("success", "✅ ¡Listo! Te suscribiste correctamente.");
+        await cargarContador();
+        setTimeout(() => susModal.hide(), 900);
+      } else {
+        // Si el backend responde "obligatorios", muéstralo como warning (amarillo)
+        const msg = data.message || "No se pudo suscribir.";
+        const isRequiredMsg = (msg || "").toLowerCase().includes("obligator");
+        showAlert(isRequiredMsg ? "warning" : "danger", msg);
+      }
+    } catch (err) {
+      showAlert("danger", "Error de red. Intenta de nuevo.");
+    } finally {
+      btnEnviarSus.disabled = false;
+      btnEnviarSus.innerHTML =
+        `<span class="me-2"><i class="fa-solid fa-paper-plane"></i></span> Suscribirme`;
+    }
+  });
+
+  cargarContador();
+</script>
 </body>
 </html>
