@@ -24,11 +24,11 @@
             background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
             background-size: 30px 30px;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            padding-top: 130px; /* Espacio para el logo grande */
+            padding-top: 130px;
             transition: padding 0.4s;
         }
 
-        /* --- NAVBAR DINÁMICA (Logo Grande a Pequeño) --- */
+        /* --- NAVBAR --- */
         .navbar {
             background: var(--glass-bg) !important;
             backdrop-filter: blur(10px);
@@ -43,15 +43,15 @@
         }
 
         .navbar-brand img {
-            max-height: 110px; /* Tamaño grande inicial igual al Index */
+            max-height: 110px;
             transition: all 0.4s ease;
         }
 
         .navbar-scrolled .navbar-brand img {
-            max-height: 60px; /* Tamaño reducido al hacer scroll */
+            max-height: 60px;
         }
 
-        /* --- MENÚ Y DROPDOWN ESTILO MEJORADO --- */
+        /* --- MENÚ --- */
         .nav-link {
             color: var(--dark-color) !important;
             font-weight: 600;
@@ -109,8 +109,6 @@
             transition: 0.3s;
         }
 
-        .btn-login:hover { transform: scale(1.05); opacity: 0.9; }
-
         /* --- HERO --- */
         .hero-section {
             padding: 80px 0 60px;
@@ -120,7 +118,7 @@
             margin-bottom: 50px;
         }
 
-        /* --- CARDS ASAMBLEISTAS --- */
+        /* --- CARDS --- */
         .member-card {
             background: white;
             border: none;
@@ -131,7 +129,7 @@
             height: 100%;
             cursor: pointer;
             position: relative;
-            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .member-card:hover {
@@ -140,8 +138,7 @@
         }
 
         .avatar-container {
-            width: 130px;
-            height: 130px;
+            width: 130px; height: 130px;
             margin: 0 auto 20px;
         }
 
@@ -167,7 +164,7 @@
             border-radius: 20px;
         }
 
-        /* --- MODAL DETALLES --- */
+        /* --- MODAL --- */
         .modal-profile-img {
             width: 120px; height: 120px;
             object-fit: cover;
@@ -210,7 +207,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="Index.html">Inicio</a></li>
-                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button">Participación</a>
                         <ul class="dropdown-menu">
@@ -224,7 +220,6 @@
                             </a></li>
                         </ul>
                     </li>
-
                     <li class="nav-item"><a class="nav-link" href="Noticias.html">Noticias</a></li>
                     <li class="nav-item">
                         <button class="btn-login ms-lg-3" data-bs-toggle="modal" data-bs-target="#adminModal">Admin</button>
@@ -260,8 +255,8 @@
 
     <div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg">
-                <div class="modal-header border-0 bg-light">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 25px;">
+                <div class="modal-header border-0 bg-light" style="border-radius: 25px 25px 0 0;">
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4 pt-0 text-center" id="detalleCuerpo"></div>
@@ -274,8 +269,8 @@
 
     <div class="modal fade" id="adminModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
+            <div class="modal-content border-0" style="border-radius: 20px;">
+                <div class="modal-header bg-primary text-white" style="border-radius: 20px 20px 0 0;">
                     <h5 class="modal-title fw-bold"><i class="fa-solid fa-lock me-2"></i> Acceso Admin</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -294,33 +289,78 @@
         const API_URL = "https://backend-asamblea-atacames.onrender.com/api/asambleistas";
         let listaOriginal = [];
 
-        // EFECTO SCROLL NAVBAR
-        const navbar = document.getElementById('mainNavbar');
+        // Navbar Scroll Effect
         window.onscroll = () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
+            const nav = document.getElementById('mainNavbar');
+            if (window.scrollY > 50) nav.classList.add('navbar-scrolled');
+            else nav.classList.remove('navbar-scrolled');
         };
 
-        const mapaOrden = {
-            "presidenta": 1, "presidente": 1, "vicepresidenta": 2, "vicepresidente": 2,
-            "secretaria": 3, "secretario": 3, "tesorera": 4, "tesorero": 4
+        // MAPEO DE JERARQUÍA Y TRADUCCIÓN DE NÚMEROS DE VOCALES
+        const mapaJerarquia = {
+            "presidente": 1, "presidenta": 1,
+            "vicepresidente": 2, "vicepresidenta": 2,
+            "secretario": 3, "secretaria": 3,
+            "tesorero": 4, "tesorera": 4,
+            "vocal": 5
+        };
+
+        const mapaVocales = {
+            "primer": 1, "primero": 1,
+            "segundo": 2,
+            "tercer": 3, "tercero": 3,
+            "cuarto": 4,
+            "quinto": 5,
+            "sexto": 6,
+            "séptimo": 7, "septimo": 7,
+            "octavo": 8
         };
 
         async function cargarDatos() {
             try {
                 const res = await fetch(API_URL);
                 const data = await res.json();
+                
                 listaOriginal = data.sort((a, b) => {
-                    const ordenA = mapaOrden[(a.cargo || "").toLowerCase().trim()] || 99;
-                    const ordenB = mapaOrden[(b.cargo || "").toLowerCase().trim()] || 99;
-                    return ordenA - ordenB;
+                    const cargoA = (a.cargo || "").toLowerCase().trim();
+                    const cargoB = (b.cargo || "").toLowerCase().trim();
+
+                    let nivelA = 99, nivelB = 99;
+
+                    // Asignar nivel base por palabra clave
+                    for (let key in mapaJerarquia) {
+                        if (cargoA.includes(key)) nivelA = mapaJerarquia[key];
+                        if (cargoB.includes(key)) nivelB = mapaJerarquia[key];
+                    }
+
+                    // Si ambos son del mismo nivel (ej. ambos son vocales)
+                    if (nivelA === nivelB) {
+                        // Extraer valor numérico del vocal (ej: "Primer vocal" -> 1)
+                        let valA = 99, valB = 99;
+                        
+                        // Buscar por número escrito (Primer, Segundo...)
+                        for (let palabra in mapaVocales) {
+                            if (cargoA.includes(palabra)) valA = mapaVocales[palabra];
+                            if (cargoB.includes(palabra)) valB = mapaVocales[palabra];
+                        }
+
+                        // Si no se encontró por palabra, buscar por dígito (Vocal 1, 2...)
+                        if (valA === 99) valA = parseInt(cargoA.replace(/\D/g, "")) || 99;
+                        if (valB === 99) valB = parseInt(cargoB.replace(/\D/g, "")) || 99;
+                        
+                        if (valA !== valB) return valA - valB;
+                        
+                        // Desempate final por nombre
+                        return a.nombre.localeCompare(b.nombre);
+                    }
+
+                    return nivelA - nivelB;
                 });
+
                 renderizarCards(listaOriginal);
             } catch (error) {
-                document.getElementById("contenedorAsambleistas").innerHTML = "<p class='text-center'>Error al cargar datos.</p>";
+                console.error(error);
+                document.getElementById("contenedorAsambleistas").innerHTML = "<p class='text-center'>Error al conectar con la base de datos.</p>";
             }
         }
 
@@ -328,13 +368,13 @@
             const contenedor = document.getElementById("contenedorAsambleistas");
             contenedor.innerHTML = asambleistas.map(a => `
                 <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp">
-                    <div class="member-card shadow-sm" onclick='abrirDetalle(${JSON.stringify(a).replace(/'/g, "&apos;")})'>
+                    <div class="member-card" onclick='abrirDetalle(${JSON.stringify(a).replace(/'/g, "&apos;")})'>
                         <div class="avatar-container">
-                            ${a.fotoUrl ? `<img src="${a.fotoUrl}" class="member-img shadow-sm">` : `<div class="no-img-icon" style="height:100%; border-radius:50%; background:#eee; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;"><i class="fa-solid fa-user"></i></div>`}
+                            ${a.fotoUrl ? `<img src="${a.fotoUrl}" class="member-img">` : `<div class="member-img d-flex align-items-center justify-content-center" style="background:#eee; font-size:3rem; color:#ccc;"><i class="fa-solid fa-user"></i></div>`}
                         </div>
-                        <span class="status-pill text-uppercase">Vigente</span>
+                        <span class="status-pill text-uppercase">Periodo Actual</span>
                         <h4 class="fw-bold mt-2 mb-1">${a.nombre}</h4>
-                        <p class="text-primary fw-600 mb-3">${a.cargo || 'Asambleísta'}</p>
+                        <p class="text-primary fw-600 mb-3" style="font-size: 0.95rem;">${a.cargo || 'Asambleísta'}</p>
                         <div class="pt-3 border-top d-flex justify-content-between text-muted small">
                             <span><i class="fa-solid fa-location-dot me-1"></i> ${a.sector}</span>
                             <span class="fw-bold text-primary">Ver perfil <i class="fa-solid fa-chevron-right ms-1"></i></span>
@@ -353,8 +393,8 @@
                     <span class="badge bg-primary-subtle text-primary rounded-pill mb-4 px-3">${a.cargo || 'Miembro'}</span>
                 </div>
                 <div class="text-start">
-                    <div class="info-row"><i class="fa-solid fa-map-pin"></i><div><small class="text-muted d-block">Jurisdicción</small><span class="fw-bold">${a.sector}</span></div></div>
-                    <div class="info-row"><i class="fa-solid fa-calendar"></i><div><small class="text-muted d-block">Periodo</small><span class="fw-bold">2024 - 2027</span></div></div>
+                    <div class="info-row"><i class="fa-solid fa-map-pin"></i><div><small class="text-muted d-block">Sector / Organización</small><span class="fw-bold">${a.sector}</span></div></div>
+                    <div class="info-row"><i class="fa-solid fa-calendar"></i><div><small class="text-muted d-block">Periodo Legislativo</small><span class="fw-bold">2024 - 2027</span></div></div>
                 </div>
             `;
             new bootstrap.Modal(document.getElementById('detalleModal')).show();
