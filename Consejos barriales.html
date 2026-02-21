@@ -24,54 +24,37 @@
       min-height: 100vh;
     }
 
-    /* --- HEADER (Basado en tu imagen) --- */
     .navbar {
       background: white;
-      padding: 15px 0;
+      padding: 10px 0; /* ✅ ajustado para que el navbar no se haga gigante */
       border-bottom: 1px solid #edf2f7;
     }
+
+    /* ✅ LOGO MÁS GRANDE */
     .navbar-brand img {
-      height: 60px;
+      height: 95px;   /* antes 60px */
+      width: auto;
     }
+
     .nav-link {
       font-weight: 700;
       color: #4a5568 !important;
       font-size: 0.9rem;
       margin-left: 20px;
     }
-    .nav-link i {
-      color: var(--primary);
-      margin-right: 5px;
-    }
-    .nav-link.admin-link i {
-      color: #e53e3e;
-    }
+    .nav-link i { color: var(--primary); margin-right: 5px; }
 
-    /* --- HERO SECTION --- */
     .hero-banner {
       background: linear-gradient(90deg, #0091ff 0%, #1a202c 100%);
       padding: 60px 0;
       color: white;
       text-align: center;
     }
-    .hero-banner h1 {
-      font-weight: 800;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
 
-    /* --- TABLA --- */
-    .main-content {
-      flex: 1;
-      padding: 50px 0;
-    }
+    .main-content { flex: 1; padding: 50px 0; }
 
-    /* --- ESTILOS DEL MODAL --- */
-    .modal-profile-header {
-      background: var(--primary);
-      height: 140px;
-      position: relative;
-    }
+    /* --- ESTILOS DEL MODAL MEJORADOS --- */
+    .modal-profile-header { background: var(--primary); height: 140px; position: relative; }
     .profile-img-wrapper {
       position: absolute;
       top: 45px;
@@ -80,27 +63,30 @@
       z-index: 10;
     }
     .profile-main-img, .profile-initials {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 6px solid white;
-      object-fit: cover;
-      background: #0091ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 3.5rem;
-      font-weight: 700;
+      width: 140px; height: 140px;
+      border-radius: 50%; border: 6px solid white;
+      object-fit: cover; background: #0091ff;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 3.5rem; font-weight: 700;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .profile-title-section {
-      margin-top: 65px;
-      text-align: center;
-      margin-bottom: 30px;
+    .profile-title-section { margin-top: 65px; text-align: center; margin-bottom: 20px; padding: 0 15px; }
+    .profile-name { font-size: 1.6rem; font-weight: 700; color: #333; margin-bottom: 0; }
+    .profile-label { color: var(--primary); font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+    /* Estilo para los cargos destacados en la parte superior */
+    .top-officials-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
     }
-    .profile-name { font-size: 1.6rem; font-weight: 700; color: #333; }
-    .profile-label { color: var(--primary); font-weight: 800; text-transform: uppercase; font-size: 0.8rem; }
+    .top-official-item { text-align: center; min-width: 130px; padding: 5px; }
+    .top-official-name { font-size: 0.85rem; font-weight: 700; color: #1a202c; display: block; }
+    .top-official-label { font-size: 0.6rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
 
     .info-header {
       font-weight: 800; font-size: 1.1rem; color: #333;
@@ -111,23 +97,15 @@
     .data-value { font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 15px; }
 
     .directory-item {
-      margin-bottom: 8px; padding: 10px; border-radius: 10px; background: #fff;
-      border: 1px solid #edf2f7; transition: all 0.2s ease;
+      margin-bottom: 10px; padding: 12px; border-radius: 12px; background: #fff;
+      border: 1px solid #edf2f7; border-left: 4px solid var(--primary);
     }
-    .role-tag { font-size: 0.6rem; text-transform: uppercase; font-weight: 800; color: var(--primary); display: block; }
-    .member-name { font-size: 0.85rem; font-weight: 700; color: #1a202c; }
+    .role-tag { font-size: 0.65rem; text-transform: uppercase; font-weight: 800; color: var(--primary); display: block; }
+    .member-name { font-size: 0.9rem; font-weight: 700; color: #1a202c; }
 
     .st-ACTIVO { background: #ecfdf5; color: #10b981; padding: 4px 12px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; }
 
-    /* --- FOOTER --- */
-    footer {
-      background: var(--dark-footer);
-      color: #cbd5e0;
-      padding: 30px 0;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
+    footer { background: var(--dark-footer); color: #cbd5e0; padding: 30px 0; text-align: center; }
     .btn-close-dark { background: #1e293b; color: white; border-radius: 50px; padding: 10px 50px; font-weight: 800; border: none; }
   </style>
 </head>
@@ -136,11 +114,11 @@
   <nav class="navbar navbar-expand-lg shadow-sm sticky-top">
     <div class="container">
       <a class="navbar-brand" href="#">
-                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="100" alt="GAD Atacames">
+        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" alt="GAD Atacames">
+      </a>
       <div class="ms-auto d-flex">
         <a class="nav-link" href="Index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-        <a class="nav-link" href="#"><i class="fa-solid fa-eye"></i> Consulta Pública</a>
-        <a class="nav-link admin-link" href="https://fidelpperez2021.github.io/Almacenamiento.io/Consejos%20barriales%20Admin.html"><i class="fa-solid fa-shield-halved"></i> Modo Administrador</a>
+        <a class="nav-link admin-link" href="https://fidelpperez2021.github.io/Almacenamiento.io/Consejos%20barriales%20Admin.html"><i class="fa-solid fa-shield-halved"></i> Admin</a>
       </div>
     </div>
   </nav>
@@ -148,10 +126,7 @@
   <header class="hero-banner">
     <div class="container">
       <h1>Consejos Barriales</h1>
-      <p class="opacity-75">Consulta pública de directivas y sectores del Cantón Atacames</p>
-      <div class="mt-3">
-        <span class="badge rounded-pill bg-white text-primary px-3 py-2"><i class="fa-solid fa-database me-2"></i> Base de Datos Conectada</span>
-      </div>
+      <p class="opacity-75">Consulta pública de directivas del Cantón Atacames</p>
     </div>
   </header>
 
@@ -161,14 +136,13 @@
         <table class="table align-middle mb-0 table-hover">
           <thead class="bg-light">
             <tr>
-              <th class="px-4 py-3">Código</th>
-              <th class="py-3">Consejo Barrial</th>
-              <th class="py-3">Presidente</th>
-              <th class="py-3 text-center">Acción</th>
+              <th class="px-4">Código</th>
+              <th>Consejo Barrial</th>
+              <th>Presidente</th>
+              <th class="text-center">Acción</th>
             </tr>
           </thead>
-          <tbody id="listaConsejos">
-            </tbody>
+          <tbody id="listaConsejos"></tbody>
         </table>
       </div>
     </div>
@@ -187,10 +161,13 @@
           <div class="modal-profile-header">
             <div class="profile-img-wrapper" id="contFotoPres"></div>
           </div>
+          
           <div class="profile-title-section">
             <h2 class="profile-name" id="detPresNombre">-</h2>
-            <p class="profile-label">Presidente del Consejo</p>
+            <p class="profile-label">Consejo Barrial</p>
+            <div id="topOfficials" class="top-officials-grid"></div>
           </div>
+
           <div class="container px-lg-5 pb-4">
             <div class="row">
               <div class="col-md-5 border-end">
@@ -206,7 +183,7 @@
               </div>
               <div class="col-md-7 ps-md-4">
                 <div class="info-header"><i class="fa-solid fa-users text-primary"></i> Directorio Completo</div>
-                <div id="contDirectorio" style="max-height: 350px; overflow-y: auto; padding-right: 10px;"></div>
+                <div id="contDirectorio" style="max-height: 400px; overflow-y: auto;"></div>
               </div>
             </div>
             <div class="text-center mt-4">
@@ -224,6 +201,10 @@
     const API_URL = "https://backend-asamblea-atacames.onrender.com/api/consejos-barriales";
     let cacheConsejos = [];
 
+    const getNombre = (o) => (o?.nombres || o?.nombre || o?.name || '').toString().trim();
+    const getTel = (o) => (o?.telefono || o?.teléfono || o?.phone || '').toString().trim();
+    const getFoto = (o) => (o?.foto || o?.Perfil || o?.perfil || '').toString().trim();
+
     async function cargarDatos() {
       try {
         const res = await fetch(API_URL);
@@ -234,52 +215,102 @@
 
     function renderizarTabla() {
       const tbody = document.getElementById("listaConsejos");
-      tbody.innerHTML = cacheConsejos.map(c => `
-        <tr>
-          <td class="px-4"><code>${c.codigo}</code></td>
-          <td class="fw-bold">${c.nombre}</td>
-          <td>${c.directiva?.presidente?.nombres || 'No asignado'}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-primary rounded-pill px-3 fw-bold" onclick="verDetalle('${c._id}')">Ver Perfil</button>
-          </td>
-        </tr>
-      `).join('');
+
+      tbody.innerHTML = cacheConsejos.map(c => {
+        const dir = c.directiva?.objetivo || c.directiva || {};
+        const pres = dir.presidente || {};
+        const presNombre = getNombre(pres) || 'No asignado';
+
+        return `
+          <tr>
+            <td class="px-4"><code>${c.codigo}</code></td>
+            <td class="fw-bold">${c.nombre}</td>
+            <td>${presNombre}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-primary rounded-pill px-3 fw-bold" onclick="verDetalle('${c._id}')">Ver Perfil</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
     function verDetalle(id) {
       const c = cacheConsejos.find(x => x._id === id);
       if(!c) return;
 
-      const dir = c.directiva || {};
+      const dir = c.directiva?.objetivo || c.directiva || {};
+
       const pres = dir.presidente || {};
-      
-      const fotoUrl = pres.foto || pres.Perfil; 
+      const vice = dir.Vicepresidente || dir.vicepresidente || {};
+      const sec  = dir.Secretario || dir.secretario || {};
+      const tes  = dir.Tesorero || dir.tesorero || {};
+
+      const fotoUrl = getFoto(pres);
       if(fotoUrl) {
         document.getElementById("contFotoPres").innerHTML = `<img src="${fotoUrl}" class="profile-main-img">`;
       } else {
-        const iniciales = pres.nombres ? pres.nombres.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : "CB";
+        const n = getNombre(pres) || "CB";
+        const iniciales = n.split(' ').filter(Boolean).map(w => w[0]).join('').substring(0,2).toUpperCase();
         document.getElementById("contFotoPres").innerHTML = `<div class="profile-initials">${iniciales}</div>`;
       }
 
-      document.getElementById("detPresNombre").innerText = pres.nombres || "Sin Nombre";
+      document.getElementById("detPresNombre").innerText = c.nombre || "Consejo Barrial";
+
       document.getElementById("detBarrio").innerText = c.barrioSector || "-";
       document.getElementById("detParroquia").innerText = c.parroquia || "-";
       document.getElementById("detReferencia").innerText = c.direccionReferencia || "-";
-      document.getElementById("detEstado").innerHTML = `<span class="st-ACTIVO">${c.estado}</span>`;
+      document.getElementById("detEstado").innerHTML = `<span class="st-ACTIVO">${c.estado || 'ACTIVO'}</span>`;
+
+      const topOffBox = document.getElementById("topOfficials");
+      let topHtml = '';
+
+      if(getNombre(vice)) {
+        topHtml += `
+          <div class="top-official-item">
+            <span class="top-official-label">Vicepresidente/a</span>
+            <span class="top-official-name">${getNombre(vice)}</span>
+          </div>`;
+      }
+
+      if(getNombre(sec)) {
+        topHtml += `
+          <div class="top-official-item">
+            <span class="top-official-label">Secretario/a</span>
+            <span class="top-official-name">${getNombre(sec)}</span>
+          </div>`;
+      }
+
+      topOffBox.innerHTML = topHtml;
 
       const contDir = document.getElementById("contDirectorio");
       const mbs = [];
-      if(pres.nombres) mbs.push({ cargo: 'Presidente/a', nombre: pres.nombres });
-      if(dir.secretario?.nombres) mbs.push({ cargo: 'Secretario/a', nombre: dir.secretario.nombres });
-      if(dir.tesorero?.nombres) mbs.push({ cargo: 'Tesorero/a', nombre: dir.tesorero.nombres });
-      if(dir.vocales) dir.vocales.forEach(v => { if(v.nombres) mbs.push({ cargo: v.cargo || 'Vocal', nombre: v.nombres }); });
 
-      contDir.innerHTML = mbs.map(m => `
+      const pushMiembro = (cargo, obj) => {
+        const nombre = getNombre(obj);
+        if(!nombre) return;
+        mbs.push({ cargo, nombre, telf: getTel(obj) });
+      };
+
+      pushMiembro('Presidente/a', pres);
+      pushMiembro('Vicepresidente/a', vice);
+      pushMiembro('Secretario/a', sec);
+      pushMiembro('Tesorero/a', tes);
+
+      pushMiembro('Primer Vocal',  dir['1er-vocal']);
+      pushMiembro('Segundo Vocal', dir['2do-vocal']);
+      pushMiembro('Tercer Vocal',  dir['3er-vocal']);
+
+      if(Array.isArray(dir.vocales)) {
+        dir.vocales.forEach(v => pushMiembro(v.cargo || 'Vocal', v));
+      }
+
+      contDir.innerHTML = mbs.length > 0 ? mbs.map(m => `
         <div class="directory-item shadow-sm">
           <span class="role-tag">${m.cargo}</span>
           <div class="member-name">${m.nombre}</div>
+          ${m.telf ? `<div class="small text-muted mt-1"><i class="fa-solid fa-phone me-1 text-success"></i> ${m.telf}</div>` : ''}
         </div>
-      `).join('') || `<p class="text-muted small">Sin directiva registrada.</p>`;
+      `).join('') : `<p class="text-muted small text-center">Sin directiva registrada.</p>`;
 
       new bootstrap.Modal(document.getElementById('modalDetalle')).show();
     }
