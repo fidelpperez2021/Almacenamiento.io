@@ -7,11 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-
-<!-- prueba desde mi otra PC -->
-
-
-
     <style>
         :root {
             --primary-color: #0097e6;
@@ -45,7 +40,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .logo img { max-height: 120px; width: auto; }
+        .logo img { max-height: 100px; width: auto; }
 
         .nav-links { list-style: none; display: flex; gap: 2rem; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--dark-color); font-weight: 500; transition: 0.3s; }
@@ -65,46 +60,66 @@
                         url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
-            padding: 220px 5% 120px;
+            padding: 180px 5% 100px;
             text-align: center;
             color: white;
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
         }
 
-        .page-header h1 { font-size: 3.5rem; font-weight: 700; }
+        .page-header h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 10px; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- SECCIÓN: QUIÉNES SOMOS --- */
-        .about-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            padding: 100px 0;
+        /* --- SECCIÓN TÍTULOS --- */
+        .section-title {
+            text-align: center;
+            margin: 80px 0 60px;
         }
 
-        .about-text h2 { color: var(--primary-color); font-size: 2.5rem; margin-bottom: 25px; position: relative; }
-        .about-text h2::after { content: ''; position: absolute; left: 0; bottom: -10px; width: 50px; height: 4px; background: var(--secondary-color); }
-
-        .image-container img {
-            width: 100%;
-            border-radius: 30px 100px 30px 30px;
-            box-shadow: 25px 25px 0px var(--secondary-color);
+        .section-title h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
         }
 
-        /* --- CARRUSEL MULTI-IMAGEN DINÁMICO --- */
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 6px;
+            background: var(--secondary-color);
+            border-radius: 10px;
+        }
+
+        /* --- FILAS DE CARACTERÍSTICAS --- */
         .feature-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
+            gap: 80px;
+            /* Cambiado de center a flex-start para que el texto pueda subir */
+            align-items: flex-start; 
             margin-bottom: 100px;
+            padding-top: 20px;
         }
 
         .feature-row.reverse { direction: rtl; }
         .feature-row.reverse .feature-text { direction: ltr; }
 
+        /* Ajuste específico para subir el texto */
+        .feature-text {
+            padding-top: 10px; /* Controla qué tan arriba empieza el texto respecto a la imagen */
+        }
+
+        .feature-text i { font-size: 3rem; color: var(--primary-color); margin-bottom: 20px; display: block; }
+        .feature-text h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--dark-color); }
+
+        /* --- CARRUSEL --- */
         .carousel-container {
             width: 100%;
             height: 400px;
@@ -118,11 +133,11 @@
         }
 
         .carousel-container::after {
-            content: 'Click para siguiente ➔';
+            content: 'Ver más ➔';
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             color: white;
             padding: 6px 15px;
             font-size: 0.8rem;
@@ -134,11 +149,10 @@
         .carousel-track {
             display: flex;
             height: 100%;
-            transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .carousel-track img {
-            /* Cada imagen ocupa el 100% del contenedor visible */
             width: 100%; 
             min-width: 100%; 
             height: 100%;
@@ -146,15 +160,24 @@
             flex-shrink: 0;
         }
 
-        .feature-text i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px; display: block; }
-        .feature-text h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--dark-color); }
-
+        /* --- FOOTER --- */
         footer { background: var(--dark-color); color: white; padding: 60px 5% 30px; text-align: center; }
-        .socials a { color: white; font-size: 1.5rem; margin: 0 15px; }
+        .socials { margin-bottom: 20px; }
+        .socials a { color: white; font-size: 1.5rem; margin: 0 15px; transition: 0.3s; }
+        .socials a:hover { color: var(--primary-color); }
 
+        /* --- RESPONSIVE --- */
         @media (max-width: 992px) {
-            .about-section, .feature-row, .feature-row.reverse { grid-template-columns: 1fr; text-align: center; direction: ltr; }
+            .feature-row, .feature-row.reverse { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+                direction: ltr; 
+                gap: 40px;
+                align-items: center;
+            }
             .carousel-container { height: 300px; order: -1; }
+            .section-title h2 { font-size: 2.5rem; }
+            .page-header h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -167,7 +190,7 @@
         <ul class="nav-links">
             <li><a href="Index.html">Inicio</a></li>
             <li><a href="#" class="active">Nuestra Asamblea</a></li>
-            <li><a href="Asambleistas.html">Asambleistas</a></li>
+            <li><a href="Asambleistas.html">Asambleístas</a></li>
             <li><a href="#" class="btn-login">Admin</a></li>
         </ul>
     </nav>
@@ -181,28 +204,25 @@
 
     <main>
         <section class="container">
-            <div class="feature-row">
-                <div class="about-text">
-                    <h2>¿Quiénes somos?</h2>
-                    <p>La Asamblea Cantonal de Participación Ciudadana de Atacames, es un organismo democrático integrado por representantes de diversos sectores sociales, barrios, parroquias y organizaciones del cantón.</p>
+            <div class="feature-row" style="padding-top: 80px;">
+                <div class="feature-text">
+                    <h2 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 25px;">¿Quiénes somos?</h2>
+                    <p>La Asamblea Cantonal de Participación Ciudadana de Atacames es un organismo democrático integrado por representantes de diversos sectores sociales, barrios, parroquias y organizaciones del cantón, comprometidos con el desarrollo local.</p>
                 </div>
                 <div class="carousel-container" onclick="moverCarrusel(this)">
                     <div class="carousel-track">
                         <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Asambleistas.jpg" alt="Miembros 1">
                         <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Miembros%20de%20la%20asamblea%20cantonal.jpeg" alt="Miembros 2">
-                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Asambleistas%204.jpg" alt="Miembros 2">
-                         <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Asambleistas%203.jpg" alt="Miembros 2">
-
-
+                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Asambleistas%204.jpg" alt="Miembros 3">
+                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Asambleistas%203.jpg" alt="Miembros 4">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="container" style="padding-bottom: 200px;">
+        <section class="container" style="margin-bottom: 100px;">
             <div class="section-title">
                 <h2>¿Qué hacemos?</h2>
-                <div></div>
             </div>
 
             <div class="feature-row">
@@ -223,7 +243,7 @@
                 <div class="feature-text">
                     <i class="fa-solid fa-users-gear"></i>
                     <h3>Presupuesto Participativo</h3>
-                    <p>Trabajamos hombro a hombro con la Alcaldía para priorizar las obras en los barrios, parroquias y recintos.</p>
+                    <p>Trabajamos hombro a hombro con la Alcaldía para priorizar las obras en los barrios, parroquias y recintos, asegurando que la inversión llegue donde más se necesita.</p>
                 </div>
                 <div class="carousel-container" onclick="moverCarrusel(this)">
                     <div class="carousel-track">
@@ -237,18 +257,18 @@
                 <div class="feature-text">
                     <i class="fa-solid fa-eye"></i>
                     <h3>Veeduría Ciudadana</h3>
-                    <p>Vigilamos que las obras se cumplan con la calidad y transparencia que Atacames merece.</p>
+                    <p>Vigilamos que las obras se cumplan con la calidad y transparencia que Atacames merece. Somos los ojos del pueblo en la gestión pública.</p>
                 </div>
                 <div class="carousel-container" onclick="moverCarrusel(this)">
                     <div class="carousel-track">
                         <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Veedur%C3%AD%20y%20vigilancia.jpg" alt="Veeduría 1">
                         <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Veeduria%203.jpg" alt="Veeduría 2">
                         <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Veeduria%204.jpg" alt="Veeduría 3">
-                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.18.06%20PM%20(1).jpeg" alt="Veeduría 3">
-                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.18.06%20PM.jpeg" alt="Veeduría 3">
-                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.38.04%20PM.jpeg" alt="Veeduría 3">
-                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.39.00%20PM.jpeg" alt="Veeduría 3">
-                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.42.33%20PM.jpeg" alt="Veeduría 3">
+                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.18.06%20PM%20(1).jpeg" alt="Veeduría 4">
+                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.18.06%20PM.jpeg" alt="Veeduría 5">
+                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.38.04%20PM.jpeg" alt="Veeduría 6">
+                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.39.00%20PM.jpeg" alt="Veeduría 7">
+                        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/WhatsApp%20Image%202026-01-22%20at%202.42.33%20PM.jpeg" alt="Veeduría 8">
                    </div>
                 </div>
             </div>
@@ -261,7 +281,7 @@
             <a href="#"><i class="fa-brands fa-twitter"></i></a>
             <a href="#"><i class="fa-brands fa-instagram"></i></a>
         </div>
-        <p>&copy; 2026 Asamblea Cantonal de Atacames.</p>
+        <p>&copy; 2026 Asamblea Cantonal de Atacames. Trabajando por nuestra gente.</p>
     </footer>
 
     <script>
@@ -270,26 +290,19 @@
             const imagenes = track.querySelectorAll('img');
             const totalImagenes = imagenes.length;
             
-            // Si no tiene el índice actual, lo inicializamos en 0
             if (!contenedor.dataset.indice) {
                 contenedor.dataset.indice = "0";
             }
 
             let indiceActual = parseInt(contenedor.dataset.indice);
-
-            // Aumentamos el índice
             indiceActual++;
 
-            // Si llegamos al final, volvemos a la primera
             if (indiceActual >= totalImagenes) {
                 indiceActual = 0;
             }
 
-            // Calculamos el desplazamiento: cada imagen es el 100% del contenedor
             const desplazamiento = indiceActual * 100;
             track.style.transform = `translateX(-${desplazamiento}%)`;
-
-            // Guardamos el nuevo índice en el contenedor
             contenedor.dataset.indice = indiceActual.toString();
         }
     </script>
