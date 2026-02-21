@@ -3,554 +3,288 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consejos Barriales - Atacames (Consulta)</title>
+  <title>Consejos Barriales - Atacames</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  
   <style>
-    :root{
-      --primary:#0097e6;
-      --primary2:#0052d4;
-      --dark:#2f3640;
-      --bg:#f8f9fc;
-      --grad:linear-gradient(135deg,#0097e6 0%,#0052d4 100%);
+    :root {
+      --primary: #007bff;
+      --bg: #f8f9fc;
+      --dark-footer: #2d3748;
     }
 
-    body{
-      font-family:'Poppins',sans-serif;
-      background:var(--bg);
-      color:#333;
-      padding-top:80px;
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    .navbar{
-      background:rgba(255,255,255,.98);
-      box-shadow:0 2px 15px rgba(0,0,0,.08);
-      padding:10px 0;
-      backdrop-filter: blur(8px);
+    /* --- HEADER (Basado en tu imagen) --- */
+    .navbar {
+      background: white;
+      padding: 15px 0;
+      border-bottom: 1px solid #edf2f7;
+    }
+    .navbar-brand img {
+      height: 60px;
+    }
+    .nav-link {
+      font-weight: 700;
+      color: #4a5568 !important;
+      font-size: 0.9rem;
+      margin-left: 20px;
+    }
+    .nav-link i {
+      color: var(--primary);
+      margin-right: 5px;
+    }
+    .nav-link.admin-link i {
+      color: #e53e3e;
     }
 
-    .page-header{
-      background:
-        linear-gradient(135deg, rgba(0,151,230,.92), rgba(47,54,64,.95)),
-        url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1350&q=80');
-      background-size:cover;
-      padding:120px 0 80px;
-      color:#fff;
-      text-align:center;
-      clip-path:ellipse(150% 100% at 50% 0%);
+    /* --- HERO SECTION --- */
+    .hero-banner {
+      background: linear-gradient(90deg, #0091ff 0%, #1a202c 100%);
+      padding: 60px 0;
+      color: white;
+      text-align: center;
+    }
+    .hero-banner h1 {
+      font-weight: 800;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
 
-    .main-card{
-      background:#fff;
-      border-radius:20px;
-      box-shadow:0 15px 35px rgba(0,0,0,.05);
-      margin-top:-60px;
-      padding:24px;
-      margin-bottom:40px;
+    /* --- TABLA --- */
+    .main-content {
+      flex: 1;
+      padding: 50px 0;
     }
 
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:50px;
-      border:1px solid rgba(0,0,0,.08);
-      background:#fff;
+    /* --- ESTILOS DEL MODAL --- */
+    .modal-profile-header {
+      background: var(--primary);
+      height: 140px;
+      position: relative;
+    }
+    .profile-img-wrapper {
+      position: absolute;
+      top: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+    .profile-main-img, .profile-initials {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 6px solid white;
+      object-fit: cover;
+      background: #0091ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3.5rem;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .profile-title-section {
+      margin-top: 65px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .profile-name { font-size: 1.6rem; font-weight: 700; color: #333; }
+    .profile-label { color: var(--primary); font-weight: 800; text-transform: uppercase; font-size: 0.8rem; }
+
+    .info-header {
+      font-weight: 800; font-size: 1.1rem; color: #333;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+      border-bottom: 2px solid #eee; padding-bottom: 5px;
+    }
+    .data-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #94a3b8; margin-bottom: 2px; }
+    .data-value { font-size: 0.95rem; font-weight: 600; color: #334155; margin-bottom: 15px; }
+
+    .directory-item {
+      margin-bottom: 8px; padding: 10px; border-radius: 10px; background: #fff;
+      border: 1px solid #edf2f7; transition: all 0.2s ease;
+    }
+    .role-tag { font-size: 0.6rem; text-transform: uppercase; font-weight: 800; color: var(--primary); display: block; }
+    .member-name { font-size: 0.85rem; font-weight: 700; color: #1a202c; }
+
+    .st-ACTIVO { background: #ecfdf5; color: #10b981; padding: 4px 12px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; }
+
+    /* --- FOOTER --- */
+    footer {
+      background: var(--dark-footer);
+      color: #cbd5e0;
+      padding: 30px 0;
+      font-size: 0.9rem;
+      text-align: center;
     }
 
-    .badge-status{
-      padding:6px 12px;
-      border-radius:50px;
-      font-weight:700;
-      font-size:.75rem;
-      letter-spacing:.2px;
-      display:inline-block;
-    }
-    .st-ACTIVO{ background:#dff9fb; color:#0984e3; }
-    .st-INACTIVO{ background:#ffeaea; color:#d63031; }
-    .st-EN_PROCESO{ background:#fff7df; color:#b8860b; }
-
-    .table thead th{
-      font-weight:700;
-      font-size:.9rem;
-    }
-
-    .empty-state{
-      text-align:center;
-      padding:40px 10px;
-      color:#777;
-    }
-
-    .skeleton{
-      background:linear-gradient(90deg,#f0f0f0 25%,#e6e6e6 37%,#f0f0f0 63%);
-      background-size:400% 100%;
-      animation:shine 1.2s ease-in-out infinite;
-      border-radius:10px;
-      height:14px;
-    }
-    @keyframes shine{
-      0%{ background-position:100% 0 }
-      100%{ background-position:0 0 }
-    }
-
-    footer{
-      background:var(--dark);
-      color:#fff;
-      padding:40px 0;
-      margin-top:50px;
-    }
-
-    /* ------- ESTILO MODAL ADMIN (tipo "ACCESO RESTRINGIDO") ------- */
-    .admin-modal-bg {
-      background:#0b0b0b;
-      color:#fff;
-      border:1px solid rgba(255,90,0,.35);
-      box-shadow:0 20px 70px rgba(0,0,0,.45);
-    }
-    .admin-title { letter-spacing:2px; }
-    .admin-hr { border-color:rgba(255,255,255,.15); }
-    .admin-btn { background:#ff3b30; color:#fff; }
-    .admin-input{
-      background:#151515;
-      border:1px solid rgba(255,255,255,.15);
-      color:#fff;
-    }
-    .admin-input::placeholder{ color:rgba(255,255,255,.35); }
+    .btn-close-dark { background: #1e293b; color: white; border-radius: 50px; padding: 10px 50px; font-weight: 800; border: none; }
   </style>
 </head>
-
 <body>
 
-  <!-- NAV -->
-  <nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg shadow-sm sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="Index.html">
-        <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="120" alt="Logo" />
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-lg-center">
-          <li class="nav-item"><a class="nav-link fw-bold" href="Index.html">Inicio</a></li>
-          <li class="nav-item"><span class="nav-link fw-bold text-primary"><i class="fa-solid fa-eye me-2"></i>Consulta Pública</span></li>
-
-          <!-- ✅ ANTES: link directo. AHORA: protegido con modal -->
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-danger" href="#" id="adminLink">
-              <i class="fa-solid fa-shield-halved me-2"></i>Modo Administrador
-            </a>
-          </li>
-
-        </ul>
+      <a class="navbar-brand" href="#">
+                <img src="https://fidelpperez2021.github.io/Almacenamiento.io/Captura%20de%20pantalla%202026-01-03%20132017.png" height="100" alt="GAD Atacames">
+      <div class="ms-auto d-flex">
+        <a class="nav-link" href="Index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+        <a class="nav-link" href="#"><i class="fa-solid fa-eye"></i> Consulta Pública</a>
+        <a class="nav-link admin-link" href="https://fidelpperez2021.github.io/Almacenamiento.io/Consejos%20barriales%20Admin.html"><i class="fa-solid fa-shield-halved"></i> Modo Administrador</a>
       </div>
     </div>
   </nav>
 
-  <!-- HEADER -->
-  <header class="page-header">
-    <div class="container animate__animated animate__fadeIn">
-      <h1 class="fw-bold display-4">Consejos Barriales</h1>
-      <p class="lead m-0">Consulta pública (solo visualización)</p>
+  <header class="hero-banner">
+    <div class="container">
+      <h1>Consejos Barriales</h1>
+      <p class="opacity-75">Consulta pública de directivas y sectores del Cantón Atacames</p>
       <div class="mt-3">
-        <span class="chip">
-          <i class="fa-solid fa-database text-primary"></i>
-          <span class="small">API: <span class="fw-bold" id="apiStatus">Conectando...</span></span>
-        </span>
+        <span class="badge rounded-pill bg-white text-primary px-3 py-2"><i class="fa-solid fa-database me-2"></i> Base de Datos Conectada</span>
       </div>
     </div>
   </header>
 
-  <main class="container">
-    <div class="main-card animate__animated animate__fadeInUp">
-
-      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3">
-        <div>
-          <h4 class="fw-bold m-0">
-            <i class="fa-solid fa-city me-2 text-primary"></i>Consejos Barriales
-          </h4>
-          <small class="text-muted">Busca consejos barriales por código, barrio o directiva.</small>
-        </div>
-
-        <div class="d-flex gap-2">
-          <button class="btn btn-outline-primary rounded-pill px-4 fw-bold" onclick="obtenerConsejos(true)">
-            <i class="fa-solid fa-rotate me-2"></i>Actualizar
-          </button>
-        </div>
-      </div>
-
-      <!-- FILTROS -->
-      <div class="row g-2 align-items-end mb-3">
-        <div class="col-md-6">
-          <label class="form-label fw-bold">Buscar</label>
-          <div class="input-group">
-            <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass"></i></span>
-            <input id="q" type="text" class="form-control" placeholder="Código, nombre, barrio o presidente..." />
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <label class="form-label fw-bold">Parroquia</label>
-          <select id="fParroquia" class="form-select">
-            <option value="">Todas</option>
-            <option value="Atacames">Atacames</option>
-            <option value="Súa">Súa</option>
-            <option value="Tonsupa">Tonsupa</option>
-            <option value="Tonchigüe">Tonchigüe</option>
-            <option value="La Unión">La Unión</option>
-          </select>
-        </div>
-
-        <div class="col-md-3">
-          <label class="form-label fw-bold">Estado</label>
-          <select id="fEstado" class="form-select">
-            <option value="">Todos</option>
-            <option value="ACTIVO">ACTIVO</option>
-            <option value="EN_PROCESO">EN_PROCESO</option>
-            <option value="INACTIVO">INACTIVO</option>
-          </select>
-        </div>
-      </div> 
-
-      <!-- TABLA -->
-      <div class="table-responsive">
-        <table class="table align-middle">
-          <thead class="table-light">
+  <main class="main-content">
+    <div class="container">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <table class="table align-middle mb-0 table-hover">
+          <thead class="bg-light">
             <tr>
-              <th>Código</th>
-              <th>Consejo</th>
-              <th>Presidente</th>
-              <th>Contacto</th>
-              <th>Estado</th>
-              <th class="text-center">Detalle</th>
+              <th class="px-4 py-3">Código</th>
+              <th class="py-3">Consejo Barrial</th>
+              <th class="py-3">Presidente</th>
+              <th class="py-3 text-center">Acción</th>
             </tr>
           </thead>
-          <tbody id="listaConsejos"></tbody>
+          <tbody id="listaConsejos">
+            </tbody>
         </table>
       </div>
-
-      <div id="emptyState" class="empty-state d-none">
-        <i class="fa-regular fa-folder-open fa-2x mb-2"></i>
-        <div class="fw-bold">No hay registros para mostrar</div>
-        <small>Prueba con otros filtros.</small>
-      </div>
-
     </div>
   </main>
 
-  <!-- MODAL DETALLE -->
-  <div class="modal fade" id="modalDetalle" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content rounded-4 shadow border-0">
-        <div class="modal-header bg-dark text-white p-4">
-          <h5 class="modal-title fw-bold">
-            <i class="fa-solid fa-circle-info me-2"></i>Detalle del Consejo
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-4" id="detalleBody"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ MODAL ACCESO ADMIN -->
-  <div class="modal fade" id="modalAdminAccess" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 admin-modal-bg">
-        <div class="modal-body p-4 p-md-5">
-
-          <div class="text-center mb-3">
-            <div style="font-size:52px; color:#ff3b30;">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <h4 class="fw-bold mt-2 admin-title">ACCESO RESTRINGIDO</h4>
-            <hr class="admin-hr">
-          </div>
-
-          <p class="text-center mb-4" style="color:rgba(255,255,255,.75)">
-            Usted está ingresando al <b>Modo Administrador</b>.  
-            Ingrese la clave para continuar.
-          </p>
-
-          <div class="mb-3">
-            <label class="form-label" style="color:rgba(255,255,255,.75)">Clave de acceso</label>
-            <input type="password" class="form-control form-control-lg rounded-3 admin-input"
-                   id="adminPass" placeholder="Ingrese la clave (Ej: Admin2024)">
-            <div class="small mt-2 d-none" id="adminError" style="color:#ff3b30;">
-              Clave incorrecta. Intente nuevamente.
-            </div>
-          </div>
-
-          <button class="btn w-100 fw-bold py-3 rounded-3 admin-btn" id="btnAdminEnter">
-            ACEPTAR LA RESPONSABILIDAD Y ENTRAR
-          </button>
-
-          <div class="text-center mt-3 small" style="color:rgba(255,255,255,.45)">
-            LOG_ID: IP_ADMIN_GATEWAY
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <footer class="text-center">
+  <footer>
     <div class="container">
-      <p class="m-0">&copy; 2026 Asamblea Cantonal de Atacames.</p>
+      <p class="mb-0">© 2026 Asamblea Cantonal de Participación Ciudadana de Atacames.</p>
     </div>
   </footer>
+
+  <div class="modal fade" id="modalDetalle" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 overflow-hidden shadow">
+        <div class="modal-body p-0">
+          <div class="modal-profile-header">
+            <div class="profile-img-wrapper" id="contFotoPres"></div>
+          </div>
+          <div class="profile-title-section">
+            <h2 class="profile-name" id="detPresNombre">-</h2>
+            <p class="profile-label">Presidente del Consejo</p>
+          </div>
+          <div class="container px-lg-5 pb-4">
+            <div class="row">
+              <div class="col-md-5 border-end">
+                <div class="info-header"><i class="fa-solid fa-map-marked-alt text-primary"></i> Sector</div>
+                <div class="data-label">Barrio / Sector</div>
+                <div class="data-value" id="detBarrio">-</div>
+                <div class="data-label">Parroquia</div>
+                <div class="data-value" id="detParroquia">-</div>
+                <div class="data-label">Estado</div>
+                <div id="detEstado" class="mb-3"></div>
+                <div class="data-label">Referencia</div>
+                <div class="data-value small text-muted" id="detReferencia">-</div>
+              </div>
+              <div class="col-md-7 ps-md-4">
+                <div class="info-header"><i class="fa-solid fa-users text-primary"></i> Directorio Completo</div>
+                <div id="contDirectorio" style="max-height: 350px; overflow-y: auto; padding-right: 10px;"></div>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <button class="btn btn-close-dark" data-bs-dismiss="modal">Cerrar Detalle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
     const API_URL = "https://backend-asamblea-atacames.onrender.com/api/consejos-barriales";
-
     let cacheConsejos = [];
 
-    document.addEventListener("DOMContentLoaded", () => {
-      wireFilters();
-      obtenerConsejos();
-    });
-
-    function wireFilters() {
-      document.getElementById("q").addEventListener("input", debounce(aplicarFiltros, 250));
-      document.getElementById("fParroquia").addEventListener("change", aplicarFiltros);
-      document.getElementById("fEstado").addEventListener("change", aplicarFiltros);
-    }
-
-    async function pingApi() {
-      try {
-        const r = await fetch(API_URL, { method: "GET" });
-        document.getElementById("apiStatus").textContent = r.ok ? "Online" : "Error";
-      } catch {
-        document.getElementById("apiStatus").textContent = "Offline";
-      }
-    }
-
-    async function obtenerConsejos(showToast = false) {
-      await pingApi();
-      renderLoading();
-
+    async function cargarDatos() {
       try {
         const res = await fetch(API_URL);
-        if (!res.ok) throw new Error("No se pudo obtener datos");
-        const datos = await res.json();
-        cacheConsejos = Array.isArray(datos) ? datos : (datos.data || []);
-        aplicarFiltros();
-
-        if (showToast) Swal.fire({ icon: "success", title: "Actualizado", timer: 900, showConfirmButton: false });
-      } catch (err) {
-        console.error(err);
-        renderEmpty(true);
-        Swal.fire("Error", "No se pudo cargar el directorio.", "error");
-      }
+        cacheConsejos = await res.json();
+        renderizarTabla();
+      } catch (e) { console.error("Error API", e); }
     }
 
-    function aplicarFiltros() {
-      const q = (document.getElementById("q").value || "").toLowerCase().trim();
-      const parroquia = document.getElementById("fParroquia").value;
-      const estado = document.getElementById("fEstado").value;
-
-      let list = [...cacheConsejos];
-
-      if (parroquia) list = list.filter(x => (x.parroquia || "") === parroquia);
-      if (estado) list = list.filter(x => (x.estado || "") === estado);
-
-      if (q) {
-        list = list.filter(x => {
-          const pres = x?.directiva?.presidente?.nombres || "";
-          return (
-            (x.codigo || "").toLowerCase().includes(q) ||
-            (x.nombre || "").toLowerCase().includes(q) ||
-            (x.barrioSector || "").toLowerCase().includes(q) ||
-            pres.toLowerCase().includes(q)
-          );
-        });
-      }
-
-      renderTable(list);
-    }
-
-    function badgeEstado(estado) {
-      const st = estado || "ACTIVO";
-      return `<span class="badge-status st-${st}">${st}</span>`;
-    }
-
-    function renderLoading() {
+    function renderizarTabla() {
       const tbody = document.getElementById("listaConsejos");
-      document.getElementById("emptyState").classList.add("d-none");
-      tbody.innerHTML = `
-        <tr><td colspan="6">
-          <div class="p-3">
-            <div class="skeleton mb-2" style="width:45%"></div>
-            <div class="skeleton mb-2" style="width:70%"></div>
-            <div class="skeleton" style="width:55%"></div>
-          </div>
-        </td></tr>
-      `;
+      tbody.innerHTML = cacheConsejos.map(c => `
+        <tr>
+          <td class="px-4"><code>${c.codigo}</code></td>
+          <td class="fw-bold">${c.nombre}</td>
+          <td>${c.directiva?.presidente?.nombres || 'No asignado'}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-primary rounded-pill px-3 fw-bold" onclick="verDetalle('${c._id}')">Ver Perfil</button>
+          </td>
+        </tr>
+      `).join('');
     }
 
-    function renderEmpty(show = false) {
-      document.getElementById("listaConsejos").innerHTML = "";
-      document.getElementById("emptyState").classList.toggle("d-none", !show);
-    }
-
-    function renderTable(list) {
-      const tbody = document.getElementById("listaConsejos");
-      tbody.innerHTML = "";
-
-      if (!list.length) {
-        renderEmpty(true);
-        return;
-      }
-      renderEmpty(false);
-
-      list.forEach(c => {
-        const pres = c?.directiva?.presidente?.nombres || "No asignado";
-        const tel = c?.directiva?.presidente?.telefono || "-";
-
-        tbody.innerHTML += `
-          <tr>
-            <td><span class="badge bg-light text-dark border">${escapeHtml(c.codigo || "-")}</span></td>
-            <td>
-              <div class="fw-bold">${escapeHtml(c.nombre || "-")}</div>
-              <small class="text-muted">${escapeHtml(c.barrioSector || "-")}</small>
-            </td>
-            <td>${escapeHtml(pres)}</td>
-            <td><i class="fa-solid fa-phone me-1 text-success"></i>${escapeHtml(tel)}</td>
-            <td>${badgeEstado(c.estado)}</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-outline-dark border-0" onclick="verDetalle('${c._id}')" title="Ver detalle">
-                <i class="fa-regular fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    async function verDetalle(id) {
+    function verDetalle(id) {
       const c = cacheConsejos.find(x => x._id === id);
-      if (!c) return;
+      if(!c) return;
 
-      const pres = c?.directiva?.presidente || {};
-      const coords = c?.ubicacion?.coordinates || [];
-
-      const inicio = c?.periodo?.inicio ? new Date(c.periodo.inicio).toLocaleDateString() : "-";
-      const fin = c?.periodo?.fin ? new Date(c.periodo.fin).toLocaleDateString() : "-";
-
-      const gm = coords.length
-        ? `https://www.google.com/maps?q=${coords[1]},${coords[0]}`
-        : null;
-
-      document.getElementById("detalleBody").innerHTML = `
-        <div class="row g-3">
-          <div class="col-md-6">
-            <div class="fw-bold text-primary">Información</div>
-            <div><span class="text-muted">Código:</span> <span class="fw-bold">${escapeHtml(c.codigo || "-")}</span></div>
-            <div><span class="text-muted">Nombre:</span> ${escapeHtml(c.nombre || "-")}</div>
-            <div><span class="text-muted">Parroquia:</span> ${escapeHtml(c.parroquia || "-")}</div>
-            <div><span class="text-muted">Barrio/Sector:</span> ${escapeHtml(c.barrioSector || "-")}</div>
-            <div><span class="text-muted">Dirección:</span> ${escapeHtml(c.direccionReferencia || "-")}</div>
-            <div class="mt-2">${badgeEstado(c.estado)}</div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="fw-bold text-primary">Directiva</div>
-            <div><span class="text-muted">Presidente:</span> ${escapeHtml(pres.nombres || "-")}</div>
-            <div><span class="text-muted">Teléfono:</span> ${escapeHtml(pres.telefono || "-")}</div>
-            <div><span class="text-muted">Email:</span> ${escapeHtml(pres.email || "-")}</div>
-          </div>
-
-          <div class="col-12">
-            <hr>
-            <div class="fw-bold text-primary">Ubicación</div>
-            <div><span class="text-muted">Coordenadas:</span> ${coords.length ? `${coords[0]}, ${coords[1]}` : "-"}</div>
-            ${gm ? `<a class="btn btn-sm btn-outline-primary rounded-pill mt-2" href="${gm}" target="_blank">
-              <i class="fa-solid fa-map-location-dot me-2"></i>Ver en Google Maps
-            </a>` : ""}
-
-            <div class="fw-bold text-primary mt-3">Periodo</div>
-            <div><span class="text-muted">Inicio:</span> ${escapeHtml(inicio)}</div>
-            <div><span class="text-muted">Fin:</span> ${escapeHtml(fin)}</div>
-          </div>
-        </div>
-      `;
-
-      new bootstrap.Modal(document.getElementById("modalDetalle")).show();
-    }
-
-    function debounce(fn, delay) {
-      let t;
-      return (...args) => {
-        clearTimeout(t);
-        t = setTimeout(() => fn.apply(null, args), delay);
-      };
-    }
-
-    function escapeHtml(str) {
-      return String(str ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-  </script>
-
-  <!-- ✅ SCRIPT RESTRICCIÓN ADMIN -->
-  <script>
-    const ADMIN_URL = "Consejos%20barriales%20Admin.html"; // tu archivo admin
-    const ADMIN_KEY = "Admin2024";
-
-    const adminLink = document.getElementById("adminLink");
-
-    adminLink?.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      const pass = document.getElementById("adminPass");
-      const err = document.getElementById("adminError");
-
-      if (pass) pass.value = "";
-      if (err) err.classList.add("d-none");
-
-      const modal = new bootstrap.Modal(document.getElementById("modalAdminAccess"));
-      modal.show();
-
-      setTimeout(() => pass?.focus(), 350);
-    });
-
-    document.getElementById("btnAdminEnter")?.addEventListener("click", () => {
-      const pass = document.getElementById("adminPass");
-      const err = document.getElementById("adminError");
-      const value = (pass?.value || "").trim();
-
-      if (value !== ADMIN_KEY) {
-        err?.classList.remove("d-none");
-        pass?.focus();
-        return;
+      const dir = c.directiva || {};
+      const pres = dir.presidente || {};
+      
+      const fotoUrl = pres.foto || pres.Perfil; 
+      if(fotoUrl) {
+        document.getElementById("contFotoPres").innerHTML = `<img src="${fotoUrl}" class="profile-main-img">`;
+      } else {
+        const iniciales = pres.nombres ? pres.nombres.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : "CB";
+        document.getElementById("contFotoPres").innerHTML = `<div class="profile-initials">${iniciales}</div>`;
       }
 
-      // ✅ “sesión” básica en la pestaña actual
-      sessionStorage.setItem("admin_access_ok", "1");
+      document.getElementById("detPresNombre").innerText = pres.nombres || "Sin Nombre";
+      document.getElementById("detBarrio").innerText = c.barrioSector || "-";
+      document.getElementById("detParroquia").innerText = c.parroquia || "-";
+      document.getElementById("detReferencia").innerText = c.direccionReferencia || "-";
+      document.getElementById("detEstado").innerHTML = `<span class="st-ACTIVO">${c.estado}</span>`;
 
-      // ✅ entra al admin
-      window.location.href = ADMIN_URL;
-    });
+      const contDir = document.getElementById("contDirectorio");
+      const mbs = [];
+      if(pres.nombres) mbs.push({ cargo: 'Presidente/a', nombre: pres.nombres });
+      if(dir.secretario?.nombres) mbs.push({ cargo: 'Secretario/a', nombre: dir.secretario.nombres });
+      if(dir.tesorero?.nombres) mbs.push({ cargo: 'Tesorero/a', nombre: dir.tesorero.nombres });
+      if(dir.vocales) dir.vocales.forEach(v => { if(v.nombres) mbs.push({ cargo: v.cargo || 'Vocal', nombre: v.nombres }); });
 
-    // Enter para enviar
-    document.getElementById("adminPass")?.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") document.getElementById("btnAdminEnter")?.click();
-    });
+      contDir.innerHTML = mbs.map(m => `
+        <div class="directory-item shadow-sm">
+          <span class="role-tag">${m.cargo}</span>
+          <div class="member-name">${m.nombre}</div>
+        </div>
+      `).join('') || `<p class="text-muted small">Sin directiva registrada.</p>`;
+
+      new bootstrap.Modal(document.getElementById('modalDetalle')).show();
+    }
+
+    window.onload = cargarDatos;
   </script>
-
 </body>
 </html>
