@@ -450,7 +450,7 @@
     </div>
   </footer>
 
-  <!-- ✅ MODAL FORMULARIO SUSCRIPCIÓN -->
+  <!-- ✅ MODAL FORMULARIO SUSCRIPCIÓN (CÉDULA) -->
   <div class="modal fade" id="suscripcionModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="border-radius: 18px;">
@@ -460,7 +460,7 @@
         </div>
 
         <div class="modal-body">
-          <p class="text-muted mb-3">Ingresa tu nombre y correo para recibir novedades.</p>
+          <p class="text-muted mb-3">Ingresa tu nombre y tu número de cédula para recibir novedades.</p>
 
           <form id="suscripcionForm" novalidate>
             <div class="mb-3">
@@ -469,8 +469,18 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Correo</label>
-              <input class="form-control" type="email" id="subEmail" placeholder="tucorreo@gmail.com" required>
+              <label class="form-label">Cédula</label>
+              <input
+                class="form-control"
+                type="text"
+                id="subCedula"
+                placeholder="10 dígitos"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="10"
+                required
+              >
+              <small class="text-muted">Ej: 0912345678</small>
             </div>
 
             <div class="alert d-none" id="subAlert" role="alert"></div>
@@ -512,7 +522,7 @@
   // =========================
   const API_BASE = "https://backend-asamblea-atacames.onrender.com";
   const SUBSCRIBE_URL = `${API_BASE}/api/suscripciones`;
-  const COUNT_URL = `${API_BASE}/api/suscripciones/count`; // si no existe, usamos fallback
+  const COUNT_URL = `${API_BASE}/api/suscripciones/count`;
 
   const btnSuscribirse = document.getElementById("btnSuscribirse");
   const subsCountEl = document.getElementById("subsCount");
@@ -522,7 +532,7 @@
 
   const form = document.getElementById("suscripcionForm");
   const subName = document.getElementById("subName");
-  const subEmail = document.getElementById("subEmail");
+  const subCedula = document.getElementById("subCedula");
   const subAlert = document.getElementById("subAlert");
   const btnEnviarSus = document.getElementById("btnEnviarSus");
 
@@ -535,8 +545,17 @@
     subAlert.classList.add("d-none");
   }
 
-  // Oculta alert al escribir
-  [subName, subEmail].forEach(inp => inp.addEventListener("input", hideAlert));
+  // Limpia alert al escribir
+  [subName, subCedula].forEach(inp => inp.addEventListener("input", hideAlert));
+
+  // Solo dígitos en cédula
+  subCedula.addEventListener("input", () => {
+    subCedula.value = subCedula.value.replace(/\D/g, "").slice(0, 10);
+  });
+
+  function isCedula10Digits(value) {
+    return /^\d{10}$/.test(value);
+  }
 
   async function cargarContador() {
     // 1) Intentar /count
@@ -575,10 +594,15 @@
     hideAlert();
 
     const nombre = subName.value.trim();
-    const correo = subEmail.value.trim().toLowerCase();
+    const cedula = subCedula.value.trim();
 
-    if (!nombre || !correo) {
-      showAlert("warning", "Nombre y correo son obligatorios.");
+    if (!nombre || !cedula) {
+      showAlert("warning", "Nombre y cédula son obligatorios.");
+      return;
+    }
+
+    if (!isCedula10Digits(cedula)) {
+      showAlert("warning", "La cédula debe tener exactamente 10 dígitos.");
       return;
     }
 
@@ -586,10 +610,11 @@
     btnEnviarSus.innerHTML = "Enviando...";
 
     try {
-      // ✅ Mandamos ambas versiones de llaves para que no falle:
+      // ✅ Mandamos ambas versiones de llaves para compatibilidad
       const payload = {
-        nombre, correo,
-        name: nombre, email: correo
+        name: nombre,
+        cedula: cedula,
+        nombre: nombre
       };
 
       const res = await fetch(SUBSCRIBE_URL, {
@@ -605,7 +630,6 @@
         await cargarContador();
         setTimeout(() => susModal.hide(), 900);
       } else {
-        // Si el backend responde "obligatorios", muéstralo como warning (amarillo)
         const msg = data.message || "No se pudo suscribir.";
         const isRequiredMsg = (msg || "").toLowerCase().includes("obligator");
         showAlert(isRequiredMsg ? "warning" : "danger", msg);
@@ -620,6 +644,6 @@
   });
 
   cargarContador();
-</script>
+  </script>
 </body>
 </html>
