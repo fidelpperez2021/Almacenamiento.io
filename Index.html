@@ -186,6 +186,96 @@
       margin-bottom: 20px;
     }
 
+
+
+    /* --- TARJETAS MISIÓN / VISIÓN EXPANDIBLES --- */
+    .identity-row {
+      align-items: stretch;
+    }
+
+    .identity-col {
+      transition: all 0.45s ease;
+    }
+
+    .card-identity {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-identity::after {
+      content: "Clic para expandir";
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      font-size: 0.78rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+
+    .card-identity:hover::after {
+      opacity: 1;
+    }
+
+    .card-identity.expanded {
+      transform: scale(1.02);
+      min-height: 330px;
+      padding: 60px 70px;
+      box-shadow: 0 18px 45px rgba(0, 151, 230, 0.20) !important;
+      border: 2px solid rgba(0, 151, 230, 0.25);
+      z-index: 2;
+    }
+
+    .card-identity.expanded::after {
+      content: "Clic para cerrar";
+      opacity: 1;
+    }
+
+    .card-identity.expanded i {
+      font-size: 4rem;
+    }
+
+    .card-identity.expanded h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .card-identity.expanded p {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .identity-col.collapsed-col {
+      opacity: 0.45;
+      transform: scale(0.96);
+    }
+
+    @media (max-width: 768px) {
+      .card-identity.expanded {
+        padding: 35px 25px;
+        min-height: auto;
+        transform: scale(1);
+      }
+
+      .card-identity.expanded h3 {
+        font-size: 1.7rem;
+      }
+
+      .card-identity.expanded p {
+        font-size: 1rem;
+      }
+
+      .identity-col.collapsed-col {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
     .bg-gradient-custom {
       background: linear-gradient(135deg, #0097e6 0%, #0056b3 100%);
       color: white;
@@ -203,6 +293,91 @@
     }
 
     .obj-item:hover { padding-left: 30px; }
+
+
+    /* --- OBJETIVOS EXPANDIBLES --- */
+    .objective-general-card,
+    .obj-item {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .objective-general-card {
+      background: rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 28px;
+      transition: all 0.35s ease;
+    }
+
+    .objective-general-card::after,
+    .obj-item::after {
+      content: "Clic para expandir";
+      position: absolute;
+      right: 18px;
+      bottom: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+
+    .objective-general-card:hover::after,
+    .obj-item:hover::after {
+      opacity: 1;
+    }
+
+    .objective-general-card.expanded,
+    .obj-item.expanded {
+      background: rgba(255,255,255,0.22);
+      transform: scale(1.02);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+      border-left: 5px solid var(--white);
+      padding: 34px;
+      z-index: 3;
+    }
+
+    .objective-general-card.expanded::after,
+    .obj-item.expanded::after {
+      content: "Clic para cerrar";
+      opacity: 1;
+    }
+
+    .objective-general-card.expanded h2 {
+      font-size: 3rem;
+    }
+
+    .objective-general-card.expanded p,
+    .obj-item.expanded span {
+      font-size: 1.18rem;
+      line-height: 1.9;
+    }
+
+    .objective-muted {
+      opacity: 0.45;
+      transform: scale(0.98);
+    }
+
+    @media (max-width: 768px) {
+      .objective-general-card.expanded,
+      .obj-item.expanded {
+        transform: scale(1);
+        padding: 26px;
+      }
+
+      .objective-general-card.expanded h2 {
+        font-size: 2rem;
+      }
+
+      .objective-general-card.expanded p,
+      .obj-item.expanded span {
+        font-size: 1rem;
+      }
+
+      .objective-muted {
+        opacity: 1;
+        transform: none;
+      }
+    }
 
     /* --- FOOTER --- */
     footer {
@@ -241,7 +416,97 @@
 
       .hero { margin-top: 100px; }
       .hero h1 { font-size: 2.2rem; }
-      .bg-gradient-custom { padding: 30px; }
+  
+
+    /* --- TARJETAS MISIÓN / VISIÓN EXPANDIBLES --- */
+    .identity-row {
+      align-items: stretch;
+    }
+
+    .identity-col {
+      transition: all 0.45s ease;
+    }
+
+    .card-identity {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-identity::after {
+      content: "Clic para expandir";
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      font-size: 0.78rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+
+    .card-identity:hover::after {
+      opacity: 1;
+    }
+
+    .card-identity.expanded {
+      transform: scale(1.02);
+      min-height: 330px;
+      padding: 60px 70px;
+      box-shadow: 0 18px 45px rgba(0, 151, 230, 0.20) !important;
+      border: 2px solid rgba(0, 151, 230, 0.25);
+      z-index: 2;
+    }
+
+    .card-identity.expanded::after {
+      content: "Clic para cerrar";
+      opacity: 1;
+    }
+
+    .card-identity.expanded i {
+      font-size: 4rem;
+    }
+
+    .card-identity.expanded h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .card-identity.expanded p {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .identity-col.collapsed-col {
+      opacity: 0.45;
+      transform: scale(0.96);
+    }
+
+    @media (max-width: 768px) {
+      .card-identity.expanded {
+        padding: 35px 25px;
+        min-height: auto;
+        transform: scale(1);
+      }
+
+      .card-identity.expanded h3 {
+        font-size: 1.7rem;
+      }
+
+      .card-identity.expanded p {
+        font-size: 1rem;
+      }
+
+      .identity-col.collapsed-col {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .bg-gradient-custom { padding: 30px; }
     }
 
     @media (max-width: 576px) {
@@ -272,7 +537,7 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropParticipacion" role="button">
-              Participación Ciudadana
+              Participación
             </a>
             <ul class="dropdown-menu">
               <li>
@@ -373,17 +638,17 @@
 
   <section id="identidad" class="section-padding">
     <div class="container">
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="card-identity text-center shadow-sm">
+      <div class="row g-4 identity-row" id="identityCards">
+        <div class="col-md-6 identity-col">
+          <div class="card-identity text-center shadow-sm" tabindex="0" role="button" aria-expanded="false">
             <i class="fa-solid fa-bullseye"></i>
             <h3>Misión</h3>
             <p>Promover y garantizar el ejercicio de los derechos de Participación Ciudadana de los habitantes del cantón Atacames, a través de la gestión y la articulación de las demandas sociales de los atacameños con los representantes de los Gobiernos parroquiales, cantonales y demas entidades públicas.</p>
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="card-identity text-center shadow-sm">
+        <div class="col-md-6 identity-col">
+          <div class="card-identity text-center shadow-sm" tabindex="0" role="button" aria-expanded="false">
             <i class="fa-solid fa-eye"></i>
             <h3>Visión</h3>
             <p>Ser el referente provincial y nacional de Participación Ciudadana a través de la articulación de las demandas sociales de la población con la administración pública, consolidando una sociedad atacameña activa, organizada y corresponsable en la toma de decisiones para el desarrollo de su cantón.</p>
@@ -398,34 +663,36 @@
       <div class="bg-gradient-custom shadow-lg">
         <div class="row align-items-center">
           <div class="col-lg-5 mb-4 mb-lg-0">
-            <h2 class="display-5 fw-bold mb-4">Objetivo General</h2>
-            <p class="fs-5">Fortalecer el sistema de Participación Ciudadana mediante la activación de distintos mecanismos que permitan a la ciudadanía incidir activamente en las políticas públicas locales.</p>
+            <div class="objective-general-card" tabindex="0" role="button" aria-expanded="false">
+              <h2 class="display-5 fw-bold mb-4">Objetivo General</h2>
+              <p class="fs-5 mb-0">Fortalecer el sistema de Participación Ciudadana mediante la activación de distintos mecanismos que permitan a la ciudadanía incidir activamente en las políticas públicas locales.</p>
+            </div>
           </div>
 
           <div class="col-lg-7">
             <h3 class="h4 mb-4 fw-bold text-white">Objetivos Específicos</h3>
 
-            <div class="obj-item d-flex align-items-start text-white">
+            <div class="obj-item d-flex align-items-start text-white" tabindex="0" role="button" aria-expanded="false">
               <i class="fa-solid fa-circle-check mt-1 me-3"></i>
               <span><strong>1.</strong> Fomentar la Formación de líderes sociales y comunitarios a través de capacitaciones en liderazgo moral, desarrollo comunitario y participación ciudadana.</span>
             </div>
 
-            <div class="obj-item d-flex align-items-start text-white">
+            <div class="obj-item d-flex align-items-start text-white" tabindex="0" role="button" aria-expanded="false">
               <i class="fa-solid fa-circle-check mt-1 me-3"></i>
               <span><strong>2.</strong> Vigilar la Gestión de Gobernanza Local a través de la implementación de procesos de veeduría ciudadana para asegurar la transparencia en la administración pública.</span>
             </div>
 
-            <div class="obj-item d-flex align-items-start text-white">
+            <div class="obj-item d-flex align-items-start text-white" tabindex="0" role="button" aria-expanded="false">
               <i class="fa-solid fa-circle-check mt-1 me-3"></i>
               <span><strong>3.</strong> Priorizar el Gasto del presupuesto público local a través de la participación de los líderes barriales, rurales y de la Asamblea de Participación Ciudadana en las mesas de trabajo y reuniones de planificación y elaboración del presupuesto participativo anual de GAD Cantonal.</span>
             </div>
 
-            <div class="obj-item d-flex align-items-start text-white">
+            <div class="obj-item d-flex align-items-start text-white" tabindex="0" role="button" aria-expanded="false">
               <i class="fa-solid fa-circle-check mt-1 me-3"></i>
               <span><strong>4.</strong> Participar activamente en las reuniones de preparación y ejecución de la rendición de cuentas anual de las autoridades parroquiales, cantonales y demas entidades públicas del cantón.</span>
             </div>
 
-            <div class="obj-item d-flex align-items-start text-white">
+            <div class="obj-item d-flex align-items-start text-white" tabindex="0" role="button" aria-expanded="false">
               <i class="fa-solid fa-circle-check mt-1 me-3"></i>
               <span><strong>5.</strong> Coordinar con los líderes barriales y rurales las gestiones necesarias para la atención de las autoridades a sus necesidades comunitarias y organizaciones sociales.</span>
             </div>
@@ -514,6 +781,84 @@
   navLinks.forEach((l) => {
     l.addEventListener('click', () => {
       if (window.innerWidth < 992) bsCollapse.hide();
+    });
+  });
+
+
+
+  // =========================
+  // MISIÓN / VISIÓN EXPANDIBLES
+  // =========================
+  const identityCards = document.querySelectorAll(".card-identity");
+
+  identityCards.forEach((card) => {
+    const col = card.closest(".identity-col");
+
+    function toggleCard() {
+      const isExpanded = card.classList.contains("expanded");
+
+      identityCards.forEach((otherCard) => {
+        const otherCol = otherCard.closest(".identity-col");
+        otherCard.classList.remove("expanded");
+        otherCard.setAttribute("aria-expanded", "false");
+        otherCol.classList.remove("col-md-12", "collapsed-col");
+        otherCol.classList.add("col-md-6");
+      });
+
+      if (!isExpanded) {
+        card.classList.add("expanded");
+        card.setAttribute("aria-expanded", "true");
+        col.classList.remove("col-md-6");
+        col.classList.add("col-md-12");
+
+        identityCards.forEach((otherCard) => {
+          if (otherCard !== card) {
+            otherCard.closest(".identity-col").classList.add("collapsed-col");
+          }
+        });
+      }
+    }
+
+    card.addEventListener("click", toggleCard);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleCard();
+      }
+    });
+  });
+
+
+  // =========================
+  // OBJETIVOS EXPANDIBLES
+  // =========================
+  const objectiveCards = document.querySelectorAll(".objective-general-card, .obj-item");
+
+  objectiveCards.forEach((card) => {
+    function toggleObjective() {
+      const isExpanded = card.classList.contains("expanded");
+
+      objectiveCards.forEach((otherCard) => {
+        otherCard.classList.remove("expanded", "objective-muted");
+        otherCard.setAttribute("aria-expanded", "false");
+      });
+
+      if (!isExpanded) {
+        card.classList.add("expanded");
+        card.setAttribute("aria-expanded", "true");
+
+        objectiveCards.forEach((otherCard) => {
+          if (otherCard !== card) otherCard.classList.add("objective-muted");
+        });
+      }
+    }
+
+    card.addEventListener("click", toggleObjective);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleObjective();
+      }
     });
   });
 
